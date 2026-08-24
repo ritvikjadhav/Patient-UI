@@ -2,125 +2,575 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Patient Registration | Clinic Automation</title>
 
-  <!-- Google Font -->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#003c90"
+  />
+
+  <meta
+    name="description"
+    content="Clinic Automation System patient registration"
+  />
+
+  <title>Clinic Automation | Registration</title>
+
+  <!-- Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS Files (Clinical Precision) -->
-  <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/global.css" />
-  <link rel="stylesheet" href="css/components.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <div class="container">
-    <div class="card">
 
-      <!-- ====================== REGISTRATION FORM ====================== -->
-      <div id="formSection">
-        <div class="header">
-          <h1>Patient Registration</h1>
-          <p>Please fill in your details to get a token</p>
+  <main class="app-shell">
+
+    <!-- =========================================================
+         ROLE SELECTION
+         ========================================================= -->
+
+    <section
+      class="screen role-screen"
+      id="roleScreen"
+      aria-labelledby="welcomeTitle"
+    >
+
+      <div class="brand">
+
+        <div class="brand-mark" aria-hidden="true">
+          +
         </div>
 
-        <form id="registrationForm" novalidate>
-          
-          <!-- Patient Name -->
-          <div class="form-group" id="nameGroup">
-            <label for="name">Patient Name</label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name"
-              placeholder="Enter full name" 
-              autocomplete="name"
-              required 
-            />
-            <div class="error-message">Name is required</div>
-          </div>
+        <div>
+          <p class="brand-name">
+            Clinic Automation
+          </p>
 
-          <!-- Age -->
-          <div class="form-group" id="ageGroup">
-            <label for="age">Age</label>
-            <input 
-              type="number" 
-              id="age" 
-              name="age"
-              placeholder="Enter age" 
-              min="1" 
-              max="120" 
-              required 
-            />
-            <div class="error-message">Please enter a valid age (1-120)</div>
-          </div>
+          <p class="brand-subtitle">
+            Digital clinic services
+          </p>
+        </div>
 
-          <!-- Mobile Number -->
-          <div class="form-group" id="mobileGroup">
-            <label for="mobile">Mobile Number</label>
-            <input 
-              type="tel" 
-              id="mobile" 
-              name="mobile"
-              placeholder="10-digit mobile number" 
-              maxlength="10"
-              required 
-            />
-            <div class="error-message">Enter a valid 10-digit mobile number</div>
-          </div>
+      </div>
 
-          <!-- Reason for Visit (Pre-defined options) -->
-          <div class="form-group" id="reasonGroup">
-            <label for="reason">Reason for Visit</label>
-            <select id="reason" name="reason" required>
-              <option value="" disabled selected>Select reason</option>
-              <option value="Fever">Fever</option>
-              <option value="Cough & Cold">Cough & Cold</option>
-              <option value="Headache">Headache</option>
-              <option value="Body Pain">Body Pain</option>
-              <option value="Stomach Pain">Stomach Pain</option>
-              <option value="Skin Problem">Skin Problem</option>
-              <option value="Blood Pressure Check">Blood Pressure Check</option>
-              <option value="Diabetes Check">Diabetes Check</option>
-              <option value="Injury / Wound">Injury / Wound</option>
-              <option value="Follow-up Visit">Follow-up Visit</option>
-              <option value="Other">Other</option>
-            </select>
-            <div class="error-message">Please select a reason</div>
-          </div>
 
-          <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary" id="submitBtn">
-            <span class="btn-text">Get Token</span>
-            <span class="spinner"></span>
-          </button>
-        </form>
+      <div class="role-content">
 
-        <p class="helper-text">
-          Your information is secure and will only be used for clinic purposes.
+        <span class="eyebrow">
+          WELCOME
+        </span>
+
+        <h1 id="welcomeTitle">
+          How can we help you today?
+        </h1>
+
+        <p class="intro-text">
+          Choose an option below to continue.
         </p>
-      </div>
 
-      <!-- ====================== SUCCESS STATE ====================== -->
-      <div class="success-state" id="successSection">
-        <div class="success-icon">✓</div>
-        <h2>Registration Successful</h2>
-        <p class="success-message">Please wait for your turn</p>
 
-        <div class="token-box">
-          <div class="token-label">Your Token Number</div>
-          <div class="token-number" id="tokenDisplay">A-024</div>
+        <div class="role-options">
+
+          <!-- Patient -->
+
+          <button
+            type="button"
+            class="role-card"
+            id="patientRoleBtn"
+          >
+
+            <div class="role-icon patient-icon">
+              <span>+</span>
+            </div>
+
+            <div class="role-information">
+
+              <h2>
+                I'm a Patient
+              </h2>
+
+              <p>
+                Register for today's consultation
+                and get your queue token.
+              </p>
+
+            </div>
+
+            <span
+              class="role-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </button>
+
+
+          <!-- Medical Staff -->
+
+          <button
+            type="button"
+            class="role-card"
+            id="staffRoleBtn"
+          >
+
+            <div class="role-icon staff-icon">
+              <span>▣</span>
+            </div>
+
+            <div class="role-information">
+
+              <h2>
+                I'm Medical Staff
+              </h2>
+
+              <p>
+                Access the clinic management
+                system.
+              </p>
+
+            </div>
+
+            <span
+              class="role-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </button>
+
         </div>
 
-        <p class="patient-name" id="patientNameDisplay"></p>
+
+        <p class="security-note">
+
+          <span aria-hidden="true">⌁</span>
+
+          Secure clinic access
+
+        </p>
+
       </div>
 
-    </div>
-  </div>
+
+      <footer class="page-footer">
+
+        <span>
+          Clinic Automation System
+        </span>
+
+      </footer>
+
+    </section>
+
+
+    <!-- =========================================================
+         PATIENT REGISTRATION
+         ========================================================= -->
+
+    <section
+      class="screen registration-screen hidden"
+      id="registrationScreen"
+      aria-labelledby="registrationTitle"
+    >
+
+      <div class="registration-container">
+
+        <!-- Top navigation -->
+
+        <button
+          type="button"
+          class="back-button"
+          id="backToRoleBtn"
+        >
+          <span aria-hidden="true">←</span>
+          Back
+        </button>
+
+
+        <!-- Clinic identity -->
+
+        <div class="clinic-identity">
+
+          <div class="clinic-mark">
+            +
+          </div>
+
+          <div>
+
+            <p class="clinic-name">
+              Clinic Automation
+            </p>
+
+            <p class="clinic-context">
+              Today's consultation
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- Registration card -->
+
+        <div class="registration-card">
+
+          <div class="registration-header">
+
+            <span class="eyebrow">
+              PATIENT REGISTRATION
+            </span>
+
+            <h1 id="registrationTitle">
+              Get your consultation token
+            </h1>
+
+            <p>
+              Enter your details below to join
+              today's queue.
+            </p>
+
+          </div>
+
+
+          <form
+            id="registrationForm"
+            novalidate
+          >
+
+            <!-- Patient name -->
+
+            <div
+              class="form-group"
+              id="nameGroup"
+            >
+
+              <label for="name">
+                Patient Name
+              </label>
+
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                required
+              />
+
+              <div class="error-message">
+                Please enter your name.
+              </div>
+
+            </div>
+
+
+            <!-- Age -->
+
+            <div
+              class="form-group"
+              id="ageGroup"
+            >
+
+              <label for="age">
+                Age
+              </label>
+
+              <input
+                type="number"
+                id="age"
+                name="age"
+                placeholder="Enter your age"
+                min="1"
+                max="120"
+                inputmode="numeric"
+                required
+              />
+
+              <div class="error-message">
+                Please enter a valid age between
+                1 and 120.
+              </div>
+
+            </div>
+
+
+            <!-- Mobile -->
+
+            <div
+              class="form-group"
+              id="mobileGroup"
+            >
+
+              <label for="mobile">
+                Mobile Number
+              </label>
+
+              <div class="phone-input">
+
+                <span class="country-code">
+                  +91
+                </span>
+
+                <input
+                  type="tel"
+                  id="mobile"
+                  name="mobile"
+                  placeholder="10-digit mobile number"
+                  maxlength="10"
+                  inputmode="numeric"
+                  autocomplete="tel"
+                  required
+                />
+
+              </div>
+
+              <div class="error-message">
+                Enter a valid 10-digit mobile number.
+              </div>
+
+            </div>
+
+
+            <!-- Reason -->
+
+            <div
+              class="form-group"
+              id="reasonGroup"
+            >
+
+              <div class="label-row">
+
+                <label for="reason">
+                  Reason for Visit
+                </label>
+
+                <span class="optional-label">
+                  Select one
+                </span>
+
+              </div>
+
+
+              <select
+                id="reason"
+                name="reason"
+                required
+              >
+
+                <option
+                  value=""
+                  disabled
+                  selected
+                >
+                  Select reason for your visit
+                </option>
+
+                <option value="Fever">
+                  Fever
+                </option>
+
+                <option value="Cough & Cold">
+                  Cough & Cold
+                </option>
+
+                <option value="Headache">
+                  Headache
+                </option>
+
+                <option value="Body Pain">
+                  Body Pain
+                </option>
+
+                <option value="Stomach Pain">
+                  Stomach Pain
+                </option>
+
+                <option value="Skin Problem">
+                  Skin Problem
+                </option>
+
+                <option value="Blood Pressure Check">
+                  Blood Pressure Check
+                </option>
+
+                <option value="Diabetes Check">
+                  Diabetes Check
+                </option>
+
+                <option value="Injury / Wound">
+                  Injury / Wound
+                </option>
+
+                <option value="Follow-up Visit">
+                  Follow-up Visit
+                </option>
+
+                <option value="Other">
+                  Other
+                </option>
+
+              </select>
+
+              <div class="error-message">
+                Please select a reason for your visit.
+              </div>
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <button
+              type="submit"
+              class="btn-primary"
+              id="submitBtn"
+            >
+
+              <span
+                class="btn-text"
+                id="submitText"
+              >
+                Get My Token
+              </span>
+
+              <span
+                class="spinner"
+                id="spinner"
+                aria-hidden="true"
+              ></span>
+
+              <span
+                class="button-arrow"
+                aria-hidden="true"
+              >
+                →
+              </span>
+
+            </button>
+
+          </form>
+
+
+          <!-- Privacy -->
+
+          <div class="privacy-note">
+
+            <span
+              class="privacy-icon"
+              aria-hidden="true"
+            >
+              ✓
+            </span>
+
+            <p>
+              Your information is securely used
+              for today's clinic visit only.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <p class="registration-footer">
+          Need help? Please contact the clinic staff.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SUCCESS / TOKEN SCREEN
+         ========================================================= -->
+
+    <section
+      class="screen success-screen hidden"
+      id="successScreen"
+    >
+
+      <div class="success-container">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <span class="eyebrow">
+          REGISTRATION COMPLETE
+        </span>
+
+        <h1>
+          You're in the queue
+        </h1>
+
+        <p class="success-description">
+          Please wait for your turn.
+          We'll show your queue status here.
+        </p>
+
+
+        <div class="token-card">
+
+          <span class="token-label">
+            YOUR TOKEN
+          </span>
+
+          <strong
+            class="token-number"
+            id="tokenDisplay"
+          >
+            A-024
+          </strong>
+
+          <span
+            class="patient-name"
+            id="patientNameDisplay"
+          ></span>
+
+        </div>
+
+
+        <div class="queue-status">
+
+          <span class="status-dot"></span>
+
+          <span>
+            Waiting for consultation
+          </span>
+
+        </div>
+
+
+        <p class="success-note">
+          Keep this page open to view your
+          queue status.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
 
   <!-- JavaScript -->
-  <script src="js/register.js"></script>
+
+  <script src="register.js"></script>
+
 </body>
-  </html>
+</html>
