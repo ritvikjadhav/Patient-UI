@@ -1,6 +1,7 @@
 /* =========================================================
    CLINIC AUTOMATION — PATIENT UI
    File: css/style.css
+   Registration Page Only
    ========================================================= */
 
 
@@ -24,14 +25,7 @@
 
   --focus: rgba(0, 60, 144, 0.14);
 
-  --success: #087f5b;
-  --success-bg: #d9f7ec;
-
   --error: #ba1a1a;
-  --error-bg: #ffdad6;
-
-  --waiting: #a15c00;
-  --waiting-bg: #fff0d5;
 
   --radius: 8px;
   --large-radius: 16px;
@@ -508,221 +502,6 @@ textarea {
 
 
 /* =========================================================
-   TOKEN RESULT
-   ========================================================= */
-
-.token-result {
-  display: none;
-
-  padding-top: 28px;
-
-  text-align: center;
-
-  border-top: 1px solid var(--border-light);
-}
-
-.token-result.show {
-  display: block;
-}
-
-
-/* =========================================================
-   SUCCESS ICON
-   ========================================================= */
-
-.success-icon {
-  width: 48px;
-  height: 48px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin: 0 auto 14px;
-
-  color: var(--success);
-
-  background: var(--success-bg);
-
-  border-radius: 50%;
-
-  font-size: 20px;
-  font-weight: 700;
-}
-
-
-/* =========================================================
-   SUCCESS LABEL
-   ========================================================= */
-
-.success-label {
-  margin-bottom: 7px;
-
-  color: var(--success);
-
-  font-size: 11px;
-  line-height: 16px;
-  font-weight: 700;
-
-  letter-spacing: 0.07em;
-}
-
-
-/* =========================================================
-   TOKEN HEADING
-   ========================================================= */
-
-.token-result h2 {
-  margin: 0;
-
-  color: var(--text);
-
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 600;
-}
-
-.token-description {
-  margin-top: 6px;
-
-  color: var(--text-muted);
-
-  font-size: 13px;
-  line-height: 20px;
-}
-
-
-/* =========================================================
-   TOKEN BOX
-   ========================================================= */
-
-.token-box {
-  margin: 24px 0 20px;
-
-  padding: 20px;
-
-  background: #f7f9fc;
-
-  border: 1px solid #e1e7ef;
-  border-radius: var(--radius);
-}
-
-.token-label {
-  display: block;
-
-  margin-bottom: 4px;
-
-  color: var(--text-muted);
-
-  font-size: 10px;
-  line-height: 15px;
-  font-weight: 700;
-
-  letter-spacing: 0.08em;
-}
-
-.token-number {
-  color: var(--primary);
-
-  font-size: 44px;
-  line-height: 52px;
-  font-weight: 700;
-
-  letter-spacing: 0.02em;
-
-  font-variant-numeric: tabular-nums;
-}
-
-
-/* =========================================================
-   PATIENT INFORMATION
-   ========================================================= */
-
-.patient-info {
-  padding: 0 4px;
-
-  text-align: left;
-}
-
-.info-label {
-  display: block;
-
-  margin-bottom: 4px;
-
-  color: var(--text-light);
-
-  font-size: 10px;
-  line-height: 15px;
-  font-weight: 700;
-
-  letter-spacing: 0.07em;
-}
-
-.patient-info p {
-  margin: 0;
-
-  color: var(--text);
-
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-}
-
-
-/* =========================================================
-   WAITING STATUS
-   ========================================================= */
-
-.waiting-status {
-  width: fit-content;
-
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
-
-  margin: 18px auto 0;
-
-  padding: 8px 13px;
-
-  color: var(--waiting);
-
-  background: var(--waiting-bg);
-
-  border-radius: 999px;
-
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-
-  flex-shrink: 0;
-
-  background: currentColor;
-
-  border-radius: 50%;
-}
-
-
-/* =========================================================
-   WAITING MESSAGE
-   ========================================================= */
-
-.waiting-message {
-  margin-top: 12px;
-
-  color: var(--text-muted);
-
-  font-size: 12px;
-  line-height: 18px;
-}
-
-
-/* =========================================================
    MOBILE
    ========================================================= */
 
@@ -763,26 +542,6 @@ textarea {
   .submit-button {
     min-height: 50px;
   }
-
-  .token-result {
-    padding-top: 24px;
-  }
-
-  .token-result h2 {
-    font-size: 19px;
-    line-height: 27px;
-  }
-
-  .token-box {
-    margin-top: 20px;
-
-    padding: 18px;
-  }
-
-  .token-number {
-    font-size: 40px;
-    line-height: 48px;
-  }
 }
 
 
@@ -803,11 +562,6 @@ textarea {
   .form-header h1 {
     font-size: 22px;
     line-height: 29px;
-  }
-
-  .token-number {
-    font-size: 36px;
-    line-height: 46px;
   }
 }
 
