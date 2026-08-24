@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Patient Registration | Clinic Automation</title>
 
-  <!-- Google Font - Inter -->
+  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS Files -->
+  <!-- CSS Files (Clinical Precision) -->
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/components.css" />
@@ -27,6 +27,7 @@
         </div>
 
         <form id="registrationForm" novalidate>
+          
           <!-- Patient Name -->
           <div class="form-group" id="nameGroup">
             <label for="name">Patient Name</label>
@@ -64,24 +65,30 @@
               id="mobile" 
               name="mobile"
               placeholder="10-digit mobile number" 
-              pattern="[0-9]{10}"
               maxlength="10"
               required 
             />
             <div class="error-message">Enter a valid 10-digit mobile number</div>
           </div>
 
-          <!-- Disease / Reason -->
+          <!-- Reason for Visit (Pre-defined options) -->
           <div class="form-group" id="reasonGroup">
-            <label for="reason">Disease / Reason for Visit</label>
-            <textarea 
-              id="reason" 
-              name="reason"
-              placeholder="Briefly describe the reason for visit" 
-              rows="3"
-              required
-            ></textarea>
-            <div class="error-message">Please mention the reason for visit</div>
+            <label for="reason">Reason for Visit</label>
+            <select id="reason" name="reason" required>
+              <option value="" disabled selected>Select reason</option>
+              <option value="Fever">Fever</option>
+              <option value="Cough & Cold">Cough & Cold</option>
+              <option value="Headache">Headache</option>
+              <option value="Body Pain">Body Pain</option>
+              <option value="Stomach Pain">Stomach Pain</option>
+              <option value="Skin Problem">Skin Problem</option>
+              <option value="Blood Pressure Check">Blood Pressure Check</option>
+              <option value="Diabetes Check">Diabetes Check</option>
+              <option value="Injury / Wound">Injury / Wound</option>
+              <option value="Follow-up Visit">Follow-up Visit</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="error-message">Please select a reason</div>
           </div>
 
           <!-- Submit Button -->
