@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -10,7 +12,6 @@
 
   <title>Patient Registration | Clinic</title>
 
-  <!-- Inter Font -->
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -27,20 +28,34 @@
     rel="stylesheet"
   >
 
-  <!-- Main CSS -->
   <link
     rel="stylesheet"
     href="css/style.css"
   >
+
 </head>
+
 
 <body>
 
+
+  <!-- =====================================================
+       PATIENT PAGE
+       ===================================================== -->
+
   <main class="patient-page">
+
+
+    <!-- ===================================================
+         REGISTRATION CARD
+         =================================================== -->
 
     <div class="registration-card">
 
-      <!-- Clinic Header -->
+
+      <!-- =================================================
+           CLINIC HEADER
+           ================================================= -->
 
       <div class="clinic-header">
 
@@ -49,14 +64,23 @@
         </div>
 
         <div>
-          <h2>Clinic Automation</h2>
-          <p>Patient Registration</p>
+
+          <h2>
+            Clinic Automation
+          </h2>
+
+          <p>
+            Patient Registration
+          </p>
+
         </div>
 
       </div>
 
 
-      <!-- Form Header -->
+      <!-- =================================================
+           FORM HEADER
+           ================================================= -->
 
       <div class="form-header">
 
@@ -75,14 +99,19 @@
       </div>
 
 
-      <!-- Registration Form -->
+      <!-- =================================================
+           REGISTRATION FORM
+           ================================================= -->
 
       <form
         id="registrationForm"
         novalidate
       >
 
-        <!-- Patient Name -->
+
+        <!-- ===============================================
+             PATIENT NAME
+             =============================================== -->
 
         <div class="form-group">
 
@@ -109,7 +138,9 @@
         </div>
 
 
-        <!-- Age -->
+        <!-- ===============================================
+             AGE
+             =============================================== -->
 
         <div class="form-group">
 
@@ -137,7 +168,9 @@
         </div>
 
 
-        <!-- Mobile Number -->
+        <!-- ===============================================
+             MOBILE NUMBER
+             =============================================== -->
 
         <div class="form-group">
 
@@ -166,7 +199,9 @@
         </div>
 
 
-        <!-- Reason for Visit -->
+        <!-- ===============================================
+             REASON FOR VISIT
+             =============================================== -->
 
         <div class="form-group">
 
@@ -244,15 +279,20 @@
         </div>
 
 
-        <!-- Additional Information -->
+        <!-- ===============================================
+             ADDITIONAL INFORMATION
+             =============================================== -->
 
         <div class="form-group">
 
           <label for="issue">
+
             Additional Information
+
             <span class="optional-label">
               Optional
             </span>
+
           </label>
 
           <textarea
@@ -266,118 +306,156 @@
         </div>
 
 
-        <!-- Submit Button -->
+        <!-- ===============================================
+             SUBMIT BUTTON
+             =============================================== -->
 
         <button
           type="submit"
           class="submit-button"
           id="submitButton"
         >
-          <span>Get Token</span>
-          <span>→</span>
+
+          <span>
+            Get Token
+          </span>
+
+          <span>
+            →
+          </span>
+
         </button>
+
 
       </form>
 
 
-      <!-- Privacy Note -->
+      <!-- =================================================
+           PRIVACY NOTE
+           ================================================= -->
 
       <p class="privacy-note">
+
         Your details are used only for today's clinic visit.
+
       </p>
 
 
-      <!-- =======================================================
-     TOKEN RESULT
-     ======================================================= -->
+      <!-- =================================================
+           TOKEN RESULT
+           Hidden until registration is successful
+           ================================================= -->
 
-<div
-  class="token-result"
-  id="tokenResult"
->
-
-  <!-- Success -->
-
-  <div class="success-icon">
-    ✓
-  </div>
-
-  <p class="success-label">
-    REGISTRATION COMPLETE
-  </p>
+      <div
+        class="token-result"
+        id="tokenResult"
+      >
 
 
-  <!-- Main Message -->
+        <!-- ===============================================
+             SUCCESS ICON
+             =============================================== -->
 
-  <h2>
-    You're in the queue
-  </h2>
-
-  <p class="token-description">
-    Your registration has been successfully completed.
-  </p>
+        <div class="success-icon">
+          ✓
+        </div>
 
 
-  <!-- Token -->
+        <!-- ===============================================
+             SUCCESS LABEL
+             =============================================== -->
 
-  <div class="token-box">
+        <p class="success-label">
+          REGISTRATION COMPLETE
+        </p>
 
-    <span class="token-label">
-      YOUR TOKEN
-    </span>
 
-    <div
-      class="token-number"
-      id="tokenNumber"
-    >
-      A-024
+        <!-- ===============================================
+             QUEUE MESSAGE
+             =============================================== -->
+
+        <h2>
+          You're in the queue
+        </h2>
+
+        <p class="token-description">
+          Your registration has been successfully completed.
+        </p>
+
+
+        <!-- ===============================================
+             TOKEN
+             =============================================== -->
+
+        <div class="token-box">
+
+          <span class="token-label">
+            YOUR TOKEN
+          </span>
+
+          <div
+            class="token-number"
+            id="tokenNumber"
+          >
+            A-024
+          </div>
+
+        </div>
+
+
+        <!-- ===============================================
+             PATIENT INFORMATION
+             =============================================== -->
+
+        <div class="patient-info">
+
+          <span class="info-label">
+            PATIENT
+          </span>
+
+          <p id="patientDisplay">
+            Patient Name
+          </p>
+
+        </div>
+
+
+        <!-- ===============================================
+             QUEUE STATUS
+             =============================================== -->
+
+        <div class="waiting-status">
+
+          <span class="status-dot"></span>
+
+          <span>
+            Waiting for your turn
+          </span>
+
+        </div>
+
+
+        <!-- ===============================================
+             WAITING MESSAGE
+             =============================================== -->
+
+        <p class="waiting-message">
+          Please wait until your token is called.
+        </p>
+
+
+      </div>
+
+
     </div>
 
-  </div>
-
-
-  <!-- Patient -->
-
-  <div class="patient-info">
-
-    <span class="info-label">
-      PATIENT
-    </span>
-
-    <p id="patientDisplay">
-      Patient Name
-    </p>
-
-  </div>
-
-
-  <!-- Queue Status -->
-
-  <div class="waiting-status">
-
-    <span class="status-dot"></span>
-
-    <span>
-      Waiting for your turn
-    </span>
-
-  </div>
-
-
-  <!-- Message -->
-
-  <p class="waiting-message">
-    Please wait until your token is called.
-  </p>
-
-</div>
 
   </main>
 
 
-  <!-- JavaScript -->
-
   <script src="register.js"></script>
 
+
 </body>
+
 </html>
