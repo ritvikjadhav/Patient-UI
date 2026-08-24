@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -10,8 +9,9 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Patient Registration | Clinic</title>
+  <title>Your Token | Clinic Automation</title>
 
+  <!-- Inter Font -->
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -28,433 +28,218 @@
     rel="stylesheet"
   >
 
+  <!-- Token CSS -->
   <link
     rel="stylesheet"
-    href="css/style.css"
+    href="css/token.css"
   >
-
 </head>
-
 
 <body>
 
+  <main class="token-page">
 
-  <!-- =====================================================
-       PATIENT PAGE
-       ===================================================== -->
+    <section class="token-card">
 
-  <main class="patient-page">
-
-
-    <!-- ===================================================
-         REGISTRATION CARD
-         =================================================== -->
-
-    <div class="registration-card">
-
-
-      <!-- =================================================
+      <!-- =====================================================
            CLINIC HEADER
-           ================================================= -->
+           ===================================================== -->
 
-      <div class="clinic-header">
+      <header class="clinic-header">
 
         <div class="clinic-logo">
           +
         </div>
 
-        <div>
-
-          <h2>
-            Clinic Automation
-          </h2>
-
-          <p>
-            Patient Registration
-          </p>
-
+        <div class="clinic-details">
+          <h1>Clinic Automation</h1>
+          <p>Patient Queue</p>
         </div>
 
-      </div>
+      </header>
 
 
-      <!-- =================================================
-           FORM HEADER
-           ================================================= -->
+      <!-- =====================================================
+           SUCCESS
+           ===================================================== -->
 
-      <div class="form-header">
-
-        <span class="eyebrow">
-          TODAY'S VISIT
-        </span>
-
-        <h1>
-          Get your consultation token
-        </h1>
-
-        <p>
-          Enter your details below to join the queue.
-        </p>
-
-      </div>
-
-
-      <!-- =================================================
-           REGISTRATION FORM
-           ================================================= -->
-
-      <form
-        id="registrationForm"
-        novalidate
-      >
-
-
-        <!-- ===============================================
-             PATIENT NAME
-             =============================================== -->
-
-        <div class="form-group">
-
-          <label for="name">
-            Patient Name
-          </label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your full name"
-            autocomplete="name"
-            required
-          >
-
-          <small
-            class="error-message"
-            id="nameError"
-          >
-            Please enter your name.
-          </small>
-
-        </div>
-
-
-        <!-- ===============================================
-             AGE
-             =============================================== -->
-
-        <div class="form-group">
-
-          <label for="age">
-            Age
-          </label>
-
-          <input
-            type="number"
-            id="age"
-            name="age"
-            placeholder="Enter your age"
-            min="1"
-            max="120"
-            required
-          >
-
-          <small
-            class="error-message"
-            id="ageError"
-          >
-            Please enter a valid age.
-          </small>
-
-        </div>
-
-
-        <!-- ===============================================
-             MOBILE NUMBER
-             =============================================== -->
-
-        <div class="form-group">
-
-          <label for="mobile">
-            Mobile Number
-          </label>
-
-          <input
-            type="tel"
-            id="mobile"
-            name="mobile"
-            placeholder="10-digit mobile number"
-            maxlength="10"
-            inputmode="numeric"
-            autocomplete="tel"
-            required
-          >
-
-          <small
-            class="error-message"
-            id="mobileError"
-          >
-            Enter a valid 10-digit mobile number.
-          </small>
-
-        </div>
-
-
-        <!-- ===============================================
-             REASON FOR VISIT
-             =============================================== -->
-
-        <div class="form-group">
-
-          <label for="reason">
-            Reason for Visit
-          </label>
-
-          <select
-            id="reason"
-            name="reason"
-            required
-          >
-
-            <option
-              value=""
-              disabled
-              selected
-            >
-              Select reason
-            </option>
-
-            <option value="Fever">
-              Fever
-            </option>
-
-            <option value="Cold / Cough">
-              Cold / Cough
-            </option>
-
-            <option value="Headache">
-              Headache
-            </option>
-
-            <option value="Body Pain">
-              Body Pain
-            </option>
-
-            <option value="Stomach Pain">
-              Stomach Pain
-            </option>
-
-            <option value="Skin Problem">
-              Skin Problem
-            </option>
-
-            <option value="Blood Pressure Check">
-              Blood Pressure Check
-            </option>
-
-            <option value="Diabetes Check">
-              Diabetes Check
-            </option>
-
-            <option value="Injury / Wound">
-              Injury / Wound
-            </option>
-
-            <option value="Follow-up">
-              Follow-up
-            </option>
-
-            <option value="Other">
-              Other
-            </option>
-
-          </select>
-
-          <small
-            class="error-message"
-            id="reasonError"
-          >
-            Please select a reason.
-          </small>
-
-        </div>
-
-
-        <!-- ===============================================
-             ADDITIONAL INFORMATION
-             =============================================== -->
-
-        <div class="form-group">
-
-          <label for="issue">
-
-            Additional Information
-
-            <span class="optional-label">
-              Optional
-            </span>
-
-          </label>
-
-          <textarea
-            id="issue"
-            name="issue"
-            rows="4"
-            maxlength="300"
-            placeholder="Any symptoms or details you'd like the doctor to know..."
-          ></textarea>
-
-        </div>
-
-
-        <!-- ===============================================
-             SUBMIT BUTTON
-             =============================================== -->
-
-        <button
-          type="submit"
-          class="submit-button"
-          id="submitButton"
-        >
-
-          <span>
-            Get Token
-          </span>
-
-          <span>
-            →
-          </span>
-
-        </button>
-
-
-      </form>
-
-
-      <!-- =================================================
-           PRIVACY NOTE
-           ================================================= -->
-
-      <p class="privacy-note">
-
-        Your details are used only for today's clinic visit.
-
-      </p>
-
-
-      <!-- =================================================
-           TOKEN RESULT
-           Hidden until registration is successful
-           ================================================= -->
-
-      <div
-        class="token-result"
-        id="tokenResult"
-      >
-
-
-        <!-- ===============================================
-             SUCCESS ICON
-             =============================================== -->
+      <section class="success-section">
 
         <div class="success-icon">
           ✓
         </div>
 
-
-        <!-- ===============================================
-             SUCCESS LABEL
-             =============================================== -->
-
-        <p class="success-label">
+        <span class="success-label">
           REGISTRATION COMPLETE
-        </p>
-
-
-        <!-- ===============================================
-             QUEUE MESSAGE
-             =============================================== -->
+        </span>
 
         <h2>
           You're in the queue
         </h2>
 
-        <p class="token-description">
-          Your registration has been successfully completed.
+        <p class="success-description">
+          Your registration was successful.
         </p>
 
-
-        <!-- ===============================================
-             TOKEN
-             =============================================== -->
-
-        <div class="token-box">
-
-          <span class="token-label">
-            YOUR TOKEN
-          </span>
-
-          <div
-            class="token-number"
-            id="tokenNumber"
-          >
-            A-024
-          </div>
-
-        </div>
+      </section>
 
 
-        <!-- ===============================================
-             PATIENT INFORMATION
-             =============================================== -->
+      <!-- =====================================================
+           PATIENT
+           ===================================================== -->
 
-        <div class="patient-info">
+      <div class="patient-card">
 
-          <span class="info-label">
-            PATIENT
-          </span>
+        <span class="info-label">
+          PATIENT
+        </span>
 
-          <p id="patientDisplay">
-            Patient Name
-          </p>
-
-        </div>
-
-
-        <!-- ===============================================
-             QUEUE STATUS
-             =============================================== -->
-
-        <div class="waiting-status">
-
-          <span class="status-dot"></span>
-
-          <span>
-            Waiting for your turn
-          </span>
-
-        </div>
-
-
-        <!-- ===============================================
-             WAITING MESSAGE
-             =============================================== -->
-
-        <p class="waiting-message">
-          Please wait until your token is called.
+        <p id="patientName">
+          Patient Name
         </p>
-
 
       </div>
 
 
-    </div>
+      <!-- =====================================================
+           TOKEN
+           ===================================================== -->
 
+      <section class="token-box">
+
+        <span class="token-label">
+          YOUR TOKEN
+        </span>
+
+        <strong
+          class="token-number"
+          id="tokenNumber"
+        >
+          A-024
+        </strong>
+
+        <div class="token-status">
+
+          <span class="status-dot"></span>
+
+          <span id="tokenStatus">
+            Waiting
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           QUEUE INFORMATION
+           ===================================================== -->
+
+      <section class="queue-grid">
+
+        <div class="queue-card">
+
+          <div class="queue-icon">
+            ≡
+          </div>
+
+          <span class="queue-label">
+            QUEUE POSITION
+          </span>
+
+          <strong id="queuePosition">
+            5th
+          </strong>
+
+          <span class="queue-subtext">
+            in line
+          </span>
+
+        </div>
+
+
+        <div class="queue-card">
+
+          <div class="queue-icon">
+            ◷
+          </div>
+
+          <span class="queue-label">
+            ESTIMATED WAIT
+          </span>
+
+          <strong id="estimatedWait">
+            ~15
+          </strong>
+
+          <span class="queue-subtext">
+            mins
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           LIVE STATUS
+           ===================================================== -->
+
+      <section class="live-status">
+
+        <div class="live-indicator">
+          <span></span>
+          Live queue
+        </div>
+
+        <p id="statusMessage">
+          Please wait until your token is called.
+        </p>
+
+      </section>
+
+
+      <!-- =====================================================
+           ACTIONS
+           ===================================================== -->
+
+      <div class="token-actions">
+
+        <button
+          type="button"
+          class="primary-action"
+          id="refreshQueue"
+        >
+          <span>↻</span>
+          Check Queue Status
+        </button>
+
+        <button
+          type="button"
+          class="secondary-action"
+          id="newRegistration"
+        >
+          New Registration
+        </button>
+
+      </div>
+
+
+      <!-- =====================================================
+           FOOTER
+           ===================================================== -->
+
+      <p class="footer-note">
+        Please keep this page open to check your queue status.
+      </p>
+
+    </section>
 
   </main>
 
 
-  <script src="js/register.js"></script>
-
+  <!-- Token JavaScript -->
+  <script src="js/token.js"></script>
 
 </body>
 
