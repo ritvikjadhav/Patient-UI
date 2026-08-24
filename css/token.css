@@ -1,0 +1,598 @@
+/* =========================================================
+   CLINIC AUTOMATION — PATIENT TOKEN PAGE
+   File: css/token.css
+   ========================================================= */
+
+:root {
+  --primary: #003c90;
+  --primary-dark: #003275;
+
+  --text: #111c2d;
+  --text-muted: #5b6270;
+  --text-light: #7a8290;
+
+  --background: #f4f7ff;
+  --card: #ffffff;
+
+  --border: #e1e6ef;
+
+  --success: #087f5b;
+  --success-bg: #d9f7ec;
+
+  --waiting: #a15c00;
+  --waiting-bg: #fff0d5;
+
+  --radius: 10px;
+  --large-radius: 18px;
+
+  --shadow:
+    0 8px 30px rgba(17, 28, 45, 0.08);
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+
+  font-family: "Inter", sans-serif;
+
+  color: var(--text);
+
+  background:
+    linear-gradient(
+      180deg,
+      #f9faff 0%,
+      var(--background) 100%
+    );
+
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.token-page {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px 16px;
+}
+
+
+/* =========================================================
+   MAIN CARD
+   ========================================================= */
+
+.token-card {
+  width: 100%;
+  max-width: 500px;
+
+  padding: 30px;
+
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--large-radius);
+
+  box-shadow: var(--shadow);
+}
+
+
+/* =========================================================
+   CLINIC HEADER
+   ========================================================= */
+
+.clinic-header {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  margin-bottom: 28px;
+}
+
+.clinic-logo {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: #ffffff;
+
+  background: var(--primary);
+
+  border-radius: var(--radius);
+
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.clinic-details h2 {
+  color: var(--text);
+
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.clinic-details p {
+  margin-top: 2px;
+
+  color: var(--text-muted);
+
+  font-size: 12px;
+  line-height: 16px;
+}
+
+
+/* =========================================================
+   SUCCESS AREA
+   ========================================================= */
+
+.success-area {
+  text-align: center;
+}
+
+.success-icon {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 16px;
+
+  color: var(--success);
+
+  background: var(--success-bg);
+
+  border-radius: 50%;
+
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.success-label {
+  margin-bottom: 7px;
+
+  color: var(--success);
+
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.success-area h1 {
+  color: var(--text);
+
+  font-size: 25px;
+  line-height: 33px;
+  font-weight: 700;
+
+  letter-spacing: -0.015em;
+}
+
+.success-description {
+  max-width: 360px;
+
+  margin: 7px auto 0;
+
+  color: var(--text-muted);
+
+  font-size: 13px;
+  line-height: 20px;
+}
+
+
+/* =========================================================
+   TOKEN BOX
+   ========================================================= */
+
+.token-box {
+  margin-top: 25px;
+
+  padding: 23px 20px;
+
+  text-align: center;
+
+  background: #f7f9fc;
+
+  border: 1px solid var(--border);
+
+  border-radius: 14px;
+}
+
+.token-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.token-number {
+  color: var(--primary);
+
+  font-size: 46px;
+  line-height: 55px;
+  font-weight: 700;
+
+  letter-spacing: 0.02em;
+
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   PATIENT
+   ========================================================= */
+
+.patient-info {
+  margin-top: 20px;
+
+  padding: 15px;
+
+  text-align: left;
+
+  background: #ffffff;
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius);
+}
+
+.info-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--text-light);
+
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.patient-name {
+  color: var(--text);
+
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   QUEUE INFORMATION
+   ========================================================= */
+
+.queue-info {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+
+  margin-top: 12px;
+}
+
+.queue-item {
+  padding: 15px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius);
+
+  text-align: left;
+}
+
+.queue-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-light);
+
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+}
+
+.queue-value {
+  color: var(--text);
+
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   WAITING STATUS
+   ========================================================= */
+
+.status-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  width: fit-content;
+
+  margin: 18px auto 0;
+
+  padding: 9px 14px;
+
+  color: var(--waiting);
+
+  background: var(--waiting-bg);
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  background: currentColor;
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   WAITING MESSAGE
+   ========================================================= */
+
+.waiting-message {
+  margin-top: 13px;
+
+  color: var(--text-muted);
+
+  text-align: center;
+
+  font-size: 12px;
+  line-height: 18px;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.token-actions {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.action-button {
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 11px 14px;
+
+  border-radius: var(--radius);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.action-button:active {
+  transform: translateY(1px);
+}
+
+
+/* Primary */
+
+.action-button.primary {
+  color: #ffffff;
+
+  background: var(--primary);
+
+  border: 1px solid var(--primary);
+}
+
+.action-button.primary:hover {
+  background: var(--primary-dark);
+
+  border-color: var(--primary-dark);
+}
+
+
+/* Secondary */
+
+.action-button.secondary {
+  color: var(--primary);
+
+  background: #ffffff;
+
+  border: 1px solid #bfc8d8;
+}
+
+.action-button.secondary:hover {
+  background: #f5f7fb;
+
+  border-color: var(--primary);
+}
+
+
+/* =========================================================
+   FOOTER NOTE
+   ========================================================= */
+
+.token-footer {
+  margin-top: 20px;
+
+  padding-top: 17px;
+
+  border-top: 1px solid var(--border);
+
+  color: var(--text-light);
+
+  text-align: center;
+
+  font-size: 11px;
+  line-height: 17px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .token-page {
+    align-items: flex-start;
+
+    padding: 16px;
+  }
+
+  .token-card {
+    margin-top: 8px;
+
+    padding: 23px 18px;
+
+    border-radius: 15px;
+  }
+
+  .clinic-header {
+    margin-bottom: 25px;
+  }
+
+  .success-area h1 {
+    font-size: 23px;
+    line-height: 31px;
+  }
+
+  .token-box {
+    margin-top: 21px;
+
+    padding: 20px 16px;
+  }
+
+  .token-number {
+    font-size: 42px;
+    line-height: 50px;
+  }
+
+  .queue-info {
+    gap: 9px;
+  }
+
+  .queue-item {
+    padding: 13px;
+  }
+
+  .token-actions {
+    gap: 9px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .token-page {
+    padding: 12px;
+  }
+
+  .token-card {
+    padding: 20px 15px;
+  }
+
+  .token-number {
+    font-size: 38px;
+    line-height: 46px;
+  }
+
+  .queue-value {
+    font-size: 16px;
+  }
+
+  .action-button {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+
+}
