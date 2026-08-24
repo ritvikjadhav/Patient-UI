@@ -297,7 +297,7 @@ function PatientRegistration() {
                   }
                   onChange={(event) => {
                     setSelectedReason("");
-                no    handleChange(event);
+                   handleChange(event);
                   }}
                   placeholder="Tell us briefly what brings you today..."
                   rows="3"
