@@ -27,7 +27,11 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Main CSS -->
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
 </head>
 
 <body>
@@ -40,7 +44,9 @@
 
       <div class="clinic-header">
 
-        <div class="clinic-logo">+</div>
+        <div class="clinic-logo">
+          +
+        </div>
 
         <div>
           <h2>Clinic Automation</h2>
@@ -50,7 +56,7 @@
       </div>
 
 
-      <!-- Heading -->
+      <!-- Form Header -->
 
       <div class="form-header">
 
@@ -58,7 +64,9 @@
           TODAY'S VISIT
         </span>
 
-        <h1>Get your consultation token</h1>
+        <h1>
+          Get your consultation token
+        </h1>
 
         <p>
           Enter your details below to join the queue.
@@ -69,9 +77,12 @@
 
       <!-- Registration Form -->
 
-      <form id="registrationForm">
+      <form
+        id="registrationForm"
+        novalidate
+      >
 
-        <!-- Name -->
+        <!-- Patient Name -->
 
         <div class="form-group">
 
@@ -88,7 +99,10 @@
             required
           >
 
-          <small class="error-message" id="nameError">
+          <small
+            class="error-message"
+            id="nameError"
+          >
             Please enter your name.
           </small>
 
@@ -113,14 +127,17 @@
             required
           >
 
-          <small class="error-message" id="ageError">
+          <small
+            class="error-message"
+            id="ageError"
+          >
             Please enter a valid age.
           </small>
 
         </div>
 
 
-        <!-- Mobile -->
+        <!-- Mobile Number -->
 
         <div class="form-group">
 
@@ -139,14 +156,17 @@
             required
           >
 
-          <small class="error-message" id="mobileError">
+          <small
+            class="error-message"
+            id="mobileError"
+          >
             Enter a valid 10-digit mobile number.
           </small>
 
         </div>
 
 
-        <!-- Reason -->
+        <!-- Reason for Visit -->
 
         <div class="form-group">
 
@@ -160,7 +180,11 @@
             required
           >
 
-            <option value="" disabled selected>
+            <option
+              value=""
+              disabled
+              selected
+            >
               Select reason
             </option>
 
@@ -210,46 +234,53 @@
 
           </select>
 
-          <small class="error-message" id="reasonError">
+          <small
+            class="error-message"
+            id="reasonError"
+          >
             Please select a reason.
           </small>
 
         </div>
 
-<!-- Additional Information -->
 
-<<div class="form-group">
+        <!-- Additional Information -->
 
-  <label for="issue">
-    Additional Information
-    <span class="optional-label">Optional</span>
-  </label>
+        <div class="form-group">
 
-  <textarea
-    id="issue"
-    name="issue"
-    rows="4"
-    maxlength="300"
-    placeholder="Any symptoms or details you'd like the doctor to know..."
-  </textarea>
+          <label for="issue">
+            Additional Information
+            <span class="optional-label">
+              Optional
+            </span>
+          </label>
 
-</div>
+          <textarea
+            id="issue"
+            name="issue"
+            rows="4"
+            maxlength="300"
+            placeholder="Any symptoms or details you'd like the doctor to know..."
+          ></textarea>
 
-        <!-- Submit -->
+        </div>
+
+
+        <!-- Submit Button -->
 
         <button
           type="submit"
           class="submit-button"
           id="submitButton"
         >
-          Get Token
+          <span>Get Token</span>
           <span>→</span>
         </button>
 
       </form>
 
 
-      <!-- Privacy -->
+      <!-- Privacy Note -->
 
       <p class="privacy-note">
         Your details are used only for today's clinic visit.
@@ -271,7 +302,9 @@
           REGISTRATION COMPLETE
         </p>
 
-        <h2>Your Token Number</h2>
+        <h2>
+          Your Token Number
+        </h2>
 
         <div
           class="token-number"
@@ -292,6 +325,8 @@
 
   </main>
 
+
+  <!-- JavaScript -->
 
   <script src="register.js"></script>
 
