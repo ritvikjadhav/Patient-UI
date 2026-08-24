@@ -16,30 +16,41 @@
 label {
   display: block;
   font-size: 13px;
-  font-weight: var(--weight-semibold);
+  font-weight: 600;
   color: var(--on-surface);
   margin-bottom: 8px;
   letter-spacing: 0.01em;
 }
 
-/* ---------- Inputs & Textarea ---------- */
+/* ---------- Inputs, Textarea & Select ---------- */
 input[type="text"],
 input[type="number"],
 input[type="tel"],
 input[type="email"],
-textarea {
+textarea,
+select {
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 14px;
   font-family: var(--font-family);
   font-size: 16px;
-  font-weight: var(--weight-regular);
+  font-weight: 400;
   color: var(--on-surface);
   background-color: var(--surface-container-lowest);
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius);
   outline: none;
-  transition: border-color var(--transition-fast),
-              box-shadow var(--transition-fast);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none; /* Removes default browser arrow on select */
+}
+
+/* Custom arrow for select */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23434653' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+  cursor: pointer;
 }
 
 input::placeholder,
@@ -48,7 +59,8 @@ textarea::placeholder {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.18);
 }
@@ -61,19 +73,21 @@ textarea {
 
 /* ---------- Error State ---------- */
 .form-group.error input,
-.form-group.error textarea {
+.form-group.error textarea,
+.form-group.error select {
   border-color: var(--error);
 }
 
 .form-group.error input:focus,
-.form-group.error textarea:focus {
+.form-group.error textarea:focus,
+.form-group.error select:focus {
   box-shadow: 0 0 0 3px rgba(186, 26, 26, 0.15);
 }
 
 .error-message {
   display: none;
   font-size: 12px;
-  font-weight: var(--weight-medium);
+  font-weight: 500;
   color: var(--error);
   margin-top: 6px;
 }
@@ -91,13 +105,11 @@ textarea {
   padding: 14px 20px;
   font-family: var(--font-family);
   font-size: 16px;
-  font-weight: var(--weight-semibold);
+  font-weight: 600;
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color var(--transition-fast),
-              transform 0.1s ease,
-              opacity var(--transition-fast);
+  transition: background-color 0.2s ease, transform 0.1s ease;
   gap: 8px;
 }
 
@@ -119,17 +131,6 @@ textarea {
   background-color: #94a3b8;
   cursor: not-allowed;
   transform: none;
-}
-
-/* Secondary Button (for future use) */
-.btn-secondary {
-  background-color: transparent;
-  color: var(--primary);
-  border: 1.5px solid var(--primary);
-}
-
-.btn-secondary:hover {
-  background-color: var(--surface-container-low);
 }
 
 /* ---------- Loading Spinner ---------- */
@@ -157,33 +158,33 @@ textarea {
   }
 }
 
-/* ---------- Status Badges (for future pages) ---------- */
+/* ---------- Status Badges (for future use) ---------- */
 .badge {
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
   font-size: 12px;
-  font-weight: var(--weight-semibold);
-  border-radius: var(--radius-full);
+  font-weight: 600;
+  border-radius: 9999px;
   line-height: 1.4;
 }
 
 .badge-waiting {
-  background-color: var(--status-waiting-bg);
-  color: var(--status-waiting);
+  background-color: #fef3c7;
+  color: #b45309;
 }
 
 .badge-in-progress {
-  background-color: var(--status-in-progress-bg);
-  color: var(--status-in-progress);
+  background-color: #dbeafe;
+  color: #1d59c1;
 }
 
 .badge-completed {
-  background-color: var(--status-completed-bg);
-  color: var(--status-completed);
+  background-color: #d1fae5;
+  color: #047857;
 }
 
 .badge-cancelled {
-  background-color: var(--status-cancelled-bg);
-  color: var(--status-cancelled);
-}
+  background-color: #fee2e2;
+  color: #b91c1c;
+   }
