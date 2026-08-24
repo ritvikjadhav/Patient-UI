@@ -1,0 +1,189 @@
+/* =========================================
+   Clinical Precision - Components
+   File: css/components.css
+   ========================================= */
+
+/* ---------- Form Group ---------- */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 8px;
+}
+
+/* ---------- Labels ---------- */
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+  color: var(--on-surface);
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Inputs & Textarea ---------- */
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: var(--weight-regular);
+  color: var(--on-surface);
+  background-color: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.18);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.5;
+}
+
+/* ---------- Error State ---------- */
+.form-group.error input,
+.form-group.error textarea {
+  border-color: var(--error);
+}
+
+.form-group.error input:focus,
+.form-group.error textarea:focus {
+  box-shadow: 0 0 0 3px rgba(186, 26, 26, 0.15);
+}
+
+.error-message {
+  display: none;
+  font-size: 12px;
+  font-weight: var(--weight-medium);
+  color: var(--error);
+  margin-top: 6px;
+}
+
+.form-group.error .error-message {
+  display: block;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 20px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: var(--weight-semibold);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              transform 0.1s ease,
+              opacity var(--transition-fast);
+  gap: 8px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-container);
+}
+
+.btn-primary:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary Button (for future use) */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--surface-container-low);
+}
+
+/* ---------- Loading Spinner ---------- */
+.spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+.btn.loading .btn-text {
+  display: none;
+}
+
+.btn.loading .spinner {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Status Badges (for future pages) ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-full);
+  line-height: 1.4;
+}
+
+.badge-waiting {
+  background-color: var(--status-waiting-bg);
+  color: var(--status-waiting);
+}
+
+.badge-in-progress {
+  background-color: var(--status-in-progress-bg);
+  color: var(--status-in-progress);
+}
+
+.badge-completed {
+  background-color: var(--status-completed-bg);
+  color: var(--status-completed);
+}
+
+.badge-cancelled {
+  background-color: var(--status-cancelled-bg);
+  color: var(--status-cancelled);
+}
