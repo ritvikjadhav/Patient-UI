@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,12 +12,14 @@
 
   <meta
     name="description"
-    content="View your clinic consultation token and queue status"
+    content="View your clinic consultation token and live queue status"
   >
 
   <title>Your Token | Clinic Automation</title>
 
+
   <!-- Inter Font -->
+
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -24,7 +27,7 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.gstatic.com"
+    href="https://fonts.googleapis.com"
     crossorigin
   >
 
@@ -33,12 +36,16 @@
     rel="stylesheet"
   >
 
-  <!-- Main Stylesheet -->
+
+  <!-- Token Page Stylesheet -->
+
   <link
     rel="stylesheet"
     href="css/token.css"
   >
+
 </head>
+
 
 <body>
 
@@ -46,9 +53,12 @@
 
     <section class="token-card">
 
-      <!-- Clinic Identity -->
 
-      <header class="token-header">
+      <!-- =================================================
+           CLINIC HEADER
+           ================================================= -->
+
+      <header class="clinic-header">
 
         <div
           class="clinic-logo"
@@ -72,9 +82,11 @@
       </header>
 
 
-      <!-- Success -->
+      <!-- =================================================
+           SUCCESS HEADER
+           ================================================= -->
 
-      <section class="success-section">
+      <section class="success-header">
 
         <div
           class="success-icon"
@@ -83,9 +95,9 @@
           ✓
         </div>
 
-        <span class="success-label">
+        <p class="success-label">
           REGISTRATION SUCCESSFUL
-        </span>
+        </p>
 
         <h1>
           You're in the queue
@@ -98,172 +110,174 @@
       </section>
 
 
-      <!-- Patient Information -->
+      <!-- =================================================
+           TOKEN SECTION
+           ================================================= -->
 
-      <div class="patient-card">
-
-        <span class="info-label">
-          PATIENT
-        </span>
-
-        <strong id="patientName">
-          Patient Name
-        </strong>
-
-      </div>
+      <section class="token-section">
 
 
-      <!-- Token -->
+        <!-- Patient -->
 
-      <section class="token-box">
+        <div class="patient-info">
 
-        <span class="token-label">
-          YOUR TOKEN NUMBER
-        </span>
-
-        <strong
-          class="token-number"
-          id="tokenNumber"
-        >
-          A-024
-        </strong>
-
-        <div class="token-status">
-
-          <span
-            class="status-dot"
-            aria-hidden="true"
-          ></span>
-
-          <span id="tokenStatus">
-            Waiting
+          <span class="info-label">
+            PATIENT
           </span>
 
-        </div>
-
-      </section>
-
-
-      <!-- Queue Information -->
-
-      <section
-        class="queue-grid"
-        aria-label="Queue information"
-      >
-
-        <!-- Queue Position -->
-
-        <div class="queue-card">
-
-          <span
-            class="queue-icon"
-            aria-hidden="true"
-          >
-            ☷
-          </span>
-
-          <span class="queue-label">
-            QUEUE POSITION
-          </span>
-
-          <strong id="queuePosition">
-            5th
-          </strong>
-
-          <small>
-            in line
-          </small>
-
-        </div>
-
-
-        <!-- Estimated Wait -->
-
-        <div class="queue-card">
-
-          <span
-            class="queue-icon"
-            aria-hidden="true"
-          >
-            ◷
-          </span>
-
-          <span class="queue-label">
-            ESTIMATED WAIT
-          </span>
-
-          <strong id="estimatedWait">
-            ~15
-          </strong>
-
-          <small>
-            minutes
-          </small>
-
-        </div>
-
-      </section>
-
-
-      <!-- Live Status -->
-
-      <section class="live-status">
-
-        <span
-          class="live-dot"
-          aria-hidden="true"
-        ></span>
-
-        <div>
-
-          <strong>
-            Queue is active
-          </strong>
-
-          <p id="statusMessage">
-            Please wait until your token is called.
+          <p id="patientName">
+            Patient Name
           </p>
 
         </div>
 
+
+        <!-- Token -->
+
+        <div class="token-box">
+
+          <span class="token-label">
+            YOUR TOKEN NUMBER
+          </span>
+
+          <strong
+            class="token-number"
+            id="tokenNumber"
+          >
+            —
+          </strong>
+
+
+          <!-- Status -->
+
+          <div class="status-badge">
+
+            <span
+              class="status-dot"
+              aria-hidden="true"
+            ></span>
+
+            <span id="statusText">
+              Waiting
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             QUEUE INFORMATION
+             ================================================= -->
+
+        <div
+          class="queue-info"
+          aria-label="Queue information"
+        >
+
+
+          <!-- Queue Position -->
+
+          <div class="queue-item">
+
+            <span class="queue-label">
+              QUEUE POSITION
+            </span>
+
+            <strong
+              class="queue-value"
+              id="queuePosition"
+            >
+              —
+            </strong>
+
+            <p class="queue-subtext">
+              in line
+            </p>
+
+          </div>
+
+
+          <!-- Estimated Wait -->
+
+          <div class="queue-item">
+
+            <span class="queue-label">
+              ESTIMATED WAIT
+            </span>
+
+            <strong
+              class="queue-value"
+              id="estimatedWait"
+            >
+              —
+            </strong>
+
+            <p class="queue-subtext">
+              minutes
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             WAITING MESSAGE
+             ================================================= -->
+
+        <div class="waiting-message">
+
+          Please wait until your token is called.
+          Your queue status will update as your turn approaches.
+
+        </div>
+
+
       </section>
 
 
-      <!-- Patient Instruction -->
-
-      <p class="patient-message">
-        Please keep this page open.
-        Your queue status can be updated when your turn approaches.
-      </p>
-
-
-      <!-- Actions -->
+      <!-- =================================================
+           ACTIONS
+           ================================================= -->
 
       <div class="token-actions">
 
+
+        <!-- Refresh -->
+
         <button
           type="button"
-          class="primary-action"
+          class="action-button primary-button"
           id="refreshButton"
         >
           Refresh Status
         </button>
 
-        <a
-          href="index.html"
-          class="secondary-action"
+
+        <!-- Back -->
+
+        <button
+          type="button"
+          class="action-button secondary-button"
+          id="backButton"
         >
           Back to Registration
-        </a>
+        </button>
 
       </div>
 
 
-      <!-- Privacy -->
+      <!-- =================================================
+           FOOTER
+           ================================================= -->
 
-      <p class="privacy-note">
+      <p class="token-footer">
+
         Your information is used only for today's clinic visit.
+
       </p>
+
 
     </section>
 
