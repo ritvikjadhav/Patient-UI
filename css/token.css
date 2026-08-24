@@ -1,0 +1,166 @@
+/* =========================================
+   Clinical Precision - Design Tokens
+   File: css/tokens.css
+   ========================================= */
+
+:root {
+  /* ======================
+     COLORS - Surface
+     ====================== */
+  --surface: #f9f9ff;
+  --surface-dim: #cfdaf2;
+  --surface-bright: #f9f9ff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f0f3ff;
+  --surface-container: #e7eeff;
+  --surface-container-high: #dee8ff;
+  --surface-container-highest: #d8e3fb;
+
+  --on-surface: #111c2d;
+  --on-surface-variant: #434653;
+  --inverse-surface: #263143;
+  --inverse-on-surface: #ecf1ff;
+
+  /* ======================
+     COLORS - Outline
+     ====================== */
+  --outline: #737784;
+  --outline-variant: #c3c6d5;
+
+  /* ======================
+     COLORS - Primary
+     ====================== */
+  --primary: #003c90;
+  --on-primary: #ffffff;
+  --primary-container: #0f52ba;
+  --on-primary-container: #bcceff;
+  --inverse-primary: #b0c6ff;
+  --surface-tint: #1d59c1;
+
+  /* ======================
+     COLORS - Secondary
+     ====================== */
+  --secondary: #505f76;
+  --on-secondary: #ffffff;
+  --secondary-container: #d0e1fb;
+  --on-secondary-container: #54647a;
+
+  /* ======================
+     COLORS - Tertiary
+     ====================== */
+  --tertiary: #3d4143;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #55585a;
+  --on-tertiary-container: #ccced0;
+
+  /* ======================
+     COLORS - Error
+     ====================== */
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  /* ======================
+     COLORS - Fixed
+     ====================== */
+  --primary-fixed: #d9e2ff;
+  --primary-fixed-dim: #b0c6ff;
+  --on-primary-fixed: #001945;
+  --on-primary-fixed-variant: #00419c;
+
+  --secondary-fixed: #d3e4fe;
+  --secondary-fixed-dim: #b7c8e1;
+  --on-secondary-fixed: #0b1c30;
+  --on-secondary-fixed-variant: #38485d;
+
+  --tertiary-fixed: #e0e3e5;
+  --tertiary-fixed-dim: #c4c7c9;
+  --on-tertiary-fixed: #191c1e;
+  --on-tertiary-fixed-variant: #444749;
+
+  /* ======================
+     COLORS - Background
+     ====================== */
+  --background: #f9f9ff;
+  --on-background: #111c2d;
+  --surface-variant: #d8e3fb;
+
+  /* ======================
+     STATUS COLORS
+     ====================== */
+  --status-waiting: #b45309;          /* Amber */
+  --status-waiting-bg: #fef3c7;
+  --status-in-progress: #1d59c1;      /* Blue */
+  --status-in-progress-bg: #dbeafe;
+  --status-completed: #047857;        /* Emerald */
+  --status-completed-bg: #d1fae5;
+  --status-cancelled: #b91c1c;        /* Red */
+  --status-cancelled-bg: #fee2e2;
+
+  /* ======================
+     TYPOGRAPHY
+     ====================== */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Font Sizes */
+  --text-headline-lg: 32px;
+  --text-headline-lg-mobile: 24px;
+  --text-headline-md: 20px;
+  --text-body-lg: 16px;
+  --text-body-md: 14px;
+  --text-label-sm: 12px;
+  --text-data: 14px;
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line Heights */
+  --leading-headline-lg: 40px;
+  --leading-headline-lg-mobile: 32px;
+  --leading-headline-md: 28px;
+  --leading-body-lg: 24px;
+  --leading-body-md: 20px;
+  --leading-label-sm: 16px;
+
+  /* ======================
+     SPACING (8px unit)
+     ====================== */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+
+  --margin-mobile: 16px;
+  --margin-desktop: 32px;
+  --container-max-width: 1440px;
+  --gutter: 24px;
+
+  /* ======================
+     BORDER RADIUS
+     ====================== */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* ======================
+     SHADOWS
+     ====================== */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* ======================
+     TRANSITIONS
+     ====================== */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  }
