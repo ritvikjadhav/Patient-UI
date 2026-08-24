@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="ClinicCare patient portal for registration, token tracking, queue status and patient support"
+  >
+
+  <title>ClinicCare | Patient Portal</title>
+
+  <!-- Inter Font -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Homepage Styles -->
+
+  <link
+    rel="stylesheet"
+    href="css/home.css"
+  >
+</head>
+
+
+<body>
+
+  <main class="portal-page">
+
+    <section class="portal-card">
+
+
+      <!-- =================================================
+           CLINIC HEADER
+           ================================================= -->
+
+      <header class="clinic-header">
+
+        <a
+          href="index.html"
+          class="clinic-brand"
+          aria-label="ClinicCare Home"
+        >
+
+          <span
+            class="clinic-logo"
+            aria-hidden="true"
+          >
+            +
+          </span>
+
+          <span class="clinic-details">
+
+            <strong>
+              ClinicCare
+            </strong>
+
+            <small>
+              Patient Portal
+            </small>
+
+          </span>
+
+        </a>
+
+      </header>
+
+
+      <!-- =================================================
+           WELCOME
+           ================================================= -->
+
+      <section class="welcome-section">
+
+        <span class="eyebrow">
+          PATIENT SERVICES
+        </span>
+
+        <h1>
+          Your visit, made simpler.
+        </h1>
+
+        <p>
+          Register for a consultation, manage your token,
+          and follow the live queue from one place.
+        </p>
+
+      </section>
+
+
+      <!-- =================================================
+           PRIMARY ACTION
+           ================================================= -->
+
+      <section class="primary-service">
+
+        <a
+          href="registration.html"
+          class="register-card"
+        >
+
+          <div class="register-icon" aria-hidden="true">
+            +
+          </div>
+
+          <div class="register-content">
+
+            <span class="service-eyebrow">
+              NEW VISIT
+            </span>
+
+            <h2>
+              Register & Get Token
+            </h2>
+
+            <p>
+              Enter your details and join today's
+              consultation queue.
+            </p>
+
+          </div>
+
+          <span
+            class="register-arrow"
+            aria-hidden="true"
+          >
+            →
+          </span>
+
+        </a>
+
+      </section>
+
+
+      <!-- =================================================
+           ACTIVE QUEUE
+           ================================================= -->
+
+      <section class="active-queue">
+
+        <div class="section-heading">
+
+          <div>
+
+            <span class="section-eyebrow">
+              AFTER REGISTRATION
+            </span>
+
+            <h2>
+              Track your visit
+            </h2>
+
+          </div>
+
+          <span
+            class="live-indicator"
+            aria-label="Live queue"
+          >
+            <span class="live-dot"></span>
+            Live
+          </span>
+
+        </div>
+
+
+        <div class="queue-actions">
+
+          <a
+            href="queue.html"
+            class="queue-action"
+          >
+
+            <span
+              class="queue-action-icon"
+              aria-hidden="true"
+            >
+              ≡
+            </span>
+
+            <span class="queue-action-content">
+
+              <strong>
+                My Live Queue
+              </strong>
+
+              <small>
+                Token, position & waiting time
+              </small>
+
+            </span>
+
+            <span
+              class="queue-action-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </a>
+
+
+          <a
+            href="token.html"
+            class="queue-action"
+          >
+
+            <span
+              class="queue-action-icon"
+              aria-hidden="true"
+            >
+              #
+            </span>
+
+            <span class="queue-action-content">
+
+              <strong>
+                My Token
+              </strong>
+
+              <small>
+                View your current consultation token
+              </small>
+
+            </span>
+
+            <span
+              class="queue-action-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           OTHER SERVICES
+           ================================================= -->
+
+      <section class="services-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <span class="section-eyebrow">
+              HELP & INFORMATION
+            </span>
+
+            <h2>
+              Patient services
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="service-grid">
+
+
+          <!-- Returning Patient -->
+
+          <a
+            href="registration.html?returning=true"
+            class="service-tile"
+          >
+
+            <span
+              class="tile-icon"
+              aria-hidden="true"
+            >
+              ↻
+            </span>
+
+            <span class="tile-content">
+
+              <strong>
+                Returning Patient
+              </strong>
+
+              <small>
+                Continue with your saved patient record
+              </small>
+
+            </span>
+
+            <span
+              class="tile-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </a>
+
+
+          <!-- Support -->
+
+          <a
+            href="support.html"
+            class="service-tile"
+          >
+
+            <span
+              class="tile-icon"
+              aria-hidden="true"
+            >
+              ?
+            </span>
+
+            <span class="tile-content">
+
+              <strong>
+                Patient Support
+              </strong>
+
+              <small>
+                Registration, token & queue assistance
+              </small>
+
+            </span>
+
+            <span
+              class="tile-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </a>
+
+
+          <!-- Clinic Information -->
+
+          <a
+            href="support.html#clinic-information"
+            class="service-tile"
+          >
+
+            <span
+              class="tile-icon"
+              aria-hidden="true"
+            >
+              i
+            </span>
+
+            <span class="tile-content">
+
+              <strong>
+                Clinic Information
+              </strong>
+
+              <small>
+                Timings, visit instructions & information
+              </small>
+
+            </span>
+
+            <span
+              class="tile-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </a>
+
+
+          <!-- Help / FAQ -->
+
+          <a
+            href="support.html#faq"
+            class="service-tile"
+          >
+
+            <span
+              class="tile-icon"
+              aria-hidden="true"
+            >
+              !
+            </span>
+
+            <span class="tile-content">
+
+              <strong>
+                Frequently Asked Questions
+              </strong>
+
+              <small>
+                Quick answers to common questions
+              </small>
+
+            </span>
+
+            <span
+              class="tile-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           VISIT INFORMATION
+           ================================================= -->
+
+      <section class="visit-information">
+
+        <div class="information-header">
+
+          <span
+            class="information-icon"
+            aria-hidden="true"
+          >
+            i
+          </span>
+
+          <div>
+
+            <strong>
+              Before your visit
+            </strong>
+
+            <p>
+              Please keep your token number available
+              and arrive when your queue position is near.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           EMERGENCY NOTICE
+           ================================================= -->
+
+      <aside class="emergency-notice">
+
+        <span
+          class="emergency-icon"
+          aria-hidden="true"
+        >
+          !
+        </span>
+
+        <div>
+
+          <strong>
+            Medical emergency?
+          </strong>
+
+          <p>
+            Do not wait for a clinic token.
+            Seek immediate emergency medical care.
+          </p>
+
+        </div>
+
+      </aside>
+
+
+      <!-- =================================================
+           PRIVACY
+           ================================================= -->
+
+      <p class="privacy-note">
+        Your information is handled securely and used
+        for your clinic visit.
+      </p>
+
+
+      <!-- =================================================
+           BOTTOM NAVIGATION
+           ================================================= -->
+
+      <nav
+        class="bottom-navigation"
+        aria-label="Patient navigation"
+      >
+
+        <a
+          href="index.html"
+          class="nav-item active"
+          aria-current="page"
+        >
+
+          <span
+            class="nav-icon"
+            aria-hidden="true"
+          >
+            ⌂
+          </span>
+
+          <span>
+            Home
+          </span>
+
+        </a>
+
+
+        <a
+          href="registration.html"
+          class="nav-item"
+        >
+
+          <span
+            class="nav-icon"
+            aria-hidden="true"
+          >
+            +
+          </span>
+
+          <span>
+            Register
+          </span>
+
+        </a>
+
+
+        <a
+          href="queue.html"
+          class="nav-item"
+        >
+
+          <span
+            class="nav-icon"
+            aria-hidden="true"
+          >
+            ≡
+          </span>
+
+          <span>
+            Queue
+          </span>
+
+        </a>
+
+
+        <a
+          href="support.html"
+          class="nav-item"
+        >
+
+          <span
+            class="nav-icon"
+            aria-hidden="true"
+          >
+            ?
+          </span>
+
+          <span>
+            Support
+          </span>
+
+        </a>
+
+      </nav>
+
+
+    </section>
+
+  </main>
+
+</body>
+
+</html>
