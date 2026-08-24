@@ -1,135 +1,354 @@
-/* =========================================
-   Patient Registration Logic
-   File: js/register.js
-   ========================================= */
+/* =========================================================
+   CLINIC AUTOMATION — PATIENT REGISTRATION
+   File: register.js
+   ========================================================= */
 
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('registrationForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const formSection = document.getElementById('formSection');
-  const successSection = document.getElementById('successSection');
+document.addEventListener("DOMContentLoaded", () => {
 
-  // Input elements
-  const nameInput = document.getElementById('name');
-  const ageInput = document.getElementById('age');
-  const mobileInput = document.getElementById('mobile');
-  const reasonInput = document.getElementById('reason');
+  /* =======================================================
+     1. ELEMENTS
+     ======================================================= */
 
-  // Form Groups (for error states)
-  const nameGroup = document.getElementById('nameGroup');
-  const ageGroup = document.getElementById('ageGroup');
-  const mobileGroup = document.getElementById('mobileGroup');
-  const reasonGroup = document.getElementById('reasonGroup');
+  const form = document.getElementById("registrationForm");
 
-  // ---------- Validation Functions ----------
+  const submitButton = document.getElementById("submitButton");
+
+  const tokenResult = document.getElementById("tokenResult");
+
+  const tokenNumber = document.getElementById("tokenNumber");
+
+  const patientDisplay = document.getElementById("patientDisplay");
+
+
+  // Inputs
+
+  const nameInput = document.getElementById("name");
+
+  const ageInput = document.getElementById("age");
+
+  const mobileInput = document.getElementById("mobile");
+
+  const reasonInput = document.getElementById("reason");
+
+
+  // Form groups
+
+  const nameGroup = nameInput.closest(".form-group");
+
+  const ageGroup = ageInput.closest(".form-group");
+
+  const mobileGroup = mobileInput.closest(".form-group");
+
+  const reasonGroup = reasonInput.closest(".form-group");
+
+
+  /* =======================================================
+     2. VALIDATION
+     ======================================================= */
+
   function validateName() {
-    const value = nameInput.value.trim();
-    if (!value) {
-      nameGroup.classList.add('error');
+
+    const name = nameInput.value.trim();
+
+    if (name.length < 2) {
+
+      nameGroup.classList.add("has-error");
+
       return false;
     }
-    nameGroup.classList.remove('error');
+
+    nameGroup.classList.remove("has-error");
+
     return true;
   }
+
 
   function validateAge() {
-    const value = parseInt(ageInput.value, 10);
-    if (!ageInput.value || isNaN(value) || value < 1 || value > 120) {
-      ageGroup.classList.add('error');
+
+    const age = Number(ageInput.value);
+
+    if (
+      !ageInput.value ||
+      !Number.isInteger(age) ||
+      age < 1 ||
+      age > 120
+    ) {
+
+      ageGroup.classList.add("has-error");
+
       return false;
     }
-    ageGroup.classList.remove('error');
+
+    ageGroup.classList.remove("has-error");
+
     return true;
   }
+
 
   function validateMobile() {
-    const value = mobileInput.value.trim();
-    const mobilePattern = /^[0-9]{10}$/;
-    if (!mobilePattern.test(value)) {
-      mobileGroup.classList.add('error');
+
+    const mobile = mobileInput.value.trim();
+
+    const mobilePattern = /^[6-9][0-9]{9}$/;
+
+    if (!mobilePattern.test(mobile)) {
+
+      mobileGroup.classList.add("has-error");
+
       return false;
     }
-    mobileGroup.classList.remove('error');
+
+    mobileGroup.classList.remove("has-error");
+
     return true;
   }
+
 
   function validateReason() {
-    const value = reasonInput.value.trim();
-    if (!value) {
-      reasonGroup.classList.add('error');
+
+    if (!reasonInput.value) {
+
+      reasonGroup.classList.add("has-error");
+
       return false;
     }
-    reasonGroup.classList.remove('error');
+
+    reasonGroup.classList.remove("has-error");
+
     return true;
   }
 
-  function validateForm() {
-    const isNameValid = validateName();
-    const isAgeValid = validateAge();
-    const isMobileValid = validateMobile();
-    const isReasonValid = validateReason();
 
-    return isNameValid && isAgeValid && isMobileValid && isReasonValid;
+  function validateForm() {
+
+    const nameValid = validateName();
+
+    const ageValid = validateAge();
+
+    const mobileValid = validateMobile();
+
+    const reasonValid = validateReason();
+
+
+    return (
+      nameValid &&
+      ageValid &&
+      mobileValid &&
+      reasonValid
+    );
   }
 
-  // ---------- Real-time validation (optional but good UX) ----------
-  nameInput.addEventListener('blur', validateName);
-  ageInput.addEventListener('blur', validateAge);
-  mobileInput.addEventListener('blur', validateMobile);
-  reasonInput.addEventListener('blur', validateReason);
 
-  // Clear error when user starts typing
-  nameInput.addEventListener('input', () => nameGroup.classList.remove('error'));
-  ageInput.addEventListener('input', () => ageGroup.classList.remove('error'));
-  mobileInput.addEventListener('input', () => mobileGroup.classList.remove('error'));
-  reasonInput.addEventListener('input', () => reasonGroup.classList.remove('error'));
+  /* =======================================================
+     3. REAL-TIME VALIDATION
+     ======================================================= */
 
-  // ---------- Form Submit ----------
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+  nameInput.addEventListener("blur", validateName);
 
-    // Validate all fields
+  ageInput.addEventListener("blur", validateAge);
+
+  mobileInput.addEventListener("blur", validateMobile);
+
+  reasonInput.addEventListener("change", validateReason);
+
+
+  nameInput.addEventListener("input", () => {
+    nameGroup.classList.remove("has-error");
+  });
+
+
+  ageInput.addEventListener("input", () => {
+    ageGroup.classList.remove("has-error");
+  });
+
+
+  mobileInput.addEventListener("input", () => {
+
+    // Allow numbers only
+
+    mobileInput.value =
+      mobileInput.value.replace(/\D/g, "");
+
+    mobileGroup.classList.remove("has-error");
+  });
+
+
+  reasonInput.addEventListener("change", () => {
+    reasonGroup.classList.remove("has-error");
+  });
+
+
+  /* =======================================================
+     4. FORM SUBMISSION
+     ======================================================= */
+
+  form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+
+    // Stop if validation fails
+
     if (!validateForm()) {
+
       return;
     }
 
-    // Show loading state
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
 
-    // Collect form data
-    const formData = {
+    /* -------------------------------------------------------
+       Collect patient information
+       ------------------------------------------------------- */
+
+    const patientData = {
+
       name: nameInput.value.trim(),
-      age: parseInt(ageInput.value, 10),
+
+      age: Number(ageInput.value),
+
       mobile: mobileInput.value.trim(),
-      reason: reasonInput.value.trim()
+
+      reason: reasonInput.value
+
     };
 
-    // Simulate API call (Replace this later with real backend call)
-    setTimeout(() => {
-      // Generate a temporary token (Backend will provide real token later)
-      const randomNum = Math.floor(Math.random() * 90) + 10;
-      const token = 'A-' + String(randomNum).padStart(3, '0');
 
-      // Show success state
-      showSuccess(token, formData.name);
+    /* -------------------------------------------------------
+       Loading state
+       ------------------------------------------------------- */
 
-      // Reset button state
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
-    }, 1200);
+    submitButton.disabled = true;
+
+    submitButton.innerHTML = `
+      <span>Getting Token...</span>
+    `;
+
+
+    try {
+
+      /*
+       * -----------------------------------------------------
+       * TEMPORARY DEMO
+       * -----------------------------------------------------
+       *
+       * This simulates a backend request.
+       *
+       * Later this section will become:
+       *
+       * fetch("YOUR_BACKEND_API/register", {
+       *   method: "POST",
+       *   headers: {
+       *     "Content-Type": "application/json"
+       *   },
+       *   body: JSON.stringify(patientData)
+       * })
+       *
+       * The backend will generate the REAL token.
+       * -----------------------------------------------------
+       */
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      });
+
+
+      /* -------------------------------------------------------
+         Temporary token
+         ------------------------------------------------------- */
+
+      const token = generateDemoToken();
+
+
+      /* -------------------------------------------------------
+         Show result
+         ------------------------------------------------------- */
+
+      showToken(token, patientData);
+
+
+    } catch (error) {
+
+      console.error(
+        "Registration error:",
+        error
+      );
+
+      alert(
+        "Something went wrong. Please try again."
+      );
+
+
+      resetSubmitButton();
+    }
+
   });
 
-  // ---------- Show Success Screen ----------
-  function showSuccess(token, patientName) {
-    // Hide form
-    formSection.style.display = 'none';
 
-    // Update success content
-    document.getElementById('tokenDisplay').textContent = token;
-    document.getElementById('patientNameDisplay').textContent = 'Patient: ' + patientName;
+  /* =======================================================
+     5. DEMO TOKEN GENERATOR
+     ======================================================= */
 
-    // Show success section
-    successSection.classList.add('show');
+  function generateDemoToken() {
+
+    const number =
+      Math.floor(Math.random() * 900) + 1;
+
+    return `A-${String(number).padStart(3, "0")}`;
   }
+
+
+  /* =======================================================
+     6. SHOW TOKEN
+     ======================================================= */
+
+  function showToken(token, patientData) {
+
+    // Hide registration form
+
+    form.style.display = "none";
+
+
+    // Update token
+
+    tokenNumber.textContent = token;
+
+
+    // Show patient name
+
+    patientDisplay.textContent =
+      `Patient: ${patientData.name}`;
+
+
+    // Show token section
+
+    tokenResult.classList.add("show");
+
+
+    // Scroll to result
+
+    tokenResult.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+
+    // Restore button for safety
+
+    resetSubmitButton();
+  }
+
+
+  /* =======================================================
+     7. RESET BUTTON
+     ======================================================= */
+
+  function resetSubmitButton() {
+
+    submitButton.disabled = false;
+
+    submitButton.innerHTML = `
+      Get Token
+      <span>→</span>
+    `;
+  }
+
 });
