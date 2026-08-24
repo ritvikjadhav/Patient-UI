@@ -10,40 +10,31 @@ document.addEventListener("DOMContentLoaded", () => {
      ======================================================= */
 
   const form = document.getElementById("registrationForm");
-
   const submitButton = document.getElementById("submitButton");
 
   const tokenResult = document.getElementById("tokenResult");
-
   const tokenNumber = document.getElementById("tokenNumber");
-
   const patientDisplay = document.getElementById("patientDisplay");
 
-
-  // Inputs
-
+  // Form inputs
   const nameInput = document.getElementById("name");
-
   const ageInput = document.getElementById("age");
-
   const mobileInput = document.getElementById("mobile");
-
   const reasonInput = document.getElementById("reason");
+  const issueInput = document.getElementById("issue");
 
+  // Character counter
+  const issueCount = document.getElementById("issueCount");
 
   // Form groups
-
   const nameGroup = nameInput.closest(".form-group");
-
   const ageGroup = ageInput.closest(".form-group");
-
   const mobileGroup = mobileInput.closest(".form-group");
-
   const reasonGroup = reasonInput.closest(".form-group");
 
 
   /* =======================================================
-     2. VALIDATION
+     2. NAME VALIDATION
      ======================================================= */
 
   function validateName() {
@@ -62,6 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
+
+  /* =======================================================
+     3. AGE VALIDATION
+     ======================================================= */
 
   function validateAge() {
 
@@ -85,9 +80,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* =======================================================
+     4. MOBILE VALIDATION
+     ======================================================= */
+
   function validateMobile() {
 
     const mobile = mobileInput.value.trim();
+
+    /*
+     * Indian mobile number:
+     * - Exactly 10 digits
+     * - Starts with 6, 7, 8 or 9
+     */
 
     const mobilePattern = /^[6-9][0-9]{9}$/;
 
@@ -104,6 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* =======================================================
+     5. REASON VALIDATION
+     ======================================================= */
+
   function validateReason() {
 
     if (!reasonInput.value) {
@@ -119,16 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* =======================================================
+     6. COMPLETE FORM VALIDATION
+     ======================================================= */
+
   function validateForm() {
 
     const nameValid = validateName();
-
     const ageValid = validateAge();
-
     const mobileValid = validateMobile();
-
     const reasonValid = validateReason();
-
 
     return (
       nameValid &&
@@ -140,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     3. REAL-TIME VALIDATION
+     7. REAL-TIME VALIDATION
      ======================================================= */
 
   nameInput.addEventListener("blur", validateName);
@@ -153,12 +162,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   nameInput.addEventListener("input", () => {
+
     nameGroup.classList.remove("has-error");
+
   });
 
 
   ageInput.addEventListener("input", () => {
+
     ageGroup.classList.remove("has-error");
+
   });
 
 
@@ -170,16 +183,31 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileInput.value.replace(/\D/g, "");
 
     mobileGroup.classList.remove("has-error");
+
   });
 
 
   reasonInput.addEventListener("change", () => {
+
     reasonGroup.classList.remove("has-error");
+
   });
 
 
   /* =======================================================
-     4. FORM SUBMISSION
+     8. ADDITIONAL INFORMATION CHARACTER COUNTER
+     ======================================================= */
+
+  issueInput.addEventListener("input", () => {
+
+    issueCount.textContent =
+      issueInput.value.length;
+
+  });
+
+
+  /* =======================================================
+     9. FORM SUBMISSION
      ======================================================= */
 
   form.addEventListener("submit", async (event) => {
@@ -187,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
 
 
-    // Stop if validation fails
+    // Validate required fields
 
     if (!validateForm()) {
 
@@ -207,9 +235,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       mobile: mobileInput.value.trim(),
 
-      reason: reasonInput.value
+      reason: reasonInput.value,
+
+      issue: issueInput.value.trim()
 
     };
+
+
+    console.log(
+      "Patient registration:",
+      patientData
+    );
 
 
     /* -------------------------------------------------------
@@ -226,43 +262,57 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
 
       /*
-       * -----------------------------------------------------
-       * TEMPORARY DEMO
-       * -----------------------------------------------------
+       * =====================================================
+       * TEMPORARY DEMO REQUEST
+       * =====================================================
        *
-       * This simulates a backend request.
+       * This simulates communication with the backend.
        *
-       * Later this section will become:
+       * Later this will be replaced with something like:
        *
-       * fetch("YOUR_BACKEND_API/register", {
-       *   method: "POST",
-       *   headers: {
-       *     "Content-Type": "application/json"
-       *   },
-       *   body: JSON.stringify(patientData)
-       * })
+       * const response = await fetch(
+       *   "YOUR_BACKEND_API/register",
+       *   {
+       *     method: "POST",
+       *     headers: {
+       *       "Content-Type": "application/json"
+       *     },
+       *     body: JSON.stringify(patientData)
+       *   }
+       * );
        *
-       * The backend will generate the REAL token.
-       * -----------------------------------------------------
+       * The backend will then:
+       *
+       * 1. Save patient data
+       * 2. Generate the actual token
+       * 3. Save the queue entry
+       * 4. Return the token
+       *
+       * =====================================================
        */
 
       await new Promise((resolve) => {
+
         setTimeout(resolve, 1000);
+
       });
 
 
       /* -------------------------------------------------------
-         Temporary token
+         Generate temporary token
          ------------------------------------------------------- */
 
       const token = generateDemoToken();
 
 
       /* -------------------------------------------------------
-         Show result
+         Display token
          ------------------------------------------------------- */
 
-      showToken(token, patientData);
+      showToken(
+        token,
+        patientData
+      );
 
 
     } catch (error) {
@@ -278,13 +328,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       resetSubmitButton();
+
     }
 
   });
 
 
   /* =======================================================
-     5. DEMO TOKEN GENERATOR
+     10. DEMO TOKEN GENERATOR
      ======================================================= */
 
   function generateDemoToken() {
@@ -293,11 +344,12 @@ document.addEventListener("DOMContentLoaded", () => {
       Math.floor(Math.random() * 900) + 1;
 
     return `A-${String(number).padStart(3, "0")}`;
+
   }
 
 
   /* =======================================================
-     6. SHOW TOKEN
+     11. SHOW TOKEN RESULT
      ======================================================= */
 
   function showToken(token, patientData) {
@@ -323,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tokenResult.classList.add("show");
 
 
-    // Scroll to result
+    // Scroll to token
 
     tokenResult.scrollIntoView({
       behavior: "smooth",
@@ -331,14 +383,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // Restore button for safety
+    // Restore button
 
     resetSubmitButton();
+
   }
 
 
   /* =======================================================
-     7. RESET BUTTON
+     12. RESET BUTTON
      ======================================================= */
 
   function resetSubmitButton() {
@@ -349,6 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
       Get Token
       <span>→</span>
     `;
+
   }
 
 });
