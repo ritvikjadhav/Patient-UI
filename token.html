@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="View your clinic consultation token and queue status"
+  >
+
+  <title>Your Token | Clinic Automation</title>
+
+  <!-- Inter Font -->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Main Stylesheet -->
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+</head>
+
+<body>
+
+  <main class="token-page">
+
+    <section class="token-card">
+
+      <!-- Clinic Identity -->
+
+      <header class="token-header">
+
+        <div
+          class="clinic-logo"
+          aria-hidden="true"
+        >
+          +
+        </div>
+
+        <div class="clinic-details">
+
+          <h2>
+            Clinic Automation
+          </h2>
+
+          <p>
+            Patient Queue
+          </p>
+
+        </div>
+
+      </header>
+
+
+      <!-- Success -->
+
+      <section class="success-section">
+
+        <div
+          class="success-icon"
+          aria-hidden="true"
+        >
+          ✓
+        </div>
+
+        <span class="success-label">
+          REGISTRATION SUCCESSFUL
+        </span>
+
+        <h1>
+          You're in the queue
+        </h1>
+
+        <p class="success-description">
+          Your consultation registration is complete.
+        </p>
+
+      </section>
+
+
+      <!-- Patient Information -->
+
+      <div class="patient-card">
+
+        <span class="info-label">
+          PATIENT
+        </span>
+
+        <strong id="patientName">
+          Patient Name
+        </strong>
+
+      </div>
+
+
+      <!-- Token -->
+
+      <section class="token-box">
+
+        <span class="token-label">
+          YOUR TOKEN NUMBER
+        </span>
+
+        <strong
+          class="token-number"
+          id="tokenNumber"
+        >
+          A-024
+        </strong>
+
+        <div class="token-status">
+
+          <span
+            class="status-dot"
+            aria-hidden="true"
+          ></span>
+
+          <span id="tokenStatus">
+            Waiting
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- Queue Information -->
+
+      <section
+        class="queue-grid"
+        aria-label="Queue information"
+      >
+
+        <!-- Queue Position -->
+
+        <div class="queue-card">
+
+          <span
+            class="queue-icon"
+            aria-hidden="true"
+          >
+            ☷
+          </span>
+
+          <span class="queue-label">
+            QUEUE POSITION
+          </span>
+
+          <strong id="queuePosition">
+            5th
+          </strong>
+
+          <small>
+            in line
+          </small>
+
+        </div>
+
+
+        <!-- Estimated Wait -->
+
+        <div class="queue-card">
+
+          <span
+            class="queue-icon"
+            aria-hidden="true"
+          >
+            ◷
+          </span>
+
+          <span class="queue-label">
+            ESTIMATED WAIT
+          </span>
+
+          <strong id="estimatedWait">
+            ~15
+          </strong>
+
+          <small>
+            minutes
+          </small>
+
+        </div>
+
+      </section>
+
+
+      <!-- Live Status -->
+
+      <section class="live-status">
+
+        <span
+          class="live-dot"
+          aria-hidden="true"
+        ></span>
+
+        <div>
+
+          <strong>
+            Queue is active
+          </strong>
+
+          <p id="statusMessage">
+            Please wait until your token is called.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- Patient Instruction -->
+
+      <p class="patient-message">
+        Please keep this page open.
+        Your queue status can be updated when your turn approaches.
+      </p>
+
+
+      <!-- Actions -->
+
+      <div class="token-actions">
+
+        <button
+          type="button"
+          class="primary-action"
+          id="refreshButton"
+        >
+          Refresh Status
+        </button>
+
+        <a
+          href="index.html"
+          class="secondary-action"
+        >
+          Back to Registration
+        </a>
+
+      </div>
+
+
+      <!-- Privacy -->
+
+      <p class="privacy-note">
+        Your information is used only for today's clinic visit.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- Token JavaScript -->
+
+  <script src="token.js"></script>
+
+</body>
+
+</html>
