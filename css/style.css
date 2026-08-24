@@ -360,17 +360,6 @@ select {
   font-weight: 500;
 }
 
-.character-count {
-  align-self: flex-end;
-
-  margin-top: -2px;
-
-  color: var(--text-light);
-
-  font-size: 11px;
-}
-
-
 /* =========================================================
    ERROR
    ========================================================= */
