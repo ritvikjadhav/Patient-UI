@@ -1,6 +1,5 @@
 import { useState } from "react";
-import "./PatientRegistration.css";
-
+import "./PatientRegis.css";
 const commonReasons = [
   "Fever",
   "Cold / Cough",
