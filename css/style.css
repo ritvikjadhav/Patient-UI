@@ -1,5 +1,11 @@
 /* =========================================================
    CLINIC AUTOMATION — PATIENT UI
+   File: css/style.css
+   ========================================================= */
+
+
+/* =========================================================
+   DESIGN TOKENS
    ========================================================= */
 
 :root {
@@ -64,6 +70,7 @@ body {
     );
 
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 button,
@@ -102,7 +109,6 @@ textarea {
   background: var(--card);
 
   border: 1px solid var(--border-light);
-
   border-radius: var(--large-radius);
 
   box-shadow: var(--shadow);
@@ -230,7 +236,20 @@ textarea {
 
 
 /* =========================================================
-   INPUTS
+   LABEL ROW
+   ========================================================= */
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
    ========================================================= */
 
 .form-group input,
@@ -243,15 +262,20 @@ textarea {
   background: #ffffff;
 
   border: 1px solid var(--border);
-
   border-radius: var(--radius);
 
   font-size: 14px;
 
   transition:
     border-color 0.18s ease,
-    box-shadow 0.18s ease;
+    box-shadow 0.18s ease,
+    background 0.18s ease;
 }
+
+
+/* =========================================================
+   INPUTS + SELECT
+   ========================================================= */
 
 .form-group input,
 .form-group select {
@@ -259,6 +283,11 @@ textarea {
 
   padding: 0 13px;
 }
+
+
+/* =========================================================
+   TEXTAREA
+   ========================================================= */
 
 .form-group textarea {
   min-height: 100px;
@@ -270,16 +299,34 @@ textarea {
   resize: vertical;
 }
 
-.form-group input::placeholder,
 .form-group textarea::placeholder {
   color: #777c88;
 }
+
+
+/* =========================================================
+   PLACEHOLDERS
+   ========================================================= */
+
+.form-group input::placeholder {
+  color: #777c88;
+}
+
+
+/* =========================================================
+   INPUT HOVER
+   ========================================================= */
 
 .form-group input:hover,
 .form-group select:hover,
 .form-group textarea:hover {
   border-color: #737784;
 }
+
+
+/* =========================================================
+   INPUT FOCUS
+   ========================================================= */
 
 .form-group input:focus,
 .form-group select:focus,
@@ -333,8 +380,6 @@ textarea {
    ========================================================= */
 
 .optional-label {
-  margin-left: 6px;
-
   color: var(--text-light);
 
   font-size: 11px;
@@ -343,7 +388,7 @@ textarea {
 
 
 /* =========================================================
-   ERROR STATES
+   ERROR MESSAGE
    ========================================================= */
 
 .error-message {
@@ -355,15 +400,24 @@ textarea {
   line-height: 16px;
 }
 
-.error-message.show {
+
+/* =========================================================
+   ERROR STATE
+   Matches register.js:
+   .form-group.has-error
+   ========================================================= */
+
+.form-group.has-error .error-message {
   display: block;
 }
 
-.input-error {
-  border-color: var(--error) !important;
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+  border-color: var(--error);
 
   box-shadow:
-    0 0 0 3px rgba(186, 26, 26, 0.08) !important;
+    0 0 0 3px rgba(186, 26, 26, 0.08);
 }
 
 
@@ -431,8 +485,9 @@ textarea {
   outline-offset: 2px;
 }
 
-.submit-button span:last-child {
+.button-arrow {
   font-size: 18px;
+  line-height: 1;
 }
 
 
@@ -549,7 +604,6 @@ textarea {
   background: #f7f9fc;
 
   border: 1px solid #e1e7ef;
-
   border-radius: var(--radius);
 }
 
