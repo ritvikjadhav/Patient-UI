@@ -1,18 +1,9 @@
 /* =========================================================
    PATIENT REGISTRATION
    File: register.js
-
-   Backend / Database:
-   Handled by backend team.
-   This file only collects data, sends the request,
-   and displays the response.
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  /* =======================================================
-     ELEMENTS
-     ======================================================= */
 
   const form = document.getElementById("registrationForm");
   const submitButton = document.getElementById("submitButton");
@@ -36,15 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const privacyNote = document.querySelector(".privacy-note");
 
 
-  /* =======================================================
+  /* =========================================================
      ERROR FUNCTIONS
-     ======================================================= */
+     ========================================================= */
 
   function showError(input, errorElement) {
     input.classList.add("input-error");
     errorElement.classList.add("show");
   }
-
 
   function hideError(input, errorElement) {
     input.classList.remove("input-error");
@@ -52,9 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =======================================================
+  /* =========================================================
      VALIDATION
-     ======================================================= */
+     ========================================================= */
 
   function validateName() {
 
@@ -93,9 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const mobile = mobileInput.value.trim();
 
-    const pattern = /^[6-9][0-9]{9}$/;
-
-    if (!pattern.test(mobile)) {
+    if (!/^[6-9][0-9]{9}$/.test(mobile)) {
       showError(mobileInput, mobileError);
       return false;
     }
@@ -119,25 +107,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function validateForm() {
 
+    const validName = validateName();
+    const validAge = validateAge();
+    const validMobile = validateMobile();
+    const validReason = validateReason();
+
     return (
-      validateName() &&
-      validateAge() &&
-      validateMobile() &&
-      validateReason()
+      validName &&
+      validAge &&
+      validMobile &&
+      validReason
     );
   }
 
 
-  /* =======================================================
-     MOBILE INPUT
-     ======================================================= */
+  /* =========================================================
+     MOBILE NUMBER
+     ========================================================= */
 
   mobileInput.addEventListener("input", () => {
 
-    mobileInput.value =
-      mobileInput.value
-        .replace(/\D/g, "")
-        .slice(0, 10);
+    mobileInput.value = mobileInput.value
+      .replace(/\D/g, "")
+      .slice(0, 10);
 
     if (mobileInput.value.length === 10) {
       validateMobile();
@@ -146,9 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  /* =======================================================
-     REAL-TIME VALIDATION
-     ======================================================= */
+  /* =========================================================
+     REAL-TIME ERROR REMOVAL
+     ========================================================= */
 
   nameInput.addEventListener("input", () => {
 
@@ -179,11 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  /* =======================================================
+  /* =========================================================
      FORM SUBMIT
-     ======================================================= */
+     ========================================================= */
 
-  form.addEventListener("submit", async (event) => {
+  form.addEventListener("submit", (event) => {
 
     event.preventDefault();
 
@@ -203,12 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       PATIENT DATA
-
-       These are the fields your backend teammate
-       can use for the API request.
-       ===================================================== */
+    /* =======================================================
+       COLLECT PATIENT DATA
+       ======================================================= */
 
     const patientData = {
 
@@ -225,138 +214,86 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-    console.log("Patient data:", patientData);
+    console.log("Patient Data:", patientData);
 
 
-    /* =====================================================
-       LOADING STATE
-       ===================================================== */
+    /* =======================================================
+       BUTTON LOADING
+       ======================================================= */
 
     submitButton.disabled = true;
 
-    submitButton.classList.add("loading");
-
     submitButton.innerHTML = `
       <span>Joining Queue...</span>
-      <span class="button-spinner"></span>
     `;
 
 
-    /* =====================================================
-       BACKEND INTEGRATION POINT
-       =====================================================
+    /* =======================================================
+       DEMO TOKEN
 
-       Your backend teammate will provide the API URL.
+       TEMPORARY ONLY.
 
-       Example:
+       Backend teammate will replace this later.
+       ======================================================= */
 
-       const response = await fetch(
-         "https://your-backend-url/api/patients/register",
-         {
-           method: "POST",
-           headers: {
-             "Content-Type": "application/json"
-           },
-           body: JSON.stringify(patientData)
-         }
-       );
+    setTimeout(() => {
 
-       const data = await response.json();
+      const tokenNumberValue =
+        "A-" +
+        String(
+          Math.floor(Math.random() * 900) + 100
+        );
 
-       if (!response.ok) {
-         throw new Error(
-           data.message || "Registration failed."
-         );
-       }
-
-       showToken(data.token, data.patientName);
-
-       ===================================================== */
-
-    try {
-
-      /*
-       * TEMPORARILY STOP HERE.
-       *
-       * Do NOT generate a fake token.
-       *
-       * Once backend teammate gives the API endpoint,
-       * put the fetch() request above here.
-       */
-
-      console.log(
-        "Ready to send patient data to backend:",
-        patientData
-      );
-
-
-      /*
-       * Temporary delay only for UI testing.
-       */
-
-      await new Promise((resolve) => {
-        setTimeout(resolve, 700);
-      });
-
-
-      /*
-       * REMOVE THIS DEMO SECTION WHEN BACKEND IS CONNECTED.
-       */
-
-      const demoToken = "A-024";
 
       showToken(
-        demoToken,
+        tokenNumberValue,
         patientData.name
       );
 
 
-    } catch (error) {
-
-      console.error(
-        "Registration error:",
-        error
-      );
-
-      alert(
-        "Unable to register right now. Please try again."
-      );
-
-      submitButton.disabled = false;
-
-      submitButton.classList.remove("loading");
-
-      submitButton.innerHTML = `
-        <span>Get Token</span>
-        <span>→</span>
-      `;
-
-    }
+    }, 700);
 
   });
 
 
-  /* =======================================================
-     SHOW TOKEN SCREEN
-     ======================================================= */
+  /* =========================================================
+     SHOW TOKEN
+     ========================================================= */
 
   function showToken(token, patientName) {
 
+    /* Token */
+
     tokenNumber.textContent = token;
 
-    patientDisplay.textContent = patientName;
+
+    /* Patient name */
+
+    patientDisplay.textContent =
+      patientName;
+
+
+    /* Hide registration */
 
     form.style.display = "none";
+
 
     if (formHeader) {
       formHeader.style.display = "none";
     }
 
+
     if (privacyNote) {
       privacyNote.style.display = "none";
     }
 
+
+    /* Show token screen */
+
     tokenResult.classList.add("show");
+
+
+    /* Scroll to top */
 
     window.scrollTo({
       top: 0,
