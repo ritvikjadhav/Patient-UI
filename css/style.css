@@ -1,5 +1,5 @@
 /* =========================================================
-   CLINIC AUTOMATION — PATIENT REGISTRATION
+   CLINIC AUTOMATION — PATIENT UI
    ========================================================= */
 
 :root {
@@ -7,13 +7,16 @@
   --primary-dark: #003275;
 
   --text: #111c2d;
-  --text-muted: #434653;
+  --text-muted: #5b6270;
+  --text-light: #7a8290;
 
   --background: #f4f7ff;
   --card: #ffffff;
 
   --border: #c3c6d5;
-  --input-focus: rgba(0, 60, 144, 0.14);
+  --border-light: #e2e6ee;
+
+  --focus: rgba(0, 60, 144, 0.14);
 
   --success: #087f5b;
   --success-bg: #d9f7ec;
@@ -65,7 +68,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -97,7 +101,7 @@ select {
 
   background: var(--card);
 
-  border: 1px solid #e0e3ec;
+  border: 1px solid var(--border-light);
 
   border-radius: var(--large-radius);
 
@@ -226,15 +230,13 @@ select {
 
 
 /* =========================================================
-   INPUTS & SELECT
+   INPUTS
    ========================================================= */
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
   width: 100%;
-  height: 48px;
-
-  padding: 0 13px;
 
   color: var(--text);
 
@@ -251,23 +253,43 @@ select {
     box-shadow 0.18s ease;
 }
 
-.form-group input::placeholder {
+.form-group input,
+.form-group select {
+  height: 48px;
+
+  padding: 0 13px;
+}
+
+.form-group textarea {
+  min-height: 100px;
+
+  padding: 13px 14px;
+
+  line-height: 21px;
+
+  resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
   color: #777c88;
 }
 
 .form-group input:hover,
-.form-group select:hover {
+.form-group select:hover,
+.form-group textarea:hover {
   border-color: #737784;
 }
 
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
 
   border-color: var(--primary);
 
   box-shadow:
-    0 0 0 3px var(--input-focus);
+    0 0 0 3px var(--focus);
 }
 
 
@@ -305,51 +327,10 @@ select {
   background-repeat: no-repeat;
 }
 
+
 /* =========================================================
-   ADDITIONAL INFORMATION
+   OPTIONAL LABEL
    ========================================================= */
-
-.form-group textarea {
-  width: 100%;
-  min-height: 100px;
-
-  padding: 13px 14px;
-
-  color: var(--text-primary);
-
-  background: #ffffff;
-
-  border: 1px solid var(--border);
-
-  border-radius: var(--radius-sm);
-
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 21px;
-
-  resize: vertical;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.form-group textarea::placeholder {
-  color: var(--text-light);
-}
-
-.form-group textarea:hover {
-  border-color: #aeb7c5;
-}
-
-.form-group textarea:focus {
-  outline: none;
-
-  border-color: var(--border-focus);
-
-  box-shadow:
-    0 0 0 3px rgba(0, 87, 184, 0.12);
-}
 
 .optional-label {
   margin-left: 6px;
@@ -360,8 +341,9 @@ select {
   font-weight: 500;
 }
 
+
 /* =========================================================
-   ERROR
+   ERROR STATES
    ========================================================= */
 
 .error-message {
@@ -373,13 +355,15 @@ select {
   line-height: 16px;
 }
 
-.form-group.has-error input,
-.form-group.has-error select {
-  border-color: var(--error);
+.error-message.show {
+  display: block;
 }
 
-.form-group.has-error .error-message {
-  display: block;
+.input-error {
+  border-color: var(--error) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(186, 26, 26, 0.08) !important;
 }
 
 
@@ -405,6 +389,7 @@ select {
 
   background: var(--primary);
 
+  border: none;
   border-radius: var(--radius);
 
   font-size: 14px;
@@ -432,13 +417,21 @@ select {
   transform: translateY(1px);
 }
 
+.submit-button:disabled {
+  opacity: 0.7;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
 .submit-button:focus-visible {
-  outline: 3px solid var(--input-focus);
+  outline: 3px solid var(--focus);
 
   outline-offset: 2px;
 }
 
-.submit-button span {
+.submit-button span:last-child {
   font-size: 18px;
 }
 
@@ -466,209 +459,11 @@ select {
 .token-result {
   display: none;
 
-  margin-top: 24px;
-
-  padding-top: 26px;
-
-  text-align: center;
-
-  border-top: 1px solid #e7e9f0;
-}
-
-.token-result.show {
-  display: block;
-}
-
-.success-icon {
-  width: 48px;
-  height: 48px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin: 0 auto 14px;
-
-  color: var(--success);
-
-  background: var(--success-bg);
-
-  border-radius: 50%;
-
-  font-size: 21px;
-  font-weight: 700;
-}
-
-.success-label {
-  margin-bottom: 6px;
-
-  color: var(--success);
-
-  font-size: 11px;
-  line-height: 16px;
-  font-weight: 700;
-
-  letter-spacing: 0.05em;
-}
-
-.token-result h2 {
-  color: var(--text);
-
-  font-size: 15px;
-  line-height: 22px;
-  font-weight: 500;
-}
-
-.token-number {
-  margin-top: 4px;
-
-  color: var(--primary);
-
-  font-size: 42px;
-  line-height: 52px;
-  font-weight: 700;
-
-  letter-spacing: 0.02em;
-
-  font-variant-numeric: tabular-nums;
-}
-
-#patientDisplay {
-  margin-top: 3px;
-
-  color: var(--text-muted);
-
-  font-size: 13px;
-}
-
-
-/* =========================================================
-   WAITING STATUS
-   ========================================================= */
-
-.waiting-status {
-  width: fit-content;
-
-  display: flex;
-  align-items: center;
-
-  gap: 7px;
-
-  margin: 16px auto 0;
-
-  padding: 8px 12px;
-
-  color: var(--waiting);
-
-  background: var(--waiting-bg);
-
-  border-radius: 999px;
-
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-}
-
-.waiting-status::first-letter {
-  font-size: 10px;
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 480px) {
-
-  .patient-page {
-    align-items: flex-start;
-
-    padding: 16px;
-  }
-
-  .registration-card {
-    margin-top: 8px;
-
-    padding: 22px 18px;
-
-    border-radius: 14px;
-  }
-
-  .clinic-header {
-    margin-bottom: 25px;
-  }
-
-  .form-header h1 {
-    font-size: 24px;
-    line-height: 32px;
-  }
-
-  #registrationForm {
-    gap: 17px;
-  }
-
-  .form-group input,
-  .form-group select {
-    height: 48px;
-  }
-
-  .submit-button {
-    min-height: 50px;
-  }
-}
-
-
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 360px) {
-
-  .patient-page {
-    padding: 12px;
-  }
-
-  .registration-card {
-    padding: 20px 16px;
-  }
-
-  .form-header h1 {
-    font-size: 22px;
-    line-height: 29px;
-  }
-
-  .token-number {
-    font-size: 36px;
-    line-height: 46px;
-  }
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
-  }
-}
-
-/* =========================================================
-   TOKEN RESULT
-   ========================================================= */
-
-.token-result {
-  display: none;
-
   padding-top: 28px;
 
   text-align: center;
 
-  border-top: 1px solid #e7ebf1;
+  border-top: 1px solid var(--border-light);
 }
 
 .token-result.show {
@@ -725,7 +520,7 @@ select {
 .token-result h2 {
   margin: 0;
 
-  color: var(--text-primary);
+  color: var(--text);
 
   font-size: 20px;
   line-height: 28px;
@@ -735,7 +530,7 @@ select {
 .token-description {
   margin-top: 6px;
 
-  color: var(--text-secondary);
+  color: var(--text-muted);
 
   font-size: 13px;
   line-height: 20px;
@@ -755,7 +550,7 @@ select {
 
   border: 1px solid #e1e7ef;
 
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
 }
 
 .token-label {
@@ -763,7 +558,7 @@ select {
 
   margin-bottom: 4px;
 
-  color: var(--text-secondary);
+  color: var(--text-muted);
 
   font-size: 10px;
   line-height: 15px;
@@ -780,6 +575,8 @@ select {
   font-weight: 700;
 
   letter-spacing: 0.02em;
+
+  font-variant-numeric: tabular-nums;
 }
 
 
@@ -810,7 +607,7 @@ select {
 .patient-info p {
   margin: 0;
 
-  color: var(--text-primary);
+  color: var(--text);
 
   font-size: 14px;
   line-height: 20px;
@@ -834,9 +631,9 @@ select {
 
   padding: 8px 13px;
 
-  color: var(--warning);
+  color: var(--waiting);
 
-  background: var(--warning-bg);
+  background: var(--waiting-bg);
 
   border-radius: 999px;
 
@@ -864,7 +661,7 @@ select {
 .waiting-message {
   margin-top: 12px;
 
-  color: var(--text-secondary);
+  color: var(--text-muted);
 
   font-size: 12px;
   line-height: 18px;
@@ -872,10 +669,46 @@ select {
 
 
 /* =========================================================
-   TOKEN RESULT — MOBILE
+   MOBILE
    ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+
+  .patient-page {
+    align-items: flex-start;
+
+    padding: 16px;
+  }
+
+  .registration-card {
+    margin-top: 8px;
+
+    padding: 22px 18px;
+
+    border-radius: 14px;
+  }
+
+  .clinic-header {
+    margin-bottom: 25px;
+  }
+
+  .form-header h1 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  #registrationForm {
+    gap: 17px;
+  }
+
+  .form-group input,
+  .form-group select {
+    height: 48px;
+  }
+
+  .submit-button {
+    min-height: 50px;
+  }
 
   .token-result {
     padding-top: 24px;
@@ -888,6 +721,7 @@ select {
 
   .token-box {
     margin-top: 20px;
+
     padding: 18px;
   }
 
@@ -895,5 +729,44 @@ select {
     font-size: 40px;
     line-height: 48px;
   }
+}
 
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .patient-page {
+    padding: 12px;
+  }
+
+  .registration-card {
+    padding: 20px 16px;
+  }
+
+  .form-header h1 {
+    font-size: 22px;
+    line-height: 29px;
+  }
+
+  .token-number {
+    font-size: 36px;
+    line-height: 46px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
 }
