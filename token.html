@@ -12,13 +12,15 @@
 
   <meta
     name="description"
-    content="View your clinic consultation token and live queue status"
+    content="View your ClinicCare consultation token and queue status."
   >
 
-  <title>Your Token | Clinic Automation</title>
+  <meta
+    name="theme-color"
+    content="#003c90"
+  >
 
-
-  <!-- Inter Font -->
+  <title>My Token | ClinicCare</title>
 
   <link
     rel="preconnect"
@@ -32,12 +34,9 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
-
-
-  <!-- Token Page Stylesheet -->
 
   <link
     rel="stylesheet"
@@ -46,294 +45,314 @@
 
 </head>
 
-
 <body>
 
-  <main class="token-page">
+
+  <header class="app-header">
+
+    <div class="header-inner">
+
+      <a
+        href="index.html"
+        class="brand"
+      >
+
+        <span class="brand-icon">
+          +
+        </span>
+
+        <span class="brand-copy">
+
+          <strong>
+            ClinicCare
+          </strong>
+
+          <small>
+            Patient Portal
+          </small>
+
+        </span>
+
+      </a>
+
+      <span class="header-live">
+        ● Live
+      </span>
+
+    </div>
+
+  </header>
+
+
+  <main class="token-main">
+
+
+    <!-- SUCCESS -->
+
+    <section class="success-section">
+
+      <span class="success-icon">
+        ✓
+      </span>
+
+      <span class="eyebrow">
+        REGISTRATION SUCCESSFUL
+      </span>
+
+      <h1>
+        You're in the queue.
+      </h1>
+
+      <p>
+        Keep your token handy. We'll update your position
+        as patients are served.
+      </p>
+
+    </section>
+
+
+    <!-- PATIENT -->
+
+    <section class="patient-strip">
+
+      <span>
+        PATIENT
+      </span>
+
+      <strong id="patientName">
+        Patient Name
+      </strong>
+
+    </section>
+
+
+    <!-- TOKEN -->
 
     <section class="token-card">
 
+      <div class="token-card-header">
 
-      <!-- =================================================
-           CLINIC HEADER
-           ================================================= -->
+        <span>
+          YOUR TOKEN NUMBER
+        </span>
 
-      <header class="clinic-header">
+        <div class="status-badge">
 
-        <div
-          class="clinic-logo"
-          aria-hidden="true"
-        >
-          +
-        </div>
+          <i class="status-dot"></i>
 
-        <div class="clinic-details">
-
-          <h2>
-            Clinic Automation
-          </h2>
-
-          <p>
-            Patient Queue
-          </p>
-
-        </div>
-
-      </header>
-
-
-      <!-- =================================================
-           SUCCESS HEADER
-           ================================================= -->
-
-      <section class="success-header">
-
-        <div
-          class="success-icon"
-          aria-hidden="true"
-        >
-          ✓
-        </div>
-
-        <p class="success-label">
-          REGISTRATION SUCCESSFUL
-        </p>
-
-        <h1>
-          You're in the queue
-        </h1>
-
-        <p class="success-description">
-          Your consultation registration is complete.
-        </p>
-
-      </section>
-
-
-      <!-- =================================================
-           TOKEN SECTION
-           ================================================= -->
-
-      <section class="token-section">
-
-
-        <!-- Patient -->
-
-        <div class="patient-info">
-
-          <span class="info-label">
-            PATIENT
+          <span id="statusText">
+            Waiting
           </span>
 
-          <p id="patientName">
-            Patient Name
-          </p>
-
         </div>
-
-
-        <!-- Token -->
-
-        <div class="token-box">
-
-          <span class="token-label">
-            YOUR TOKEN NUMBER
-          </span>
-
-          <strong
-            class="token-number"
-            id="tokenNumber"
-          >
-            —
-          </strong>
-
-
-          <!-- Status -->
-
-          <div class="status-badge">
-
-            <span
-              class="status-dot"
-              aria-hidden="true"
-            ></span>
-
-            <span id="statusText">
-              Waiting
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <!-- =================================================
-             QUEUE INFORMATION
-             ================================================= -->
-
-        <div
-          class="queue-info"
-          aria-label="Queue information"
-        >
-
-
-          <!-- Queue Position -->
-
-          <div class="queue-item">
-
-            <span class="queue-label">
-              QUEUE POSITION
-            </span>
-
-            <strong
-              class="queue-value"
-              id="queuePosition"
-            >
-              —
-            </strong>
-
-            <p class="queue-subtext">
-              in line
-            </p>
-
-          </div>
-
-
-          <!-- Estimated Wait -->
-
-          <div class="queue-item">
-
-            <span class="queue-label">
-              ESTIMATED WAIT
-            </span>
-
-            <strong
-              class="queue-value"
-              id="estimatedWait"
-            >
-              —
-            </strong>
-
-            <p class="queue-subtext">
-              minutes
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <!-- =================================================
-             WAITING MESSAGE
-             ================================================= -->
-
-        <div class="waiting-message">
-
-          Please wait until your token is called.
-          Your queue status will update as your turn approaches.
-
-        </div>
-
-
-      </section>
-
-<!-- =====================================================
-     MOBILE BOTTOM NAVIGATION
-     ================================================= -->
-
-<nav
-  class="mobile-navigation"
-  aria-label="Patient navigation"
->
-
-  <a
-    href="index.html"
-    class="mobile-nav-item"
-  >
-    <span
-      class="mobile-nav-icon"
-      aria-hidden="true"
-    >
-      ⌂
-    </span>
-
-    <span>
-      Home
-    </span>
-  </a>
-
-
-  <a
-    href="registration.html"
-    class="mobile-nav-item"
-  >
-    <span
-      class="mobile-nav-icon"
-      aria-hidden="true"
-    >
-      +
-    </span>
-
-    <span>
-      Register
-    </span>
-  </a>
-
-
-  <a
-    href="queue.html"
-    class="mobile-nav-item active"
-  >
-    <span
-      class="mobile-nav-icon"
-      aria-hidden="true"
-    >
-      ≡
-    </span>
-
-    <span>
-      My Queue
-    </span>
-  </a>
-
-
-  <a
-    href="support.html"
-    class="mobile-nav-item"
-  >
-    <span
-      class="mobile-nav-icon"
-      aria-hidden="true"
-    >
-      ?
-    </span>
-
-    <span>
-      Support
-    </span>
-  </a>
-
-</nav>
 
       </div>
 
+      <strong
+        id="tokenNumber"
+        class="token-number"
+      >
+        A-024
+      </strong>
 
-      <!-- =================================================
-           FOOTER
-           ================================================= -->
 
-      <p class="token-footer">
+      <!-- STATS -->
 
-        Your information is used only for today's clinic visit.
+      <div class="token-stats">
 
-      </p>
+        <div>
 
+          <span>
+            AHEAD OF YOU
+          </span>
+
+          <strong id="aheadOfYou">
+            4
+          </strong>
+
+          <small>
+            patients
+          </small>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            ESTIMATED WAIT
+          </span>
+
+          <strong id="estimatedWait">
+            12
+          </strong>
+
+          <small>
+            minutes
+          </small>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            YOUR POSITION
+          </span>
+
+          <strong id="queuePosition">
+            5
+          </strong>
+
+          <small>
+            in queue
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRIMARY TRACK -->
+
+    <a
+      href="queue.html"
+      class="track-button"
+    >
+
+      <span>
+        ≡
+      </span>
+
+      <span>
+
+        <strong>
+          Track Live Queue
+        </strong>
+
+        <small>
+          See who's being served now
+        </small>
+
+      </span>
+
+      <b>
+        →
+      </b>
+
+    </a>
+
+
+    <!-- REFRESH -->
+
+    <button
+      type="button"
+      id="refreshButton"
+      class="refresh-button"
+    >
+      ↻ &nbsp; Refresh Status
+    </button>
+
+
+    <!-- INFORMATION -->
+
+    <section class="waiting-card">
+
+      <span class="waiting-icon">
+        i
+      </span>
+
+      <div>
+
+        <strong>
+          What happens next?
+        </strong>
+
+        <p>
+          You can leave this page open or check your live queue
+          anytime. Your position will change automatically
+          as consultations are completed.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+
+    <section class="token-actions">
+
+      <a
+        href="index.html"
+        class="secondary-action"
+      >
+        ← Home
+      </a>
+
+      <a
+        href="support.html"
+        class="secondary-action"
+      >
+        Need Help?
+      </a>
 
     </section>
 
   </main>
 
 
-  <!-- Token JavaScript -->
+  <!-- MOBILE NAV -->
+
+  <nav
+    class="mobile-navigation"
+    aria-label="Patient navigation"
+  >
+
+    <a
+      href="index.html"
+      class="mobile-nav-item"
+    >
+
+      <span>⌂</span>
+      <small>Home</small>
+
+    </a>
+
+    <a
+      href="registration.html"
+      class="mobile-nav-item"
+    >
+
+      <span>+</span>
+      <small>Register</small>
+
+    </a>
+
+    <a
+      href="queue.html"
+      class="mobile-nav-item"
+    >
+
+      <span>≡</span>
+      <small>My Queue</small>
+
+    </a>
+
+    <a
+      href="support.html"
+      class="mobile-nav-item"
+    >
+
+      <span>?</span>
+      <small>Support</small>
+
+    </a>
+
+  </nav>
+
 
   <script src="js/token.js"></script>
 
