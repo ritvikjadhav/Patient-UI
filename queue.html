@@ -12,7 +12,7 @@
 
   <meta
     name="description"
-    content="View the live clinic queue, current token, waiting position and estimated consultation time."
+    content="Track your clinic consultation queue in real time."
   >
 
   <meta
@@ -20,10 +20,7 @@
     content="#003c90"
   >
 
-  <title>Live Queue | Clinic Automation</title>
-
-
-  <!-- Inter Font -->
+  <title>My Queue | ClinicCare</title>
 
   <link
     rel="preconnect"
@@ -37,12 +34,9 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
-
-
-  <!-- Queue Stylesheet -->
 
   <link
     rel="stylesheet"
@@ -51,296 +45,165 @@
 
 </head>
 
-
 <body>
 
 
-  <!-- =====================================================
-       APP HEADER
-       ===================================================== -->
+  <header class="app-header">
 
-  <header class="queue-header">
-
-    <div class="queue-header-inner">
-
-
-      <!-- Brand -->
+    <div class="header-inner">
 
       <a
         href="index.html"
-        class="queue-brand"
-        aria-label="Clinic Automation home"
+        class="brand"
       >
 
-        <span
-          class="brand-icon"
-          aria-hidden="true"
-        >
+        <span class="brand-icon">
           +
         </span>
 
-        <span class="brand-name">
-          Clinic Automation
+        <span class="brand-copy">
+
+          <strong>
+            ClinicCare
+          </strong>
+
+          <small>
+            Patient Portal
+          </small>
+
         </span>
 
       </a>
 
-
-      <!-- Desktop Navigation -->
-
-      <nav
-        class="desktop-navigation"
-        aria-label="Patient navigation"
-      >
-
-        <a
-          href="index.html"
-          class="nav-link"
-        >
-          Registration
-        </a>
-
-        <a
-          href="queue.html"
-          class="nav-link active"
-          aria-current="page"
-        >
-          Live Queue
-        </a>
-
-        <a
-          href="token.html"
-          class="nav-link"
-        >
-          My Token
-        </a>
-
-        <a
-          href="support.html"
-          class="nav-link"
-        >
-          Support
-        </a>
-
-      </nav>
-
-
-      <!-- Patient Indicator -->
-
-      <div
-        class="patient-indicator"
-        aria-label="Patient account"
-      >
-
-        <span
-          class="patient-avatar"
-          id="patientAvatar"
-        >
-          P
-        </span>
-
-      </div>
+      <span class="header-live">
+        ● Live
+      </span>
 
     </div>
 
   </header>
 
 
-  <!-- =====================================================
-       MAIN
-       ===================================================== -->
-
   <main class="queue-main">
 
 
-    <!-- ===================================================
-         PAGE INTRO
-         =================================================== -->
+    <!-- INTRO -->
 
     <section class="queue-intro">
 
-      <div>
+      <span class="eyebrow">
+        LIVE QUEUE
+      </span>
 
-        <span class="page-eyebrow">
-          LIVE QUEUE
-        </span>
+      <h1>
+        Your place
+        <br>
+        in line.
+      </h1>
 
-        <h1>
-          Your place in line
-        </h1>
+      <p>
+        Follow the queue in real time and know when
+        your consultation is getting closer.
+      </p>
 
-        <p>
-          Follow the queue in real time and know when
-          your consultation is getting closer.
-        </p>
-
-      </div>
-
-
-      <!-- Live Indicator -->
-
-      <div class="live-indicator">
-
-        <span
-          class="live-pulse"
-          aria-hidden="true"
-        ></span>
-
-        <span>
-          Live
-        </span>
-
+      <div class="live-badge">
+        <i></i>
+        Live updates
       </div>
 
     </section>
 
 
-    <!-- ===================================================
-         YOUR TOKEN CARD
-         =================================================== -->
+    <!-- CURRENT TOKEN -->
 
-    <section
-      class="current-token-card"
-      aria-label="Your current token"
-    >
+    <section class="current-token-card">
 
-      <div class="token-card-top">
+      <div class="token-card-header">
 
-        <div>
+        <span>
+          YOUR TOKEN
+        </span>
 
-          <span class="token-card-label">
-            YOUR TOKEN
-          </span>
-
-          <strong
-            class="current-token"
-            id="currentToken"
-          >
-            A-024
-          </strong>
-
-        </div>
-
-
-        <div
-          class="queue-status"
-          id="queueStatus"
-        >
-
-          <span
-            class="status-indicator"
-            aria-hidden="true"
-          ></span>
-
+        <span class="queue-status">
+          <i></i>
           <span id="queueStatusText">
             Waiting
           </span>
-
-        </div>
+        </span>
 
       </div>
 
 
-      <!-- Token Statistics -->
+      <strong
+        class="current-token-number"
+        id="currentToken"
+      >
+        A-024
+      </strong>
+
 
       <div class="token-statistics">
 
 
-        <!-- Position -->
-
         <div class="token-stat">
 
-          <span
-            class="stat-icon"
-            aria-hidden="true"
-          >
+          <span>
             #
           </span>
 
-          <div>
+          <small>
+            AHEAD OF YOU
+          </small>
 
-            <span class="stat-label">
-              AHEAD OF YOU
-            </span>
+          <strong id="aheadOfYou">
+            4
+          </strong>
 
-            <strong
-              class="stat-value"
-              id="aheadOfYou"
-            >
-              4
-            </strong>
-
-            <span class="stat-unit">
-              patients
-            </span>
-
-          </div>
+          <em>
+            patients
+          </em>
 
         </div>
 
 
-        <!-- Estimated Wait -->
-
         <div class="token-stat">
 
-          <span
-            class="stat-icon"
-            aria-hidden="true"
-          >
+          <span>
             ◷
           </span>
 
-          <div>
+          <small>
+            ESTIMATED WAIT
+          </small>
 
-            <span class="stat-label">
-              ESTIMATED WAIT
-            </span>
+          <strong id="estimatedMinutes">
+            12
+          </strong>
 
-            <strong
-              class="stat-value"
-              id="estimatedMinutes"
-            >
-              12
-            </strong>
-
-            <span class="stat-unit">
-              minutes
-            </span>
-
-          </div>
+          <em>
+            minutes
+          </em>
 
         </div>
 
 
-        <!-- Position -->
-
         <div class="token-stat">
 
-          <span
-            class="stat-icon"
-            aria-hidden="true"
-          >
-            ☷
+          <span>
+            ≡
           </span>
 
-          <div>
+          <small>
+            YOUR POSITION
+          </small>
 
-            <span class="stat-label">
-              YOUR POSITION
-            </span>
+          <strong id="yourPosition">
+            5
+          </strong>
 
-            <strong
-              class="stat-value"
-              id="yourPosition"
-            >
-              5
-            </strong>
-
-            <span class="stat-unit">
-              in queue
-            </span>
-
-          </div>
+          <em>
+            in queue
+          </em>
 
         </div>
 
@@ -349,20 +212,15 @@
     </section>
 
 
-    <!-- ===================================================
-         QUEUE OVERVIEW
-         =================================================== -->
+    <!-- QUEUE OVERVIEW -->
 
     <section class="queue-overview">
-
-
-      <!-- Section Heading -->
 
       <div class="section-heading">
 
         <div>
 
-          <span class="section-eyebrow">
+          <span>
             QUEUE OVERVIEW
           </span>
 
@@ -372,37 +230,29 @@
 
         </div>
 
-
         <button
           type="button"
-          class="refresh-button"
           id="refreshQueueButton"
+          class="refresh-button"
         >
-
-          <span
-            aria-hidden="true"
-          >
-            ↻
-          </span>
-
+          ↻
           Refresh
-
         </button>
 
       </div>
 
 
-      <!-- Currently Serving -->
+      <!-- CURRENTLY SERVING -->
 
-      <div class="serving-card">
+      <article class="serving-card">
 
-        <div class="serving-icon" aria-hidden="true">
+        <div class="serving-icon">
           ✓
         </div>
 
-        <div class="serving-details">
+        <div>
 
-          <span class="serving-label">
+          <span>
             CURRENTLY SERVING
           </span>
 
@@ -416,32 +266,27 @@
 
         </div>
 
-
         <span class="serving-live">
           Live
         </span>
 
-      </div>
+      </article>
 
 
-      <!-- Queue List -->
+      <!-- QUEUE -->
 
       <div
         class="queue-list"
         id="queueList"
-        aria-label="Current queue"
       >
-
-
-        <!-- Previous / Current -->
 
         <article class="queue-row current-row">
 
-          <span class="queue-number current-number">
+          <span class="queue-number">
             ✓
           </span>
 
-          <div class="queue-row-content">
+          <div>
 
             <strong>
               Token A-019
@@ -453,14 +298,12 @@
 
           </div>
 
-          <span class="row-status">
+          <b>
             Serving
-          </span>
+          </b>
 
         </article>
 
-
-        <!-- Waiting 1 -->
 
         <article class="queue-row">
 
@@ -468,7 +311,7 @@
             1
           </span>
 
-          <div class="queue-row-content">
+          <div>
 
             <strong>
               Token A-020
@@ -483,15 +326,13 @@
         </article>
 
 
-        <!-- Waiting 2 -->
-
         <article class="queue-row">
 
           <span class="queue-number">
             2
           </span>
 
-          <div class="queue-row-content">
+          <div>
 
             <strong>
               Token A-021
@@ -502,15 +343,13 @@
         </article>
 
 
-        <!-- Waiting 3 -->
-
         <article class="queue-row">
 
           <span class="queue-number">
             3
           </span>
 
-          <div class="queue-row-content">
+          <div>
 
             <strong>
               Token A-022
@@ -521,15 +360,13 @@
         </article>
 
 
-        <!-- Waiting 4 -->
-
         <article class="queue-row">
 
           <span class="queue-number">
             4
           </span>
 
-          <div class="queue-row-content">
+          <div>
 
             <strong>
               Token A-023
@@ -540,21 +377,17 @@
         </article>
 
 
-        <!-- YOUR TOKEN -->
-
         <article class="queue-row your-row">
 
-          <span class="queue-number your-number">
+          <span class="queue-number">
             5
           </span>
 
-          <div class="queue-row-content">
+          <div>
 
             <strong>
               Token A-024
-              <span class="you-label">
-                YOU
-              </span>
+              <small>YOU</small>
             </strong>
 
             <span>
@@ -563,51 +396,34 @@
 
           </div>
 
-          <span class="your-position-label">
-            Your turn
-          </span>
+          <b>
+            Your token
+          </b>
 
         </article>
-
-      </div>
-
-
-      <!-- More Queue -->
-
-      <div class="queue-more">
-
-        <span id="queueMoreText">
-          Showing nearby tokens
-        </span>
 
       </div>
 
     </section>
 
 
-    <!-- ===================================================
-         WAITING INFORMATION
-         =================================================== -->
+    <!-- SMART NOTICE -->
 
     <section class="queue-notice">
 
-      <div
-        class="notice-icon"
-        aria-hidden="true"
-      >
+      <span>
         i
-      </div>
+      </span>
 
       <div>
 
         <strong>
-          We'll keep you updated
+          You don't need to wait at the counter.
         </strong>
 
         <p>
-          Keep this page open while you wait.
-          Your position and estimated time can change
-          as patients are served.
+          Keep your phone nearby. Your queue position can
+          change as patients are served.
         </p>
 
       </div>
@@ -615,109 +431,39 @@
     </section>
 
 
-    <!-- ===================================================
-         QUICK ACTIONS
-         =================================================== -->
+    <!-- QUICK ACTION -->
 
-    <section class="quick-actions">
-
-      <a
-        href="token.html"
-        class="quick-action"
-      >
-
-        <span
-          class="quick-action-icon"
-          aria-hidden="true"
-        >
-          #
-        </span>
-
-        <span>
-
-          <strong>
-            View My Token
-          </strong>
-
-          <small>
-            See your complete token details
-          </small>
-
-        </span>
-
-        <span
-          class="action-arrow"
-          aria-hidden="true"
-        >
-          →
-        </span>
-
-      </a>
-
-
-      <a
-        href="support.html"
-        class="quick-action"
-      >
-
-        <span
-          class="quick-action-icon"
-          aria-hidden="true"
-        >
-          ?
-        </span>
-
-        <span>
-
-          <strong>
-            Need Help?
-          </strong>
-
-          <small>
-            Get support with your registration
-          </small>
-
-        </span>
-
-        <span
-          class="action-arrow"
-          aria-hidden="true"
-        >
-          →
-        </span>
-
-      </a>
-
-    </section>
-
-
-    <!-- ===================================================
-         LAST UPDATED
-         =================================================== -->
-
-    <div class="last-updated">
-
-      <span
-        class="update-dot"
-        aria-hidden="true"
-      ></span>
+    <a
+      href="token.html"
+      class="queue-action"
+    >
 
       <span>
-        Last updated
+        #
       </span>
 
-      <time id="lastUpdated">
-        Just now
-      </time>
+      <div>
 
-    </div>
+        <strong>
+          View My Token
+        </strong>
+
+        <small>
+          See your complete token details
+        </small>
+
+      </div>
+
+      <b>
+        →
+      </b>
+
+    </a>
 
   </main>
 
 
-  <!-- =====================================================
-       MOBILE BOTTOM NAVIGATION
-       ===================================================== -->
+  <!-- MOBILE NAV -->
 
   <nav
     class="mobile-navigation"
@@ -729,64 +475,43 @@
       class="mobile-nav-item"
     >
 
-      <span
-        class="mobile-nav-icon"
-        aria-hidden="true"
-      >
-        ▣
-      </span>
-
-      <span>
-        Registration
-      </span>
+      <span>⌂</span>
+      <small>Home</small>
 
     </a>
 
+    <a
+      href="registration.html"
+      class="mobile-nav-item"
+    >
+
+      <span>+</span>
+      <small>Register</small>
+
+    </a>
 
     <a
       href="queue.html"
       class="mobile-nav-item active"
-      aria-current="page"
     >
 
-      <span
-        class="mobile-nav-icon"
-        aria-hidden="true"
-      >
-        ◷
-      </span>
-
-      <span>
-        My Queue
-      </span>
+      <span>≡</span>
+      <small>My Queue</small>
 
     </a>
-
 
     <a
       href="support.html"
       class="mobile-nav-item"
     >
 
-      <span
-        class="mobile-nav-icon"
-        aria-hidden="true"
-      >
-        ?
-      </span>
-
-      <span>
-        Support
-      </span>
+      <span>?</span>
+      <small>Support</small>
 
     </a>
 
   </nav>
 
-
-  <!-- =====================================================
-       QUEUE JAVASCRIPT
-       ===================================================== -->
 
   <script src="js/queue.js"></script>
 
