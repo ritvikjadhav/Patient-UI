@@ -236,34 +236,83 @@
 
       </section>
 
+<!-- =====================================================
+     MOBILE BOTTOM NAVIGATION
+     ================================================= -->
 
-      <!-- =================================================
-           ACTIONS
-           ================================================= -->
-
-      <div class="token-actions">
-
-
-        <!-- Refresh -->
-
-        <button
-          type="button"
-          class="action-button primary-button"
-          id="refreshButton"
-        >
-          Go to Homepage
-        </button>
-
-
-        <!-- Back -->
-
-        <a
-  href="queue.html"
-  class="action-button secondary-button"
-  id="backButton"
+<nav
+  class="mobile-navigation"
+  aria-label="Patient navigation"
 >
-  Track Live Queue 
-</a>
+
+  <a
+    href="index.html"
+    class="mobile-nav-item"
+  >
+    <span
+      class="mobile-nav-icon"
+      aria-hidden="true"
+    >
+      ⌂
+    </span>
+
+    <span>
+      Home
+    </span>
+  </a>
+
+
+  <a
+    href="registration.html"
+    class="mobile-nav-item"
+  >
+    <span
+      class="mobile-nav-icon"
+      aria-hidden="true"
+    >
+      +
+    </span>
+
+    <span>
+      Register
+    </span>
+  </a>
+
+
+  <a
+    href="queue.html"
+    class="mobile-nav-item active"
+  >
+    <span
+      class="mobile-nav-icon"
+      aria-hidden="true"
+    >
+      ≡
+    </span>
+
+    <span>
+      My Queue
+    </span>
+  </a>
+
+
+  <a
+    href="support.html"
+    class="mobile-nav-item"
+  >
+    <span
+      class="mobile-nav-icon"
+      aria-hidden="true"
+    >
+      ?
+    </span>
+
+    <span>
+      Support
+    </span>
+  </a>
+
+</nav>
 
       </div>
 
