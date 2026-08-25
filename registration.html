@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,7 +12,7 @@
 
   <meta
     name="description"
-    content="ClinicCare patient portal for registration, live queue tracking and consultation tokens."
+    content="Register for your clinic consultation and receive a queue token."
   >
 
   <meta
@@ -19,7 +20,12 @@
     content="#003c90"
   >
 
-  <title>ClinicCare | Patient Portal</title>
+  <title>Registration | Clinic Automation</title>
+
+
+  <!-- =====================================================
+       FONT
+       ===================================================== -->
 
   <link
     rel="preconnect"
@@ -28,7 +34,7 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.googleapis.com"
+    href="https://fonts.gstatic.com"
     crossorigin
   >
 
@@ -37,31 +43,50 @@
     rel="stylesheet"
   >
 
+
+  <!-- =====================================================
+       REGISTRATION STYLESHEET
+       ===================================================== -->
+
   <link
     rel="stylesheet"
-    href="css/index.css"
+    href="css/registration.css"
   >
+
 </head>
 
+
 <body>
+
+
+  <!-- =====================================================
+       APP HEADER
+       ===================================================== -->
 
   <header class="app-header">
 
     <div class="header-inner">
 
+
+      <!-- Brand -->
+
       <a
         href="index.html"
         class="brand"
+        aria-label="Clinic Automation Home"
       >
 
-        <span class="brand-icon">
+        <span
+          class="brand-icon"
+          aria-hidden="true"
+        >
           +
         </span>
 
-        <span class="brand-copy">
+        <span class="brand-content">
 
           <strong>
-            ClinicCare
+            Clinic Automation
           </strong>
 
           <small>
@@ -72,324 +97,572 @@
 
       </a>
 
-      <div class="header-status">
 
-        <span class="status-dot"></span>
+      <!-- Desktop Navigation -->
 
-        <span>
-          Clinic Live
-        </span>
+      <nav
+        class="desktop-nav"
+        aria-label="Main navigation"
+      >
 
-      </div>
+        <a
+          href="index.html"
+          class="nav-link"
+        >
+          Home
+        </a>
+
+        <a
+          href="registration.html"
+          class="nav-link active"
+          aria-current="page"
+        >
+          Registration
+        </a>
+
+        <a
+          href="queue.html"
+          class="nav-link"
+        >
+          My Queue
+        </a>
+
+        <a
+          href="support.html"
+          class="nav-link"
+        >
+          Support
+        </a>
+
+      </nav>
 
     </div>
 
   </header>
 
 
-  <main class="home-main">
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
+
+  <main class="registration-main">
 
 
-    <!-- HERO -->
+    <!-- ===================================================
+         PAGE INTRO
+         =================================================== -->
 
-    <section class="home-hero">
+    <section class="registration-intro">
 
       <span class="eyebrow">
-        PATIENT SERVICES
+        NEW VISIT
       </span>
 
       <h1>
-        Your visit,
-        <br>
-        made simpler.
+        Register for your consultation
       </h1>
 
       <p>
-        Register for your consultation, manage your token,
-        and follow the live queue from one place.
+        Enter your details below to join today's
+        clinic queue and receive your consultation token.
       </p>
 
     </section>
 
 
-    <!-- PRIMARY ACTION -->
+    <!-- ===================================================
+         REGISTRATION FORM CARD
+         =================================================== -->
 
-    <section class="primary-action-card">
+    <section class="registration-card">
 
-      <a
-        href="registration.html"
-        class="primary-action"
+
+      <!-- Form Header -->
+
+      <div class="form-header">
+
+        <div>
+
+          <span class="section-eyebrow">
+            PATIENT DETAILS
+          </span>
+
+          <h2>
+            Tell us about yourself
+          </h2>
+
+        </div>
+
+        <span class="required-note">
+          * Required
+        </span>
+
+      </div>
+
+
+      <!-- =================================================
+           FORM
+           ================================================= -->
+
+      <form
+        id="registrationForm"
+        novalidate
       >
 
-        <span class="action-icon">
-          +
-        </span>
 
-        <span class="action-content">
+        <!-- =================================================
+             NAME
+             ================================================= -->
 
-          <small>
-            NEW VISIT
+        <div class="form-group">
+
+          <label for="name">
+            Full Name
+            <span>*</span>
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            maxlength="80"
+            required
+          >
+
+          <small
+            class="field-hint"
+            id="nameHint"
+          >
+            Enter your name as you would like it on your visit record.
           </small>
 
-          <strong>
-            Register & Get Token
-          </strong>
-
-          <span>
-            Enter your details and join today's consultation queue.
-          </span>
-
-        </span>
-
-        <span class="action-arrow">
-          →
-        </span>
-
-      </a>
-
-    </section>
-
-
-    <!-- AFTER REGISTRATION -->
-
-    <section class="home-section">
-
-      <div class="section-heading">
-
-        <div>
-
-          <span>
-            AFTER REGISTRATION
-          </span>
-
-          <h2>
-            Track your visit
-          </h2>
+          <small
+            class="error-message"
+            id="nameError"
+          ></small>
 
         </div>
 
-        <span class="live-badge">
-          <i></i>
-          Live
-        </span>
 
-      </div>
+        <!-- =================================================
+             AGE + MOBILE
+             ================================================= -->
 
-
-      <div class="service-list">
-
-        <a
-          href="queue.html"
-          class="service-card"
-        >
-
-          <span class="service-icon">
-            ≡
-          </span>
-
-          <span class="service-content">
-
-            <strong>
-              My Live Queue
-            </strong>
-
-            <small>
-              Token, position & waiting time
-            </small>
-
-          </span>
-
-          <span class="service-arrow">
-            →
-          </span>
-
-        </a>
+        <div class="form-row">
 
 
-        <a
-          href="token.html"
-          class="service-card"
-        >
+          <!-- Age -->
 
-          <span class="service-icon">
-            #
-          </span>
+          <div class="form-group">
 
-          <span class="service-content">
+            <label for="age">
+              Age
+              <span>*</span>
+            </label>
 
-            <strong>
-              My Token
-            </strong>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              placeholder="Age"
+              min="1"
+              max="120"
+              inputmode="numeric"
+              required
+            >
 
-            <small>
-              View your current consultation token
-            </small>
+            <small
+              class="error-message"
+              id="ageError"
+            ></small>
 
-          </span>
-
-          <span class="service-arrow">
-            →
-          </span>
-
-        </a>
-
-      </div>
-
-    </section>
+          </div>
 
 
-    <!-- PATIENT TOOLS -->
+          <!-- Mobile -->
 
-    <section class="home-section">
+          <div class="form-group">
 
-      <div class="section-heading">
+            <label for="mobile">
+              Mobile Number
+              <span>*</span>
+            </label>
 
-        <div>
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              placeholder="10-digit number"
+              inputmode="numeric"
+              maxlength="10"
+              autocomplete="tel"
+              required
+            >
 
-          <span>
-            PATIENT TOOLS
-          </span>
+            <small
+              class="error-message"
+              id="mobileError"
+            ></small>
 
-          <h2>
-            Need something?
-          </h2>
+          </div>
 
         </div>
 
-      </div>
+
+        <!-- =================================================
+             REASON
+             ================================================= -->
+
+        <div class="form-group">
+
+          <label for="reason">
+            Reason for Visit
+            <span>*</span>
+          </label>
+
+          <select
+            id="reason"
+            name="reason"
+            required
+          >
+
+            <option
+              value=""
+              selected
+              disabled
+            >
+              Select reason for your visit
+            </option>
+
+            <option value="General Consultation">
+              General Consultation
+            </option>
+
+            <option value="Follow-up">
+              Follow-up Visit
+            </option>
+
+            <option value="Fever or Infection">
+              Fever or Infection
+            </option>
+
+            <option value="Pain or Discomfort">
+              Pain or Discomfort
+            </option>
+
+            <option value="Routine Check-up">
+              Routine Check-up
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+          <small
+            class="error-message"
+            id="reasonError"
+          ></small>
+
+        </div>
 
 
-      <div class="tools-grid">
+        <!-- =================================================
+             ISSUE / MESSAGE
+             ================================================= -->
 
-        <a
-          href="support.html"
-          class="tool-card"
-        >
+        <div class="form-group">
 
-          <span class="tool-icon">
-            ?
+          <label for="issue">
+            Briefly describe your issue
+            <span class="optional">
+              Optional
+            </span>
+          </label>
+
+          <textarea
+            id="issue"
+            name="issue"
+            rows="4"
+            maxlength="300"
+            placeholder="Tell the doctor briefly what you are visiting for..."
+          ></textarea>
+
+          <div class="textarea-footer">
+
+            <small>
+              Keep it brief. You can explain more during consultation.
+            </small>
+
+            <span id="characterCount">
+              0 / 300
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PRIVACY
+             ================================================= -->
+
+        <div class="form-notice">
+
+          <span
+            class="notice-icon"
+            aria-hidden="true"
+          >
+            ✓
           </span>
 
-          <strong>
-            Patient Support
-          </strong>
+          <div>
 
-          <small>
-            Registration, token & queue assistance
-          </small>
+            <strong>
+              Your information is secure
+            </strong>
 
-          <span class="tool-arrow">
+            <p>
+              Your details are used only to manage
+              today's clinic visit and queue.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SUBMIT
+             ================================================= -->
+
+        <button
+          type="submit"
+          class="submit-button"
+          id="submitButton"
+        >
+
+          <span>
+            Register &amp; Get Token
+          </span>
+
+          <span
+            class="submit-arrow"
+            aria-hidden="true"
+          >
             →
           </span>
 
-        </a>
+        </button>
 
 
-        <a
-          href="registration.html"
-          class="tool-card"
-        >
+        <!-- Existing registration -->
 
-          <span class="tool-icon">
-            ↻
-          </span>
+        <p class="existing-note">
 
-          <strong>
-            New Registration
-          </strong>
+          Already registered today?
 
-          <small>
-            Start a new clinic visit
-          </small>
+          <a href="queue.html">
+            Track My Queue
+          </a>
 
-          <span class="tool-arrow">
-            →
-          </span>
-
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- QR INFORMATION -->
-
-    <section class="qr-info-card">
-
-      <div class="qr-info-icon">
-        QR
-      </div>
-
-      <div>
-
-        <strong>
-          Visiting the clinic?
-        </strong>
-
-        <p>
-          Scan the clinic QR code to open this patient portal
-          and register directly from your phone.
         </p>
 
+
+      </form>
+
+    </section>
+
+
+    <!-- ===================================================
+         PROCESS
+         =================================================== -->
+
+    <section class="registration-process">
+
+      <div class="process-heading">
+
+        <span class="section-eyebrow">
+          WHAT HAPPENS NEXT
+        </span>
+
+        <h2>
+          You're only 3 steps away
+        </h2>
+
+      </div>
+
+
+      <div class="process-steps">
+
+
+        <div class="process-step">
+
+          <span class="process-number">
+            01
+          </span>
+
+          <div>
+
+            <strong>
+              Submit details
+            </strong>
+
+            <p>
+              Complete the registration form.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="process-step">
+
+          <span class="process-number">
+            02
+          </span>
+
+          <div>
+
+            <strong>
+              Receive your token
+            </strong>
+
+            <p>
+              Your queue token is generated instantly.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="process-step">
+
+          <span class="process-number">
+            03
+          </span>
+
+          <div>
+
+            <strong>
+              Follow your queue
+            </strong>
+
+            <p>
+              Track your position while you wait.
+            </p>
+
+          </div>
+
+        </div>
+
       </div>
 
     </section>
+
 
   </main>
 
 
-  <!-- MOBILE NAV -->
+  <!-- =====================================================
+       MOBILE BOTTOM NAVIGATION
+       ===================================================== -->
 
   <nav
     class="mobile-navigation"
     aria-label="Patient navigation"
   >
 
+
     <a
       href="index.html"
-      class="mobile-nav-item active"
-    >
-
-      <span>⌂</span>
-      <small>Home</small>
-
-    </a>
-
-    <a
-      href="registration.html"
       class="mobile-nav-item"
     >
 
-      <span>+</span>
-      <small>Register</small>
+      <span
+        class="mobile-nav-icon"
+        aria-hidden="true"
+      >
+        ⌂
+      </span>
+
+      <span>
+        Home
+      </span>
 
     </a>
+
+
+    <a
+      href="registration.html"
+      class="mobile-nav-item active"
+      aria-current="page"
+    >
+
+      <span
+        class="mobile-nav-icon"
+        aria-hidden="true"
+      >
+        +
+      </span>
+
+      <span>
+        Register
+      </span>
+
+    </a>
+
 
     <a
       href="queue.html"
       class="mobile-nav-item"
     >
 
-      <span>≡</span>
-      <small>My Queue</small>
+      <span
+        class="mobile-nav-icon"
+        aria-hidden="true"
+      >
+        ≡
+      </span>
+
+      <span>
+        My Queue
+      </span>
 
     </a>
+
 
     <a
       href="support.html"
       class="mobile-nav-item"
     >
 
-      <span>?</span>
-      <small>Support</small>
+      <span
+        class="mobile-nav-icon"
+        aria-hidden="true"
+      >
+        ?
+      </span>
+
+      <span>
+        Support
+      </span>
 
     </a>
 
   </nav>
 
 
-  <script src="js/index.js"></script>
+  <!-- =====================================================
+       REGISTRATION JAVASCRIPT
+       ===================================================== -->
+
+  <script src="js/register.js"></script>
 
 </body>
 
