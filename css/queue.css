@@ -11,23 +11,26 @@
 :root {
   --primary: #003c90;
   --primary-dark: #003275;
-  --primary-soft: #e8f0ff;
+  --primary-light: #e8f0ff;
 
   --text: #111c2d;
-  --text-muted: #5b6270;
-  --text-light: #7a8290;
+  --text-muted: #626b79;
+  --text-light: #858d99;
 
-  --background: #f5f7fd;
+  --background: #f5f7fc;
   --card: #ffffff;
 
-  --border: #e2e6ee;
-  --border-light: #edf0f5;
+  --border: #e2e6ed;
+  --border-light: #edf0f4;
 
   --success: #087f5b;
   --success-bg: #d9f7ec;
 
   --waiting: #a15c00;
   --waiting-bg: #fff0d5;
+
+  --danger: #b42318;
+  --danger-bg: #fde8e7;
 
   --radius: 12px;
   --large-radius: 18px;
@@ -62,7 +65,7 @@ body {
   background:
     linear-gradient(
       180deg,
-      #fafaff 0%,
+      #fafbff 0%,
       var(--background) 100%
     );
 
@@ -77,15 +80,12 @@ textarea {
   font: inherit;
 }
 
+a {
+  color: inherit;
+}
 
-/* =========================================================
-   PAGE
-   ========================================================= */
-
-.queue-page {
-  min-height: 100vh;
-
-  padding: 0 16px 100px;
+button {
+  -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -95,17 +95,31 @@ textarea {
 
 .queue-header {
   width: 100%;
-  max-width: 520px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border-bottom: 1px solid var(--border-light);
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.queue-header-inner {
+  width: min(100% - 32px, 1080px);
+
+  min-height: 68px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
+  gap: 24px;
+
   margin: 0 auto;
-
-  padding: 18px 0 16px;
-
-  border-bottom: 1px solid var(--border-light);
 }
 
 
@@ -118,9 +132,97 @@ textarea {
   align-items: center;
 
   gap: 11px;
+
+  color: var(--text);
+
+  text-decoration: none;
+
+  flex-shrink: 0;
 }
 
 .brand-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  background: var(--primary);
+
+  border-radius: 10px;
+
+  font-size: 24px;
+  font-weight: 500;
+
+  box-shadow:
+    0 4px 12px rgba(0, 60, 144, 0.16);
+}
+
+.brand-name {
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
+.desktop-navigation {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  margin-left: auto;
+}
+
+.nav-link {
+  padding: 9px 12px;
+
+  color: var(--text-muted);
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+
+  transition:
+    color 0.18s ease,
+    background 0.18s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+
+  background: #f3f6fb;
+}
+
+.nav-link.active {
+  color: var(--primary);
+
+  background: var(--primary-light);
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   PATIENT INDICATOR
+   ========================================================= */
+
+.patient-indicator {
+  flex-shrink: 0;
+}
+
+.patient-avatar {
   width: 38px;
   height: 38px;
 
@@ -130,51 +232,10 @@ textarea {
 
   color: var(--primary);
 
-  background: #ffffff;
+  background: var(--primary-light);
 
-  border: 1px solid #dbe3ef;
+  border: 1px solid #d9e5f8;
 
-  border-radius: 10px;
-
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.queue-brand h1 {
-  color: var(--text);
-
-  font-size: 16px;
-  line-height: 21px;
-  font-weight: 700;
-}
-
-.queue-brand p {
-  margin-top: 1px;
-
-  color: var(--text-muted);
-
-  font-size: 11px;
-  line-height: 16px;
-}
-
-
-/* =========================================================
-   PROFILE
-   ========================================================= */
-
-.profile-button {
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: var(--primary);
-
-  background: var(--primary-soft);
-
-  border: none;
   border-radius: 50%;
 
   font-size: 13px;
@@ -183,39 +244,114 @@ textarea {
 
 
 /* =========================================================
-   MAIN CONTENT
+   MAIN
    ========================================================= */
 
-.queue-content {
-  width: 100%;
-  max-width: 520px;
+.queue-main {
+  width: min(100% - 32px, 900px);
 
   margin: 0 auto;
+
+  padding: 36px 0 110px;
 }
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
 
 .queue-intro {
-  padding: 28px 0 22px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 22px;
 }
 
-.queue-intro h2 {
-  color: var(--text);
+.page-eyebrow,
+.section-eyebrow {
+  display: block;
 
-  font-size: 28px;
-  line-height: 35px;
+  color: var(--primary);
+
+  font-size: 11px;
+  line-height: 16px;
   font-weight: 700;
 
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
+}
+
+.queue-intro h1 {
+  margin-top: 5px;
+
+  color: var(--text);
+
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 700;
+
+  letter-spacing: -0.03em;
 }
 
 .queue-intro p {
-  max-width: 430px;
+  max-width: 590px;
 
   margin-top: 8px;
 
   color: var(--text-muted);
 
-  font-size: 14px;
-  line-height: 21px;
+  font-size: 15px;
+  line-height: 23px;
+}
+
+
+/* =========================================================
+   LIVE INDICATOR
+   ========================================================= */
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  padding: 8px 12px;
+
+  color: var(--success);
+
+  background: var(--success-bg);
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 600;
+}
+
+.live-pulse {
+  width: 7px;
+  height: 7px;
+
+  background: var(--success);
+
+  border-radius: 50%;
+
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
 }
 
 
@@ -223,104 +359,100 @@ textarea {
    CURRENT TOKEN CARD
    ========================================================= */
 
-.current-token {
+.current-token-card {
   position: relative;
 
   overflow: hidden;
 
-  padding: 25px 20px 20px;
+  padding: 26px;
 
   color: #ffffff;
 
   background:
     linear-gradient(
       145deg,
-      #064aa5 0%,
-      var(--primary) 55%,
-      #00377f 100%
+      #0751ad 0%,
+      #003c90 55%,
+      #003475 100%
     );
 
   border-radius: var(--large-radius);
 
   box-shadow:
-    0 10px 28px rgba(0, 60, 144, 0.20);
+    0 12px 30px rgba(0, 60, 144, 0.19);
 }
 
-
-/* subtle decoration */
-
-.current-token::before {
+.current-token-card::before {
   content: "";
 
   position: absolute;
 
-  width: 180px;
-  height: 180px;
+  width: 220px;
+  height: 220px;
 
-  top: -90px;
-  right: -70px;
+  top: -125px;
+  right: -80px;
 
   background: rgba(255, 255, 255, 0.07);
 
   border-radius: 50%;
 }
 
-.current-token::after {
+.current-token-card::after {
   content: "";
 
   position: absolute;
 
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
 
-  bottom: -70px;
-  left: -50px;
+  bottom: -100px;
+  left: -70px;
 
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.045);
 
   border-radius: 50%;
 }
 
-.current-token > * {
+.current-token-card > * {
   position: relative;
   z-index: 1;
 }
 
 
 /* =========================================================
-   TOKEN LABEL
+   TOKEN CARD TOP
    ========================================================= */
 
-.token-heading {
+.token-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.token-card-label {
   display: block;
 
-  color: rgba(255, 255, 255, 0.78);
-
-  text-align: center;
+  color: rgba(255, 255, 255, 0.72);
 
   font-size: 11px;
   line-height: 16px;
   font-weight: 700;
 
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
 }
 
-
-/* =========================================================
-   TOKEN NUMBER
-   ========================================================= */
-
-.current-token-number {
+.current-token {
   display: block;
 
   margin-top: 3px;
 
   color: #ffffff;
 
-  text-align: center;
-
-  font-size: 48px;
-  line-height: 57px;
+  font-size: 46px;
+  line-height: 55px;
   font-weight: 700;
 
   letter-spacing: 0.02em;
@@ -330,26 +462,22 @@ textarea {
 
 
 /* =========================================================
-   TOKEN STATUS
+   QUEUE STATUS
    ========================================================= */
 
-.token-status {
-  width: fit-content;
-
+.queue-status {
   display: flex;
   align-items: center;
 
   gap: 7px;
 
-  margin: 9px auto 0;
-
-  padding: 6px 12px;
+  padding: 7px 11px;
 
   color: #ffffff;
 
-  background: rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.12);
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   border-radius: 999px;
 
@@ -358,7 +486,7 @@ textarea {
   font-weight: 600;
 }
 
-.token-status-dot {
+.status-indicator {
   width: 7px;
   height: 7px;
 
@@ -371,130 +499,278 @@ textarea {
 
 
 /* =========================================================
-   TOKEN STATS
+   TOKEN STATISTICS
    ========================================================= */
 
-.token-stats {
+.token-statistics {
   display: grid;
 
-  grid-template-columns: 1fr 1px 1fr;
+  grid-template-columns:
+    1fr
+    1px
+    1fr
+    1px
+    1fr;
 
-  align-items: center;
+  align-items: stretch;
 
-  margin-top: 22px;
-  padding-top: 18px;
+  margin-top: 24px;
+  padding-top: 20px;
 
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.token-stat-divider {
+.token-statistics::before,
+.token-statistics::after {
+  content: "";
+
   width: 1px;
-  height: 52px;
+
+  height: 58px;
+
+  align-self: center;
 
   background: rgba(255, 255, 255, 0.18);
 }
 
 .token-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   text-align: center;
 }
 
-.token-stat-icon {
+.stat-icon {
   display: block;
 
   margin-bottom: 5px;
 
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.82);
 
-  font-size: 20px;
+  font-size: 18px;
   line-height: 22px;
 }
 
-.token-stat strong {
+.stat-label {
   display: block;
+
+  color: rgba(255, 255, 255, 0.66);
+
+  font-size: 9px;
+  line-height: 14px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.stat-value {
+  display: block;
+
+  margin-top: 2px;
 
   color: #ffffff;
 
   font-size: 25px;
   line-height: 30px;
   font-weight: 700;
+
+  font-variant-numeric: tabular-nums;
 }
 
-.token-stat span {
+.stat-unit {
   display: block;
 
   margin-top: 1px;
 
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.67);
 
-  font-size: 11px;
+  font-size: 10px;
+  line-height: 15px;
+}
+
+
+/* =========================================================
+   QUEUE OVERVIEW
+   ========================================================= */
+
+.queue-overview {
+  margin-top: 30px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 15px;
+}
+
+.section-heading h2 {
+  margin-top: 4px;
+
+  color: var(--text);
+
+  font-size: 25px;
+  line-height: 32px;
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+   ========================================================= */
+
+.refresh-button {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 8px 13px;
+
+  color: var(--primary);
+
+  background: #ffffff;
+
+  border: 1px solid var(--border);
+
+  border-radius: 9px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.refresh-button:hover {
+  background: var(--primary-light);
+
+  border-color: #c6d5ee;
+}
+
+.refresh-button:active {
+  transform: translateY(1px);
+}
+
+.refresh-button:disabled {
+  opacity: 0.6;
+
+  cursor: wait;
+}
+
+.refresh-button span {
+  font-size: 16px;
   line-height: 16px;
 }
 
 
 /* =========================================================
-   QUEUE PROGRESS CARD
+   SERVING CARD
    ========================================================= */
 
-.queue-progress {
-  margin-top: 18px;
+.serving-card {
+  display: flex;
+  align-items: center;
 
-  padding: 20px;
+  gap: 13px;
 
-  background: var(--card);
+  padding: 15px;
+
+  background: #ffffff;
 
   border: 1px solid var(--border);
 
-  border-radius: var(--large-radius);
+  border-left: 4px solid var(--success);
+
+  border-radius: var(--radius);
 
   box-shadow: var(--shadow);
 }
 
+.serving-icon {
+  width: 38px;
+  height: 38px;
 
-/* =========================================================
-   PROGRESS HEADER
-   ========================================================= */
-
-.progress-header {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 
-  gap: 14px;
-
-  margin-bottom: 18px;
-}
-
-.progress-header h3 {
-  color: var(--text);
-
-  font-size: 22px;
-  line-height: 28px;
-  font-weight: 700;
-
-  letter-spacing: -0.015em;
-}
-
-.serving-token {
   flex-shrink: 0;
 
-  padding: 8px 12px;
+  color: var(--success);
+
+  background: var(--success-bg);
+
+  border-radius: 50%;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.serving-details {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.serving-label {
+  display: block;
+
+  color: var(--text-light);
+
+  font-size: 9px;
+  line-height: 14px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.serving-details strong {
+  display: inline-block;
+
+  margin-top: 1px;
+
+  color: var(--text);
+
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.serving-details p {
+  margin-top: 1px;
 
   color: var(--text-muted);
 
-  background: var(--primary-soft);
+  font-size: 11px;
+  line-height: 17px;
+}
+
+.serving-live {
+  padding: 6px 9px;
+
+  color: var(--success);
+
+  background: var(--success-bg);
 
   border-radius: 999px;
 
-  font-size: 11px;
-  line-height: 15px;
-}
-
-.serving-token strong {
-  margin-left: 4px;
-
-  color: var(--primary);
-
-  font-size: 12px;
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 600;
 }
 
 
@@ -506,31 +782,31 @@ textarea {
   display: flex;
   flex-direction: column;
 
-  gap: 9px;
+  gap: 8px;
 
-  list-style: none;
+  margin-top: 10px;
 }
 
 
 /* =========================================================
-   QUEUE ITEM
+   QUEUE ROW
    ========================================================= */
 
-.queue-item {
-  min-height: 68px;
+.queue-row {
+  min-height: 62px;
 
   display: flex;
   align-items: center;
 
   gap: 12px;
 
-  padding: 11px 12px;
+  padding: 10px 13px;
 
-  background: #fafbfe;
+  background: #ffffff;
 
-  border: 1px solid transparent;
+  border: 1px solid var(--border);
 
-  border-radius: 10px;
+  border-radius: var(--radius);
 
   transition:
     background 0.18s ease,
@@ -538,20 +814,20 @@ textarea {
     transform 0.18s ease;
 }
 
-.queue-item:hover {
-  background: #f5f8fd;
+.queue-row:hover {
+  background: #fafcff;
 
-  border-color: var(--border);
+  border-color: #d3dbe7;
 }
 
 
 /* =========================================================
-   QUEUE POSITION NUMBER
+   QUEUE NUMBER
    ========================================================= */
 
 .queue-number {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
 
   display: flex;
   align-items: center;
@@ -561,7 +837,7 @@ textarea {
 
   color: var(--primary);
 
-  background: #e2ebfc;
+  background: #e6eefc;
 
   border-radius: 50%;
 
@@ -569,18 +845,26 @@ textarea {
   font-weight: 600;
 }
 
+.current-number {
+  color: var(--success);
+
+  background: var(--success-bg);
+
+  font-size: 15px;
+}
+
 
 /* =========================================================
-   QUEUE ITEM CONTENT
+   QUEUE ROW CONTENT
    ========================================================= */
 
-.queue-item-content {
+.queue-row-content {
   min-width: 0;
 
   flex: 1;
 }
 
-.queue-item-content strong {
+.queue-row-content strong {
   display: block;
 
   color: var(--text);
@@ -590,7 +874,7 @@ textarea {
   font-weight: 700;
 }
 
-.queue-item-content span {
+.queue-row-content span:not(.you-label) {
   display: block;
 
   margin-top: 1px;
@@ -603,54 +887,46 @@ textarea {
 
 
 /* =========================================================
-   QUEUE ARROW
+   ROW STATUS
    ========================================================= */
 
-.queue-arrow {
+.row-status {
   flex-shrink: 0;
 
-  color: var(--text-light);
+  color: var(--success);
 
-  font-size: 20px;
-}
-
-
-/* =========================================================
-   CURRENTLY SERVING
-   ========================================================= */
-
-.queue-item.serving {
-  background: #eaf1ff;
-
-  border-left: 4px solid var(--primary);
-}
-
-.queue-item.serving .queue-number {
-  color: var(--primary);
-
-  background: #d6e3fb;
-}
-
-.queue-item.serving .queue-item-content span {
-  color: var(--primary);
-
+  font-size: 10px;
+  line-height: 15px;
   font-weight: 600;
 }
 
 
 /* =========================================================
-   YOUR TOKEN
+   CURRENT ROW
    ========================================================= */
 
-.queue-item.current {
-  background: #e3edff;
+.current-row {
+  background: #f5fbf8;
 
-  border: 1px solid #a9c3eb;
+  border-color: #cce9dd;
+
+  border-left: 4px solid var(--success);
+}
+
+
+/* =========================================================
+   YOUR ROW
+   ========================================================= */
+
+.your-row {
+  background: #edf4ff;
+
+  border-color: #b8cdef;
 
   border-left: 4px solid var(--primary);
 }
 
-.queue-item.current .queue-number {
+.your-row .queue-number {
   color: #ffffff;
 
   background: var(--primary);
@@ -658,77 +934,104 @@ textarea {
   font-weight: 700;
 }
 
-.queue-item.current .queue-item-content strong {
+.your-row .queue-row-content strong {
   color: var(--primary);
 }
 
-.queue-item.current .queue-item-content span {
-  color: var(--text-muted);
+.you-label {
+  display: inline-block;
 
-  font-weight: 500;
+  margin-left: 5px;
+  padding: 2px 6px;
+
+  color: var(--primary);
+
+  background: #d9e7fc;
+
+  border-radius: 999px;
+
+  font-size: 8px;
+  line-height: 12px;
+  font-weight: 700;
+
+  vertical-align: middle;
+}
+
+.your-position-label {
+  flex-shrink: 0;
+
+  padding: 6px 8px;
+
+  color: var(--primary);
+
+  background: #dce9fc;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+  line-height: 13px;
+  font-weight: 600;
 }
 
 
 /* =========================================================
-   QUEUE EMPTY / ERROR
+   MORE QUEUE
    ========================================================= */
 
-.queue-empty {
-  padding: 28px 15px;
+.queue-more {
+  padding: 12px 0 0;
 
-  color: var(--text-muted);
-
-  background: #fafbfe;
-
-  border: 1px dashed #d5dce7;
-
-  border-radius: var(--radius);
+  color: var(--text-light);
 
   text-align: center;
 
-  font-size: 13px;
-  line-height: 20px;
+  font-size: 10px;
+  line-height: 15px;
 }
 
 
 /* =========================================================
-   LIVE UPDATE NOTICE
+   QUEUE NOTICE
    ========================================================= */
 
-.queue-live {
+.queue-notice {
   display: flex;
   align-items: flex-start;
 
-  gap: 10px;
+  gap: 11px;
 
-  margin-top: 18px;
+  margin-top: 22px;
 
-  padding: 14px;
+  padding: 15px;
 
-  background: #f7f9fc;
+  background: #f8faff;
 
   border: 1px solid var(--border);
 
   border-radius: var(--radius);
 }
 
-.live-indicator {
-  width: 8px;
-  height: 8px;
+.notice-icon {
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   flex-shrink: 0;
 
-  margin-top: 5px;
+  color: var(--primary);
 
-  background: var(--success);
+  background: var(--primary-light);
 
   border-radius: 50%;
 
-  box-shadow:
-    0 0 0 4px rgba(8, 127, 91, 0.10);
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.queue-live strong {
+.queue-notice strong {
   display: block;
 
   color: var(--text);
@@ -737,8 +1040,8 @@ textarea {
   line-height: 17px;
 }
 
-.queue-live p {
-  margin-top: 2px;
+.queue-notice p {
+  margin-top: 3px;
 
   color: var(--text-muted);
 
@@ -748,28 +1051,40 @@ textarea {
 
 
 /* =========================================================
-   REFRESH BUTTON
+   QUICK ACTIONS
    ========================================================= */
 
-.refresh-queue {
-  width: 100%;
+.quick-actions {
+  display: grid;
 
-  min-height: 46px;
+  grid-template-columns: repeat(2, 1fr);
 
-  margin-top: 16px;
+  gap: 10px;
 
-  color: var(--primary);
+  margin-top: 14px;
+}
+
+.quick-action {
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 13px;
+
+  color: var(--text);
 
   background: #ffffff;
 
-  border: 1px solid #cbd5e3;
+  border: 1px solid var(--border);
 
   border-radius: var(--radius);
 
-  font-size: 13px;
-  font-weight: 600;
+  text-decoration: none;
 
-  cursor: pointer;
+  box-shadow: 0 3px 15px rgba(17, 28, 45, 0.04);
 
   transition:
     background 0.18s ease,
@@ -777,129 +1092,181 @@ textarea {
     transform 0.18s ease;
 }
 
-.refresh-queue:hover {
-  background: #f5f8fd;
+.quick-action:hover {
+  background: #fafcff;
 
-  border-color: var(--primary);
+  border-color: #cbd6e5;
+
+  transform: translateY(-1px);
 }
 
-.refresh-queue:active {
-  transform: translateY(1px);
-}
-
-.refresh-queue:focus-visible {
-  outline: 3px solid rgba(0, 60, 144, 0.14);
-
-  outline-offset: 2px;
-}
-
-
-/* =========================================================
-   BOTTOM NAVIGATION
-   ========================================================= */
-
-.queue-bottom-nav {
-  position: fixed;
-
-  z-index: 20;
-
-  left: 50%;
-  bottom: 0;
-
-  width: 100%;
-  max-width: 520px;
-
-  transform: translateX(-50%);
-
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  padding: 8px 12px;
-
-  background: rgba(255, 255, 255, 0.96);
-
-  border-top: 1px solid var(--border);
-
-  box-shadow:
-    0 -5px 20px rgba(17, 28, 45, 0.06);
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.nav-item {
-  min-height: 48px;
+.quick-action-icon {
+  width: 34px;
+  height: 34px;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  gap: 2px;
+  flex-shrink: 0;
+
+  color: var(--primary);
+
+  background: var(--primary-light);
+
+  border-radius: 9px;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.quick-action > span:nth-child(2) {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.quick-action strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 700;
+}
+
+.quick-action small {
+  display: block;
+
+  margin-top: 2px;
 
   color: var(--text-muted);
 
-  background: transparent;
-
-  border: none;
-
-  border-radius: 999px;
-
-  text-decoration: none;
-
   font-size: 10px;
   line-height: 15px;
-  font-weight: 500;
-
-  cursor: pointer;
-
-  transition:
-    background 0.18s ease,
-    color 0.18s ease;
 }
 
-.nav-icon {
-  font-size: 19px;
-  line-height: 20px;
-}
+.action-arrow {
+  color: var(--text-light);
 
-.nav-item.active {
-  color: #ffffff;
-
-  background: var(--primary);
-
-  box-shadow:
-    0 4px 12px rgba(0, 60, 144, 0.18);
-}
-
-.nav-item:hover:not(.active) {
-  color: var(--primary);
-
-  background: #f1f5fc;
+  font-size: 17px;
 }
 
 
 /* =========================================================
-   DESKTOP
+   LAST UPDATED
+   ========================================================= */
+
+.last-updated {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  margin-top: 17px;
+
+  color: var(--text-light);
+
+  font-size: 10px;
+  line-height: 15px;
+}
+
+.update-dot {
+  width: 6px;
+  height: 6px;
+
+  background: var(--success);
+
+  border-radius: 50%;
+}
+
+.last-updated time {
+  color: var(--text-muted);
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+
+.mobile-navigation {
+  display: none;
+}
+
+
+/* =========================================================
+   JS UPDATE ANIMATION
+   ========================================================= */
+
+.queue-value-updated {
+  animation: queueValueUpdate 0.3s ease;
+}
+
+@keyframes queueValueUpdate {
+  0% {
+    opacity: 0.55;
+
+    transform: translateY(3px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   LOADING STATE
+   ========================================================= */
+
+.refresh-button.is-loading {
+  opacity: 0.65;
+
+  cursor: wait;
+}
+
+.refresh-button.is-loading span {
+  animation: refreshSpin 0.8s linear infinite;
+}
+
+@keyframes refreshSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   OFFLINE STATE
+   ========================================================= */
+
+.live-indicator.offline {
+  color: var(--waiting);
+
+  background: var(--waiting-bg);
+}
+
+.live-indicator.offline .live-pulse {
+  background: var(--waiting);
+
+  animation: none;
+}
+
+
+/* =========================================================
+   TABLET / DESKTOP
    ========================================================= */
 
 @media (min-width: 700px) {
 
-  .queue-page {
-    padding-bottom: 40px;
-  }
-
-  .queue-bottom-nav {
-    position: static;
-
-    margin: 24px auto 0;
-
-    border: 1px solid var(--border);
-
-    border-radius: 16px;
-
-    box-shadow: var(--shadow);
+  .queue-main {
+    padding-bottom: 60px;
   }
 
 }
@@ -909,116 +1276,271 @@ textarea {
    MOBILE
    ========================================================= */
 
-@media (max-width: 480px) {
-
-  .queue-page {
-    padding: 0 16px 94px;
-  }
+@media (max-width: 699px) {
 
   .queue-header {
-    padding-top: 15px;
+    position: relative;
+
+    background: #ffffff;
+  }
+
+  .queue-header-inner {
+    width: calc(100% - 24px);
+
+    min-height: 64px;
+  }
+
+  .desktop-navigation {
+    display: none;
+  }
+
+  .patient-indicator {
+    display: none;
+  }
+
+  .queue-main {
+    width: calc(100% - 24px);
+
+    padding-top: 24px;
+
+    padding-bottom: 90px;
   }
 
   .queue-intro {
-    padding: 24px 0 18px;
+    display: block;
+
+    margin-bottom: 18px;
   }
 
-  .queue-intro h2 {
-    font-size: 26px;
-    line-height: 33px;
+  .queue-intro h1 {
+    font-size: 28px;
+    line-height: 35px;
   }
 
   .queue-intro p {
+    margin-top: 7px;
+
     font-size: 14px;
     line-height: 21px;
   }
 
+  .live-indicator {
+    width: fit-content;
+
+    margin-top: 12px;
+  }
+
+  .current-token-card {
+    padding: 22px 17px 19px;
+  }
+
   .current-token {
-    padding: 22px 16px 18px;
+    font-size: 42px;
+    line-height: 51px;
   }
 
-  .current-token-number {
-    font-size: 44px;
-    line-height: 53px;
-  }
-
-  .token-stats {
-    margin-top: 19px;
-    padding-top: 16px;
-  }
-
-  .token-stat strong {
-    font-size: 23px;
-  }
-
-  .queue-progress {
-    padding: 17px;
-  }
-
-  .progress-header h3 {
-    font-size: 20px;
-    line-height: 27px;
-  }
-
-  .serving-token {
-    padding: 7px 10px;
+  .queue-status {
+    padding: 6px 9px;
 
     font-size: 10px;
   }
 
-  .queue-item {
-    min-height: 64px;
+  .token-statistics {
+    margin-top: 20px;
 
-    padding: 10px;
+    padding-top: 17px;
+  }
+
+  .stat-label {
+    font-size: 8px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .stat-unit {
+    font-size: 9px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+
+  .section-heading h2 {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .refresh-button {
+    min-height: 38px;
+
+    padding: 7px 10px;
+
+    font-size: 11px;
+  }
+
+  .serving-card {
+    padding: 13px;
+  }
+
+  .queue-row {
+    min-height: 60px;
+
+    padding: 9px 10px;
+
+    gap: 10px;
   }
 
   .queue-number {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .queue-row-content strong {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .queue-row-content span:not(.you-label) {
+    font-size: 10px;
+    line-height: 15px;
+  }
+
+  .row-status {
+    font-size: 9px;
+  }
+
+  .your-position-label {
+    display: none;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-navigation {
+    position: fixed;
+
+    z-index: 100;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 4px;
+
+    padding:
+      7px 10px
+      calc(7px + env(safe-area-inset-bottom));
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border-top: 1px solid var(--border);
+
+    box-shadow:
+      0 -5px 20px rgba(17, 28, 45, 0.07);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .mobile-nav-item {
+    min-height: 48px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2px;
+
+    color: var(--text-muted);
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 9px;
+    line-height: 14px;
+    font-weight: 500;
+
+    transition:
+      background 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .mobile-nav-icon {
+    font-size: 17px;
+    line-height: 20px;
+  }
+
+  .mobile-nav-item.active {
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    font-weight: 600;
   }
 
 }
 
 
 /* =========================================================
-   VERY SMALL PHONES
+   SMALL PHONES
    ========================================================= */
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
 
-  .queue-page {
-    padding-left: 12px;
-    padding-right: 12px;
+  .queue-main {
+    width: calc(100% - 20px);
   }
 
-  .queue-intro h2 {
-    font-size: 24px;
-    line-height: 31px;
+  .queue-intro h1 {
+    font-size: 26px;
+    line-height: 33px;
   }
 
-  .current-token-number {
-    font-size: 40px;
-    line-height: 49px;
+  .current-token-card {
+    padding: 20px 14px 17px;
   }
 
-  .queue-progress {
-    padding: 15px;
+  .current-token {
+    font-size: 38px;
+    line-height: 47px;
   }
 
-  .progress-header {
-    gap: 8px;
+  .token-card-label {
+    font-size: 10px;
   }
 
-  .progress-header h3 {
-    font-size: 19px;
+  .queue-status {
+    padding: 5px 8px;
   }
 
-  .serving-token {
-    font-size: 9px;
+  .stat-value {
+    font-size: 20px;
   }
 
-  .queue-item-content strong {
-    font-size: 12px;
+  .stat-label {
+    font-size: 7px;
+  }
+
+  .stat-unit {
+    font-size: 8px;
+  }
+
+  .section-heading h2 {
+    font-size: 20px;
+  }
+
+  .refresh-button {
+    padding: 6px 8px;
   }
 
 }
@@ -1028,55 +1550,24 @@ textarea {
    ACCESSIBILITY
    ========================================================= */
 
+.nav-link:focus-visible,
+.refresh-button:focus-visible,
+.quick-action:focus-visible,
+.mobile-nav-item:focus-visible {
+  outline: 3px solid rgba(0, 60, 144, 0.18);
+
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   *,
   *::before,
   *::after {
-    transition: none !important;
-
     scroll-behavior: auto !important;
+
+    animation: none !important;
+
+    transition: none !important;
   }
-
-}
-/* =========================================================
-   QUEUE JS STATES
-   ========================================================= */
-
-.queue-value-updated {
-  animation: queueValueUpdate 0.3s ease;
-}
-
-@keyframes queueValueUpdate {
-
-  0% {
-    opacity: 0.55;
-    transform: translateY(3px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}
-
-.refresh-queue.is-loading {
-  opacity: 0.65;
-  cursor: wait;
-}
-
-.live-indicator.offline {
-  background: var(--waiting);
-
-  box-shadow:
-    0 0 0 4px rgba(161, 92, 0, 0.10);
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .queue-value-updated {
-    animation: none;
-  }
-
 }
