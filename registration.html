@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -12,7 +11,7 @@
 
   <meta
     name="description"
-    content="Register for your clinic consultation and receive a queue token."
+    content="ClinicCare patient portal for registration, live queue tracking and consultation tokens."
   >
 
   <meta
@@ -20,7 +19,7 @@
     content="#003c90"
   >
 
-  <title>Register | ClinicCare</title>
+  <title>ClinicCare | Patient Portal</title>
 
   <link
     rel="preconnect"
@@ -40,13 +39,11 @@
 
   <link
     rel="stylesheet"
-    href="css/register.css"
+    href="css/index.css"
   >
-
 </head>
 
 <body>
-
 
   <header class="app-header">
 
@@ -75,261 +72,267 @@
 
       </a>
 
-      <a
-        href="index.html"
-        class="header-back"
-      >
-        Home
-      </a>
+      <div class="header-status">
+
+        <span class="status-dot"></span>
+
+        <span>
+          Clinic Live
+        </span>
+
+      </div>
 
     </div>
 
   </header>
 
 
-  <main class="registration-main">
+  <main class="home-main">
 
 
-    <!-- INTRO -->
+    <!-- HERO -->
 
-    <section class="registration-intro">
+    <section class="home-hero">
 
       <span class="eyebrow">
-        NEW VISIT
+        PATIENT SERVICES
       </span>
 
       <h1>
-        Register for
+        Your visit,
         <br>
-        your consultation.
+        made simpler.
       </h1>
 
       <p>
-        Enter your details below to join today's clinic queue.
+        Register for your consultation, manage your token,
+        and follow the live queue from one place.
       </p>
 
     </section>
 
 
-    <!-- FORM CARD -->
+    <!-- PRIMARY ACTION -->
 
-    <section class="registration-card">
+    <section class="primary-action-card">
 
-      <div class="form-header">
+      <a
+        href="registration.html"
+        class="primary-action"
+      >
+
+        <span class="action-icon">
+          +
+        </span>
+
+        <span class="action-content">
+
+          <small>
+            NEW VISIT
+          </small>
+
+          <strong>
+            Register & Get Token
+          </strong>
+
+          <span>
+            Enter your details and join today's consultation queue.
+          </span>
+
+        </span>
+
+        <span class="action-arrow">
+          →
+        </span>
+
+      </a>
+
+    </section>
+
+
+    <!-- AFTER REGISTRATION -->
+
+    <section class="home-section">
+
+      <div class="section-heading">
 
         <div>
 
-          <span class="form-step">
-            STEP 1 OF 1
+          <span>
+            AFTER REGISTRATION
           </span>
 
           <h2>
-            Patient details
+            Track your visit
           </h2>
 
         </div>
 
-        <span class="secure-badge">
-          Secure
+        <span class="live-badge">
+          <i></i>
+          Live
         </span>
 
       </div>
 
 
-      <form
-        id="registrationForm"
-        novalidate
-      >
+      <div class="service-list">
 
-
-        <!-- NAME -->
-
-        <div class="form-group">
-
-          <label for="name">
-            Full name
-          </label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your full name"
-            autocomplete="name"
-          >
-
-          <span
-            class="field-error"
-            id="nameError"
-          ></span>
-
-        </div>
-
-
-        <!-- AGE -->
-
-        <div class="form-group">
-
-          <label for="age">
-            Age
-          </label>
-
-          <input
-            type="number"
-            id="age"
-            name="age"
-            min="1"
-            max="120"
-            placeholder="Enter your age"
-            inputmode="numeric"
-          >
-
-          <span
-            class="field-error"
-            id="ageError"
-          ></span>
-
-        </div>
-
-
-        <!-- MOBILE -->
-
-        <div class="form-group">
-
-          <label for="mobile">
-            Mobile number
-          </label>
-
-          <input
-            type="tel"
-            id="mobile"
-            name="mobile"
-            maxlength="10"
-            placeholder="10-digit mobile number"
-            autocomplete="tel"
-            inputmode="numeric"
-          >
-
-          <span
-            class="field-error"
-            id="mobileError"
-          ></span>
-
-        </div>
-
-
-        <!-- REASON -->
-
-        <div class="form-group">
-
-          <label for="reason">
-            Reason for visit
-          </label>
-
-          <select
-            id="reason"
-            name="reason"
-          >
-
-            <option value="">
-              Select reason for visit
-            </option>
-
-            <option value="General Consultation">
-              General Consultation
-            </option>
-
-            <option value="Follow-up">
-              Follow-up
-            </option>
-
-            <option value="Fever / Cold">
-              Fever / Cold
-            </option>
-
-            <option value="Pain">
-              Pain
-            </option>
-
-            <option value="Other">
-              Other
-            </option>
-
-          </select>
-
-          <span
-            class="field-error"
-            id="reasonError"
-          ></span>
-
-        </div>
-
-
-        <!-- ISSUE -->
-
-        <div class="form-group">
-
-          <label for="issue">
-            Briefly describe your issue
-            <span>Optional</span>
-          </label>
-
-          <textarea
-            id="issue"
-            name="issue"
-            rows="4"
-            maxlength="300"
-            placeholder="Tell the doctor briefly what you are experiencing..."
-          ></textarea>
-
-        </div>
-
-
-        <!-- INFORMATION -->
-
-        <div class="form-information">
-
-          <span>
-            i
-          </span>
-
-          <p>
-            Your information is used only for today's clinic
-            visit and queue management.
-          </p>
-
-        </div>
-
-
-        <!-- SUBMIT -->
-
-        <button
-          type="submit"
-          id="submitButton"
-          class="submit-button"
+        <a
+          href="queue.html"
+          class="service-card"
         >
 
+          <span class="service-icon">
+            ≡
+          </span>
+
+          <span class="service-content">
+
+            <strong>
+              My Live Queue
+            </strong>
+
+            <small>
+              Token, position & waiting time
+            </small>
+
+          </span>
+
+          <span class="service-arrow">
+            →
+          </span>
+
+        </a>
+
+
+        <a
+          href="token.html"
+          class="service-card"
+        >
+
+          <span class="service-icon">
+            #
+          </span>
+
+          <span class="service-content">
+
+            <strong>
+              My Token
+            </strong>
+
+            <small>
+              View your current consultation token
+            </small>
+
+          </span>
+
+          <span class="service-arrow">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- PATIENT TOOLS -->
+
+    <section class="home-section">
+
+      <div class="section-heading">
+
+        <div>
+
           <span>
-            Register & Get Token
+            PATIENT TOOLS
+          </span>
+
+          <h2>
+            Need something?
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="tools-grid">
+
+        <a
+          href="support.html"
+          class="tool-card"
+        >
+
+          <span class="tool-icon">
+            ?
           </span>
 
           <strong>
-            →
+            Patient Support
           </strong>
 
-        </button>
+          <small>
+            Registration, token & queue assistance
+          </small>
 
+          <span class="tool-arrow">
+            →
+          </span>
 
-        <!-- HOME -->
-
-        <a
-          href="index.html"
-          class="cancel-link"
-        >
-          ← Back to Home
         </a>
 
-      </form>
+
+        <a
+          href="registration.html"
+          class="tool-card"
+        >
+
+          <span class="tool-icon">
+            ↻
+          </span>
+
+          <strong>
+            New Registration
+          </strong>
+
+          <small>
+            Start a new clinic visit
+          </small>
+
+          <span class="tool-arrow">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- QR INFORMATION -->
+
+    <section class="qr-info-card">
+
+      <div class="qr-info-icon">
+        QR
+      </div>
+
+      <div>
+
+        <strong>
+          Visiting the clinic?
+        </strong>
+
+        <p>
+          Scan the clinic QR code to open this patient portal
+          and register directly from your phone.
+        </p>
+
+      </div>
 
     </section>
 
@@ -345,7 +348,7 @@
 
     <a
       href="index.html"
-      class="mobile-nav-item"
+      class="mobile-nav-item active"
     >
 
       <span>⌂</span>
@@ -355,7 +358,7 @@
 
     <a
       href="registration.html"
-      class="mobile-nav-item active"
+      class="mobile-nav-item"
     >
 
       <span>+</span>
@@ -386,7 +389,7 @@
   </nav>
 
 
-  <script src="js/register.js"></script>
+  <script src="js/index.js"></script>
 
 </body>
 
