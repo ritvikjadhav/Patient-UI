@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,12 +12,16 @@
 
   <meta
     name="description"
-    content="Patient registration and consultation token system"
+    content="Register for your clinic consultation and receive a queue token."
   >
 
-  <title>Patient Registration | Clinic Automation</title>
+  <meta
+    name="theme-color"
+    content="#003c90"
+  >
 
-  <!-- Inter Font -->
+  <title>Register | ClinicCare</title>
+
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -24,89 +29,125 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.gstatic.com"
+    href="https://fonts.googleapis.com"
     crossorigin
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
 
-  <!-- Main Stylesheet -->
   <link
     rel="stylesheet"
-    href="css/style.css"
+    href="css/register.css"
   >
+
 </head>
 
 <body>
 
-  <main class="patient-page">
+
+  <header class="app-header">
+
+    <div class="header-inner">
+
+      <a
+        href="index.html"
+        class="brand"
+      >
+
+        <span class="brand-icon">
+          +
+        </span>
+
+        <span class="brand-copy">
+
+          <strong>
+            ClinicCare
+          </strong>
+
+          <small>
+            Patient Portal
+          </small>
+
+        </span>
+
+      </a>
+
+      <a
+        href="index.html"
+        class="header-back"
+      >
+        Home
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <main class="registration-main">
+
+
+    <!-- INTRO -->
+
+    <section class="registration-intro">
+
+      <span class="eyebrow">
+        NEW VISIT
+      </span>
+
+      <h1>
+        Register for
+        <br>
+        your consultation.
+      </h1>
+
+      <p>
+        Enter your details below to join today's clinic queue.
+      </p>
+
+    </section>
+
+
+    <!-- FORM CARD -->
 
     <section class="registration-card">
 
-      <!-- Clinic Identity -->
+      <div class="form-header">
 
-      <header class="clinic-header">
+        <div>
 
-        <div
-          class="clinic-logo"
-          aria-hidden="true"
-        >
-          +
-        </div>
-
-        <div class="clinic-details">
+          <span class="form-step">
+            STEP 1 OF 1
+          </span>
 
           <h2>
-            Clinic Automation
+            Patient details
           </h2>
-
-          <p>
-            Patient Registration
-          </p>
 
         </div>
 
-      </header>
-
-
-      <!-- Page Introduction -->
-
-      <section class="form-header">
-
-        <span class="eyebrow">
-          TODAY'S VISIT
+        <span class="secure-badge">
+          Secure
         </span>
 
-        <h1>
-          Get your consultation token
-        </h1>
+      </div>
 
-        <p>
-          Enter your details below to join today's queue.
-        </p>
-
-      </section>
-
-
-      <!-- Registration Form -->
 
       <form
         id="registrationForm"
         novalidate
       >
 
-        <!-- Patient Name -->
 
-        <div
-          class="form-group"
-          id="nameGroup"
-        >
+        <!-- NAME -->
+
+        <div class="form-group">
 
           <label for="name">
-            Patient Name
+            Full name
           </label>
 
           <input
@@ -115,26 +156,19 @@
             name="name"
             placeholder="Enter your full name"
             autocomplete="name"
-            maxlength="100"
-            required
           >
 
-          <small
-            class="error-message"
+          <span
+            class="field-error"
             id="nameError"
-          >
-            Please enter your name.
-          </small>
+          ></span>
 
         </div>
 
 
-        <!-- Age -->
+        <!-- AGE -->
 
-        <div
-          class="form-group"
-          id="ageGroup"
-        >
+        <div class="form-group">
 
           <label for="age">
             Age
@@ -144,118 +178,77 @@
             type="number"
             id="age"
             name="age"
-            placeholder="Enter your age"
             min="1"
             max="120"
+            placeholder="Enter your age"
             inputmode="numeric"
-            required
           >
 
-          <small
-            class="error-message"
+          <span
+            class="field-error"
             id="ageError"
-          >
-            Please enter a valid age between 1 and 120.
-          </small>
+          ></span>
 
         </div>
 
 
-        <!-- Mobile Number -->
+        <!-- MOBILE -->
 
-        <div
-          class="form-group"
-          id="mobileGroup"
-        >
+        <div class="form-group">
 
           <label for="mobile">
-            Mobile Number
+            Mobile number
           </label>
 
           <input
             type="tel"
             id="mobile"
             name="mobile"
-            placeholder="10-digit mobile number"
             maxlength="10"
-            inputmode="numeric"
+            placeholder="10-digit mobile number"
             autocomplete="tel"
-            required
+            inputmode="numeric"
           >
 
-          <small
-            class="error-message"
+          <span
+            class="field-error"
             id="mobileError"
-          >
-            Enter a valid 10-digit mobile number.
-          </small>
+          ></span>
 
         </div>
 
 
-        <!-- Reason -->
+        <!-- REASON -->
 
-        <div
-          class="form-group"
-          id="reasonGroup"
-        >
+        <div class="form-group">
 
           <label for="reason">
-            Reason for Visit
+            Reason for visit
           </label>
 
           <select
             id="reason"
             name="reason"
-            required
           >
 
-            <option
-              value=""
-              selected
-              disabled
-            >
-              Select reason
+            <option value="">
+              Select reason for visit
             </option>
 
-            <option value="Fever">
-              Fever
-            </option>
-
-            <option value="Cold / Cough">
-              Cold / Cough
-            </option>
-
-            <option value="Headache">
-              Headache
-            </option>
-
-            <option value="Body Pain">
-              Body Pain
-            </option>
-
-            <option value="Stomach Pain">
-              Stomach Pain
-            </option>
-
-            <option value="Skin Problem">
-              Skin Problem
-            </option>
-
-            <option value="Blood Pressure Check">
-              Blood Pressure Check
-            </option>
-
-            <option value="Diabetes Check">
-              Diabetes Check
-            </option>
-
-            <option value="Injury / Wound">
-              Injury / Wound
+            <option value="General Consultation">
+              General Consultation
             </option>
 
             <option value="Follow-up">
               Follow-up
+            </option>
+
+            <option value="Fever / Cold">
+              Fever / Cold
+            </option>
+
+            <option value="Pain">
+              Pain
             </option>
 
             <option value="Other">
@@ -264,79 +257,134 @@
 
           </select>
 
-          <small
-            class="error-message"
+          <span
+            class="field-error"
             id="reasonError"
-          >
-            Please select a reason for your visit.
-          </small>
+          ></span>
 
         </div>
 
 
-        <!-- Additional Information -->
+        <!-- ISSUE -->
 
         <div class="form-group">
 
-          <div class="label-row">
-
-            <label for="issue">
-              Additional Information
-            </label>
-
-            <span class="optional-label">
-              Optional
-            </span>
-
-          </div>
+          <label for="issue">
+            Briefly describe your issue
+            <span>Optional</span>
+          </label>
 
           <textarea
             id="issue"
             name="issue"
             rows="4"
             maxlength="300"
-            placeholder="Briefly describe any symptoms or details the doctor should know..."
+            placeholder="Tell the doctor briefly what you are experiencing..."
           ></textarea>
 
         </div>
 
 
-        <!-- Submit -->
+        <!-- INFORMATION -->
+
+        <div class="form-information">
+
+          <span>
+            i
+          </span>
+
+          <p>
+            Your information is used only for today's clinic
+            visit and queue management.
+          </p>
+
+        </div>
+
+
+        <!-- SUBMIT -->
 
         <button
           type="submit"
-          class="submit-button"
           id="submitButton"
+          class="submit-button"
         >
 
-          <span class="button-text">
-            Get Token
+          <span>
+            Register & Get Token
           </span>
 
-          <span
-            class="button-arrow"
-            aria-hidden="true"
-          >
+          <strong>
             →
-          </span>
+          </strong>
 
         </button>
 
+
+        <!-- HOME -->
+
+        <a
+          href="index.html"
+          class="cancel-link"
+        >
+          ← Back to Home
+        </a>
+
       </form>
-
-
-      <!-- Privacy -->
-
-      <p class="privacy-note">
-        Your details are used only for today's clinic visit.
-      </p>
 
     </section>
 
   </main>
 
 
-  <!-- Registration JavaScript -->
+  <!-- MOBILE NAV -->
+
+  <nav
+    class="mobile-navigation"
+    aria-label="Patient navigation"
+  >
+
+    <a
+      href="index.html"
+      class="mobile-nav-item"
+    >
+
+      <span>⌂</span>
+      <small>Home</small>
+
+    </a>
+
+    <a
+      href="registration.html"
+      class="mobile-nav-item active"
+    >
+
+      <span>+</span>
+      <small>Register</small>
+
+    </a>
+
+    <a
+      href="queue.html"
+      class="mobile-nav-item"
+    >
+
+      <span>≡</span>
+      <small>My Queue</small>
+
+    </a>
+
+    <a
+      href="support.html"
+      class="mobile-nav-item"
+    >
+
+      <span>?</span>
+      <small>Support</small>
+
+    </a>
+
+  </nav>
+
 
   <script src="js/register.js"></script>
 
