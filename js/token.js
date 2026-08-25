@@ -2,10 +2,16 @@
    CLINIC AUTOMATION — PATIENT TOKEN
    File: js/token.js
 
-   Database / Backend Ready
+   Frontend Demo + Backend Ready
 
-   Frontend flow:
+   Current:
+   token.html
+        ↓
+   token.js
+        ↓
+   DEMO DATA
 
+   Future:
    token.html
         ↓
    token.js
@@ -13,31 +19,53 @@
    Backend API
         ↓
    Database
-        ↓
-   Token + Queue Status
    ========================================================= */
 
 
 document.addEventListener("DOMContentLoaded", () => {
-
 
   /* =======================================================
      CONFIGURATION
      ======================================================= */
 
   /*
-    Replace this with your real backend URL later.
+    Keep empty during frontend development.
 
-    Example:
+    Later:
 
     const API_BASE_URL =
       "https://your-backend.com/api";
-
-    For now keep it empty so the page can still
-    be tested without a backend.
   */
 
   const API_BASE_URL = "";
+
+
+  /* =======================================================
+     DEMO DATA
+     ======================================================= */
+
+  /*
+    Temporary frontend data.
+
+    This allows the complete UI to work BEFORE
+    the backend/database is connected.
+
+    Remove/replace this when backend is ready.
+  */
+
+  const DEMO_TOKEN_DATA = {
+
+    token: "A-024",
+
+    patientName: "Patient Name",
+
+    queuePosition: 5,
+
+    estimatedWait: 15,
+
+    status: "Waiting"
+
+  };
 
 
   /* =======================================================
@@ -56,14 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const estimatedWait =
     document.getElementById("estimatedWait");
 
-  const statusText =
-    document.getElementById("statusText");
+  const tokenStatus =
+    document.getElementById("tokenStatus");
+
+  const statusMessage =
+    document.getElementById("statusMessage");
 
   const refreshButton =
     document.getElementById("refreshButton");
-
-  const backButton =
-    document.getElementById("backButton");
 
 
   /* =======================================================
@@ -89,62 +117,67 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeTokenPage() {
 
     /*
-      The token should normally be provided by the backend.
+      Check URL first.
 
-      For development/testing, we allow a token from
-      the URL:
+      Example:
 
       token.html?token=A-024
     */
 
     const urlParams =
-      new URLSearchParams(window.location.search);
+      new URLSearchParams(
+        window.location.search
+      );
 
-    currentToken =
+
+    const urlToken =
       urlParams.get("token");
 
 
     /*
-      If there is no token in the URL, show a clear
-      state instead of silently using fake data.
+      If a token exists in the URL,
+      use that token.
+
+      Otherwise use demo token.
     */
 
-    if (!currentToken) {
-
-      showNoTokenState();
-
-      return;
-    }
+    currentToken =
+      urlToken || DEMO_TOKEN_DATA.token;
 
 
     /*
-      Display token immediately.
-      The backend will provide the actual patient,
-      queue position and status.
+      Show token immediately.
+
+      This guarantees the demo UI works.
     */
 
     if (tokenNumber) {
+
       tokenNumber.textContent =
         currentToken;
+
     }
 
 
     /*
-      Load the current queue information.
+      Load queue information.
     */
 
     loadTokenStatus();
 
 
     /*
-      Refresh automatically every 30 seconds.
+      Automatic refresh.
 
-      This will become useful when the backend is
-      updating the patient's queue in real time.
+      Backend can later update the queue
+      without the patient manually refreshing.
     */
 
     refreshTimer =
-      setInterval(loadTokenStatus, 30000);
+      setInterval(
+        loadTokenStatus,
+        30000
+      );
 
   }
 
@@ -156,8 +189,9 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadTokenStatus() {
 
     /*
-      If backend URL has not been configured yet,
-      don't make a fake API request.
+      No backend configured.
+
+      Use demo data.
     */
 
     if (!API_BASE_URL) {
@@ -165,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setDemoState();
 
       return;
+
     }
 
 
@@ -178,16 +213,13 @@ document.addEventListener("DOMContentLoaded", () => {
           `${API_BASE_URL}/queue/${encodeURIComponent(currentToken)}`,
           {
             method: "GET",
+
             headers: {
               "Accept": "application/json"
             }
           }
         );
 
-
-      /*
-        Backend returned an error.
-      */
 
       if (!response.ok) {
 
@@ -203,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       /*
-        Display backend data.
+        Update UI with database/backend data.
       */
 
       updateTokenUI(data);
@@ -218,6 +250,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       showConnectionError();
+
+    } finally {
+
+      restoreRefreshButton();
 
     }
 
@@ -235,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       {
         token: "A-024",
-        patientName: "John Doe",
+        patientName: "Ritvik",
         queuePosition: 5,
         estimatedWait: 15,
         status: "Waiting"
@@ -271,26 +307,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (estimatedWait) {
 
-      estimatedWait.textContent =
+      if (
         data.estimatedWait !== undefined &&
         data.estimatedWait !== null
-          ? `~${data.estimatedWait}`
-          : "—";
+      ) {
+
+        estimatedWait.textContent =
+          `~${data.estimatedWait}`;
+
+      } else {
+
+        estimatedWait.textContent =
+          "—";
+
+      }
 
     }
 
 
-    if (statusText) {
+    const status =
+      data.status || "Waiting";
 
-      statusText.textContent =
-        data.status || "Waiting";
+
+    if (tokenStatus) {
+
+      tokenStatus.textContent =
+        status;
 
     }
 
 
-    updateStatusAppearance(
-      data.status || "Waiting"
-    );
+    updateStatusUI(status);
+
+  }
+
+
+  /* =======================================================
+     DEMO STATE
+     ======================================================= */
+
+  function setDemoState() {
+
+    /*
+      Use demo data while backend is not connected.
+    */
+
+    updateTokenUI({
+
+      token:
+        currentToken,
+
+      patientName:
+        DEMO_TOKEN_DATA.patientName,
+
+      queuePosition:
+        DEMO_TOKEN_DATA.queuePosition,
+
+      estimatedWait:
+        DEMO_TOKEN_DATA.estimatedWait,
+
+      status:
+        DEMO_TOKEN_DATA.status
+
+    });
 
   }
 
@@ -306,7 +385,9 @@ document.addEventListener("DOMContentLoaded", () => {
       position === null ||
       position === ""
     ) {
+
       return "—";
+
     }
 
 
@@ -320,15 +401,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /*
-      Example:
-
-      1 → 1st
-      2 → 2nd
-      3 → 3rd
-      5 → 5th
-    */
 
     const lastTwo =
       number % 100;
@@ -364,47 +436,151 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     DEMO STATE
+     STATUS UI
      ======================================================= */
 
-  /*
-    This is ONLY for frontend testing.
+  function updateStatusUI(status) {
 
-    It is NOT database data.
-
-    Delete this section once the backend is connected.
-  */
-
-  function setDemoState() {
-
-    if (patientName) {
-
-      patientName.textContent =
-        "Patient";
-
-    }
+    const normalizedStatus =
+      String(status)
+        .toLowerCase()
+        .trim();
 
 
-    if (queuePosition) {
+    /*
+      Token status text
+    */
 
-      queuePosition.textContent =
-        "—";
+    if (tokenStatus) {
+
+      tokenStatus.textContent =
+        status;
 
     }
 
 
-    if (estimatedWait) {
+    /*
+      Status message
+    */
 
-      estimatedWait.textContent =
-        "—";
+    if (statusMessage) {
+
+      if (
+        normalizedStatus === "called" ||
+        normalizedStatus === "your turn"
+      ) {
+
+        statusMessage.textContent =
+          "Your token has been called. Please proceed to the consultation area.";
+
+      } else if (
+        normalizedStatus === "completed" ||
+        normalizedStatus === "complete"
+      ) {
+
+        statusMessage.textContent =
+          "Your consultation has been completed.";
+
+      } else if (
+        normalizedStatus === "cancelled" ||
+        normalizedStatus === "canceled"
+      ) {
+
+        statusMessage.textContent =
+          "This token has been cancelled.";
+
+      } else {
+
+        statusMessage.textContent =
+          "Please wait until your token is called.";
+
+      }
 
     }
 
 
-    if (statusText) {
+    /*
+      Token status container
+    */
 
-      statusText.textContent =
-        "Waiting";
+    const tokenStatusElement =
+      document.querySelector(
+        ".token-status"
+      );
+
+
+    if (!tokenStatusElement) {
+      return;
+    }
+
+
+    tokenStatusElement.classList.remove(
+      "status-waiting",
+      "status-called",
+      "status-completed",
+      "status-cancelled"
+    );
+
+
+    /*
+      Waiting
+    */
+
+    if (
+      normalizedStatus === "waiting"
+    ) {
+
+      tokenStatusElement.classList.add(
+        "status-waiting"
+      );
+
+    }
+
+
+    /*
+      Called
+    */
+
+    else if (
+      normalizedStatus === "called" ||
+      normalizedStatus === "your turn"
+    ) {
+
+      tokenStatusElement.classList.add(
+        "status-called"
+      );
+
+    }
+
+
+    /*
+      Completed
+    */
+
+    else if (
+      normalizedStatus === "completed" ||
+      normalizedStatus === "complete"
+    ) {
+
+      tokenStatusElement.classList.add(
+        "status-completed"
+      );
+
+    }
+
+
+    /*
+      Cancelled
+    */
+
+    else if (
+      normalizedStatus === "cancelled" ||
+      normalizedStatus === "canceled"
+    ) {
+
+      tokenStatusElement.classList.add(
+        "status-cancelled"
+      );
 
     }
 
@@ -417,32 +593,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setLoadingState() {
 
-    if (refreshButton) {
-
-      refreshButton.disabled = true;
-
-      refreshButton.textContent =
-        "Refreshing...";
-
+    if (!refreshButton) {
+      return;
     }
+
+
+    refreshButton.disabled = true;
+
+    refreshButton.textContent =
+      "Refreshing...";
 
   }
 
 
   /* =======================================================
-     RESTORE REFRESH BUTTON
+     RESTORE BUTTON
      ======================================================= */
 
   function restoreRefreshButton() {
 
-    if (refreshButton) {
-
-      refreshButton.disabled = false;
-
-      refreshButton.textContent =
-        "Refresh Status";
-
+    if (!refreshButton) {
+      return;
     }
+
+
+    refreshButton.disabled = false;
+
+    refreshButton.textContent =
+      "Refresh Status";
 
   }
 
@@ -453,152 +631,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showConnectionError() {
 
-    restoreRefreshButton();
+    if (tokenStatus) {
 
-
-    if (statusText) {
-
-      statusText.textContent =
-        "Unable to update";
-
-    }
-
-  }
-
-
-  /* =======================================================
-     NO TOKEN STATE
-     ======================================================= */
-
-  function showNoTokenState() {
-
-    if (tokenNumber) {
-
-      tokenNumber.textContent =
-        "—";
+      tokenStatus.textContent =
+        "Update unavailable";
 
     }
 
 
-    if (patientName) {
+    if (statusMessage) {
 
-      patientName.textContent =
-        "Registration not found";
-
-    }
-
-
-    if (queuePosition) {
-
-      queuePosition.textContent =
-        "—";
+      statusMessage.textContent =
+        "We couldn't update the queue right now. Please try again.";
 
     }
-
-
-    if (estimatedWait) {
-
-      estimatedWait.textContent =
-        "—";
-
-    }
-
-
-    if (statusText) {
-
-      statusText.textContent =
-        "No token available";
-
-    }
-
-  }
-
-
-  /* =======================================================
-     STATUS APPEARANCE
-     ======================================================= */
-
-  function updateStatusAppearance(status) {
-
-    const statusBadge =
-      document.querySelector(".status-badge");
-
-    const statusDot =
-      document.querySelector(".status-dot");
-
-
-    if (!statusBadge || !statusDot) {
-      return;
-    }
-
-
-    /*
-      Remove previous status classes.
-    */
-
-    statusBadge.classList.remove(
-      "status-waiting",
-      "status-called",
-      "status-completed",
-      "status-cancelled"
-    );
-
-
-    const normalizedStatus =
-      String(status)
-        .toLowerCase()
-        .trim();
-
-
-    if (
-      normalizedStatus === "called" ||
-      normalizedStatus === "your turn"
-    ) {
-
-      statusBadge.classList.add(
-        "status-called"
-      );
-
-      return;
-
-    }
-
-
-    if (
-      normalizedStatus === "completed" ||
-      normalizedStatus === "complete"
-    ) {
-
-      statusBadge.classList.add(
-        "status-completed"
-      );
-
-      return;
-
-    }
-
-
-    if (
-      normalizedStatus === "cancelled" ||
-      normalizedStatus === "canceled"
-    ) {
-
-      statusBadge.classList.add(
-        "status-cancelled"
-      );
-
-      return;
-
-    }
-
-
-    /*
-      Default status.
-    */
-
-    statusBadge.classList.add(
-      "status-waiting"
-    );
 
   }
 
@@ -613,44 +659,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "click",
       async () => {
 
-        if (!currentToken) {
-          return;
-        }
-
-
         await loadTokenStatus();
-
-        restoreRefreshButton();
-
-      }
-    );
-
-  }
-
-
-  /* =======================================================
-     BACK BUTTON
-     ======================================================= */
-
-  if (backButton) {
-
-    backButton.addEventListener(
-      "click",
-      () => {
-
-        /*
-          Stop automatic queue refresh.
-        */
-
-        if (refreshTimer) {
-
-          clearInterval(refreshTimer);
-
-        }
-
-
-        window.location.href =
-          "index.html";
 
       }
     );
