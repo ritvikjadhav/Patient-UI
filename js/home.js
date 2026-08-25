@@ -1,18 +1,20 @@
 /* =========================================================
-   CLINICCARE — PATIENT HOMEPAGE
+   CLINIC AUTOMATION — PATIENT HOME
    File: js/home.js
 
-   Purpose:
-   - Handle homepage interactions
-   - Detect an active patient session/token
-   - Prepare homepage for backend integration
-   - No patient data is permanently stored here
+   UI-focused version
 
-   Backend:
-   Replace the demo session check with an API request
-   when the backend/database is connected.
+   Current:
+   - Works without backend
+   - Reads demo registration/token data
+   - Keeps patient information consistent across pages
+   - Updates dashboard statistics
+   - Handles navigation
+   - Ready for backend integration later
+
+   Backend later:
+   Replace loadPatientData() with an API call.
    ========================================================= */
-
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -20,50 +22,518 @@ document.addEventListener("DOMContentLoaded", () => {
      ELEMENTS
      ======================================================= */
 
-  const registerCard =
-    document.querySelector(".register-card");
+  const patientName =
+    document.getElementById("patientName");
 
-  const queueLinks =
-    document.querySelectorAll(
-      'a[href="queue.html"]'
-    );
+  const patientInitial =
+    document.getElementById("patientInitial");
 
-  const tokenLinks =
-    document.querySelectorAll(
-      'a[href="token.html"]'
-    );
+  const tokenNumber =
+    document.getElementById("tokenNumber");
 
-  const returningPatientLink =
-    document.querySelector(
-      'a[href*="returning=true"]'
-    );
+  const queuePosition =
+    document.getElementById("queuePosition");
+
+  const estimatedWait =
+    document.getElementById("estimatedWait");
+
+  const tokenStatus =
+    document.getElementById("tokenStatus");
+
+  const servingToken =
+    document.getElementById("servingToken");
+
+  const lastUpdated =
+    document.getElementById("lastUpdated");
+
+  const refreshButton =
+    document.getElementById("refreshButton");
 
 
   /* =======================================================
-     PAGE INITIALIZATION
+     DEMO DATA
      ======================================================= */
 
-  initializeHomepage();
+  const demoPatient = {
+    name: "Patient",
+    token: "A-024",
+    queuePosition: 5,
+    estimatedWait: 12,
+    status: "Waiting",
+    servingToken: "A-019"
+  };
 
 
   /* =======================================================
      INITIALIZE
      ======================================================= */
 
-  function initializeHomepage() {
+  loadPatientData();
+
+
+  /* =======================================================
+     LOAD PATIENT DATA
+     ======================================================= */
+
+  function loadPatientData() {
+
+    let data = null;
+
 
     /*
-      Backend integration will eventually happen here.
+      Registration page currently stores:
 
-      Example:
-
-      loadPatientSession();
-
-      For now, the homepage works entirely through
-      normal page navigation.
+      patientRegistration
     */
 
-    setupNavigation();
+    const savedRegistration =
+      localStorage.getItem("patientRegistration");
+
+
+    if (savedRegistration) {
+
+      try {
+
+        data =
+          JSON.parse(savedRegistration);
+
+      } catch (error) {
+
+        console.error(
+          "Unable to read patient registration:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /*
+      If there is no registration yet,
+      use demo information so the UI
+      remains launch-ready during development.
+    */
+
+    if (!data) {
+
+      data = demoPatient;
+
+    }
+
+
+    updateHomeUI(data);
+
+  }
+
+
+  /* =======================================================
+     UPDATE HOME UI
+     ======================================================= */
+
+  function updateHomeUI(data) {
+
+    const name =
+      data.name ||
+      data.patientName ||
+      "Patient";
+
+
+    const token =
+      data.token ||
+      "A-024";
+
+
+    const position =
+      data.queuePosition ??
+      5;
+
+
+    const wait =
+      data.estimatedWait ??
+      12;
+
+
+    const status =
+      data.status ||
+      "Waiting";
+
+
+    const serving =
+      data.servingToken ||
+      "A-019";
+
+
+    /* -----------------------------------------------------
+       PATIENT NAME
+       ----------------------------------------------------- */
+
+    if (patientName) {
+
+      patientName.textContent =
+        name;
+
+    }
+
+
+    /* -----------------------------------------------------
+       PATIENT INITIAL
+       ----------------------------------------------------- */
+
+    if (patientInitial) {
+
+      patientInitial.textContent =
+        getInitial(name);
+
+    }
+
+
+    /* -----------------------------------------------------
+       TOKEN
+       ----------------------------------------------------- */
+
+    if (tokenNumber) {
+
+      tokenNumber.textContent =
+        token;
+
+      animateValue(tokenNumber);
+
+    }
+
+
+    /* -----------------------------------------------------
+       QUEUE POSITION
+       ----------------------------------------------------- */
+
+    if (queuePosition) {
+
+      queuePosition.textContent =
+        formatPosition(position);
+
+      animateValue(queuePosition);
+
+    }
+
+
+    /* -----------------------------------------------------
+       ESTIMATED WAIT
+       ----------------------------------------------------- */
+
+    if (estimatedWait) {
+
+      estimatedWait.textContent =
+        wait !== null &&
+        wait !== undefined
+          ? `~${wait}`
+          : "—";
+
+      animateValue(estimatedWait);
+
+    }
+
+
+    /* -----------------------------------------------------
+       TOKEN STATUS
+       ----------------------------------------------------- */
+
+    if (tokenStatus) {
+
+      tokenStatus.textContent =
+        status;
+
+      updateStatus(status);
+
+    }
+
+
+    /* -----------------------------------------------------
+       CURRENTLY SERVING
+       ----------------------------------------------------- */
+
+    if (servingToken) {
+
+      servingToken.textContent =
+        serving;
+
+    }
+
+
+    /* -----------------------------------------------------
+       LAST UPDATED
+       ----------------------------------------------------- */
+
+    updateLastUpdated();
+
+  }
+
+
+  /* =======================================================
+     INITIAL LETTER
+     ======================================================= */
+
+  function getInitial(name) {
+
+    if (!name) {
+      return "P";
+    }
+
+
+    return name
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
+  }
+
+
+  /* =======================================================
+     QUEUE POSITION FORMAT
+     ======================================================= */
+
+  function formatPosition(position) {
+
+    if (
+      position === null ||
+      position === undefined ||
+      position === ""
+    ) {
+
+      return "—";
+
+    }
+
+
+    const number =
+      Number(position);
+
+
+    if (!Number.isFinite(number)) {
+
+      return position;
+
+    }
+
+
+    const lastTwo =
+      number % 100;
+
+
+    if (
+      lastTwo >= 11 &&
+      lastTwo <= 13
+    ) {
+
+      return `${number}th`;
+
+    }
+
+
+    switch (number % 10) {
+
+      case 1:
+        return `${number}st`;
+
+      case 2:
+        return `${number}nd`;
+
+      case 3:
+        return `${number}rd`;
+
+      default:
+        return `${number}th`;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     STATUS
+     ======================================================= */
+
+  function updateStatus(status) {
+
+    const normalized =
+      String(status)
+        .toLowerCase()
+        .trim();
+
+
+    /*
+      Support different class names
+      depending on the home.html structure.
+    */
+
+    const statusElement =
+      document.querySelector(
+        ".token-status, .status-badge, .queue-status"
+      );
+
+
+    if (!statusElement) {
+      return;
+    }
+
+
+    statusElement.classList.remove(
+      "waiting",
+      "called",
+      "completed",
+      "cancelled",
+      "status-waiting",
+      "status-called",
+      "status-completed",
+      "status-cancelled"
+    );
+
+
+    if (
+      normalized === "called" ||
+      normalized === "your turn"
+    ) {
+
+      statusElement.classList.add(
+        "called",
+        "status-called"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      normalized === "completed" ||
+      normalized === "complete"
+    ) {
+
+      statusElement.classList.add(
+        "completed",
+        "status-completed"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      normalized === "cancelled" ||
+      normalized === "canceled"
+    ) {
+
+      statusElement.classList.add(
+        "cancelled",
+        "status-cancelled"
+      );
+
+      return;
+
+    }
+
+
+    statusElement.classList.add(
+      "waiting",
+      "status-waiting"
+    );
+
+  }
+
+
+  /* =======================================================
+     LAST UPDATED
+     ======================================================= */
+
+  function updateLastUpdated() {
+
+    if (!lastUpdated) {
+      return;
+    }
+
+
+    const now =
+      new Date();
+
+
+    lastUpdated.textContent =
+      now.toLocaleTimeString(
+        [],
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+
+  }
+
+
+  /* =======================================================
+     VALUE ANIMATION
+     ======================================================= */
+
+  function animateValue(element) {
+
+    element.classList.remove(
+      "queue-value-updated"
+    );
+
+
+    /*
+      Force browser reflow so the animation
+      can run again when refreshed.
+    */
+
+    void element.offsetWidth;
+
+
+    element.classList.add(
+      "queue-value-updated"
+    );
+
+  }
+
+
+  /* =======================================================
+     REFRESH
+     ======================================================= */
+
+  if (refreshButton) {
+
+    refreshButton.addEventListener(
+      "click",
+      () => {
+
+        refreshButton.disabled = true;
+
+        refreshButton.classList.add(
+          "is-loading"
+        );
+
+
+        refreshButton.textContent =
+          "Refreshing...";
+
+
+        setTimeout(() => {
+
+          loadPatientData();
+
+          refreshButton.disabled =
+            false;
+
+          refreshButton.classList.remove(
+            "is-loading"
+          );
+
+
+          refreshButton.textContent =
+            "Refresh Status";
+
+        }, 450);
+
+      }
+    );
 
   }
 
@@ -72,195 +542,75 @@ document.addEventListener("DOMContentLoaded", () => {
      NAVIGATION
      ======================================================= */
 
-  function setupNavigation() {
+  /*
+    These work with normal HTML links.
 
-    /*
-      Register card
-    */
+    home/index
+      → index.html
 
-    if (registerCard) {
+    registration
+      → registration.html
 
-      registerCard.addEventListener("click", () => {
+    live queue
+      → queue.html
 
-        /*
-          Allow the browser to handle the normal
-          registration.html navigation.
-        */
+    token
+      → token.html
 
-        registerCard.classList.add("is-opening");
-
-      });
-
-    }
+    support
+      → support.html
+  */
 
 
-    /*
-      Queue links
-    */
+  document
+    .querySelectorAll(
+      "[data-navigation]"
+    )
+    .forEach((link) => {
 
-    queueLinks.forEach((link) => {
-
-      link.addEventListener("click", () => {
-
-        link.classList.add("is-opening");
-
-      });
-
-    });
-
-
-    /*
-      Token links
-    */
-
-    tokenLinks.forEach((link) => {
-
-      link.addEventListener("click", () => {
-
-        link.classList.add("is-opening");
-
-      });
-
-    });
-
-
-    /*
-      Returning patient
-    */
-
-    if (returningPatientLink) {
-
-      returningPatientLink.addEventListener(
+      link.addEventListener(
         "click",
         () => {
 
-          /*
-            registration.js will handle the
-            returning=true parameter.
-          */
+          const destination =
+            link.dataset.navigation;
 
-          returningPatientLink.classList.add(
-            "is-opening"
-          );
+
+          if (!destination) {
+            return;
+          }
+
+
+          window.location.href =
+            destination;
 
         }
       );
 
-    }
-
-  }
+    });
 
 
   /* =======================================================
-     BACKEND SESSION — FUTURE
+     AUTO UPDATE
      ======================================================= */
 
   /*
-    When your backend is connected, this function can
-    retrieve the patient's active visit.
+    UI-only refresh.
 
-    Example:
+    Later this can become:
 
-    async function loadPatientSession() {
+      GET /api/patient/status
 
-      try {
+    or:
 
-        const response = await fetch(
-          "YOUR_BACKEND_API/patient/session",
-          {
-            method: "GET",
-            credentials: "include"
-          }
-        );
-
-        if (!response.ok) {
-          return;
-        }
-
-        const patient = await response.json();
-
-        updateHomepage(patient);
-
-      } catch (error) {
-
-        console.error(
-          "Unable to load patient session:",
-          error
-        );
-
-      }
-
-    }
+      GET /api/queue/{token}
   */
 
+  setInterval(() => {
 
-  /* =======================================================
-     UPDATE HOMEPAGE — FUTURE BACKEND
-     ======================================================= */
+    loadPatientData();
 
-  /*
-    Example backend response:
-
-    {
-      hasActiveVisit: true,
-      token: "A-024",
-      queuePosition: 5,
-      estimatedWait: 15,
-      status: "Waiting"
-    }
-
-
-    Then the homepage could dynamically show:
-
-    "Active Token A-024"
-    "5 patients ahead"
-    "~15 minutes"
-
-
-    Example:
-
-    function updateHomepage(patient) {
-
-      if (!patient.hasActiveVisit) {
-        return;
-      }
-
-      // Update active token card
-      // Update queue status
-      // Update navigation
-    }
-  */
-
-
-  /* =======================================================
-     ACCESSIBILITY
-     ======================================================= */
-
-  document.addEventListener(
-    "keydown",
-    (event) => {
-
-      /*
-        Prevent accidental activation while the page
-        is loading or transitioning.
-      */
-
-      if (event.key === "Escape") {
-
-        document
-          .querySelectorAll(".is-opening")
-          .forEach((element) => {
-
-            element.classList.remove(
-              "is-opening"
-            );
-
-          });
-
-      }
-
-    }
-  );
+  }, 30000);
 
 
 });
