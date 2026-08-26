@@ -12,7 +12,7 @@
 
   <meta
     name="description"
-    content="View your ClinicCare consultation token and queue status."
+    content="View your ClinicCare consultation token and live queue status."
   >
 
   <meta
@@ -22,6 +22,11 @@
 
   <title>My Token | ClinicCare</title>
 
+
+  <!-- =====================================================
+       FONT
+       ===================================================== -->
+
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -29,7 +34,7 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.googleapis.com"
+    href="https://fonts.gstatic.com"
     crossorigin
   >
 
@@ -38,6 +43,11 @@
     rel="stylesheet"
   >
 
+
+  <!-- =====================================================
+       TOKEN STYLESHEET
+       ===================================================== -->
+
   <link
     rel="stylesheet"
     href="css/token.css"
@@ -45,19 +55,29 @@
 
 </head>
 
+
 <body>
 
+
+  <!-- =====================================================
+       APP HEADER
+       ===================================================== -->
 
   <header class="app-header">
 
     <div class="header-inner">
 
+
       <a
         href="index.html"
         class="brand"
+        aria-label="ClinicCare Home"
       >
 
-        <span class="brand-icon">
+        <span
+          class="brand-icon"
+          aria-hidden="true"
+        >
           +
         </span>
 
@@ -75,8 +95,13 @@
 
       </a>
 
-      <span class="header-live">
-        ● Live
+
+      <span
+        class="header-live"
+        id="headerLiveStatus"
+      >
+        <i aria-hidden="true"></i>
+        Live
       </span>
 
     </div>
@@ -84,14 +109,23 @@
   </header>
 
 
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
+
   <main class="token-main">
 
 
-    <!-- SUCCESS -->
+    <!-- ===================================================
+         REGISTRATION SUCCESS
+         =================================================== -->
 
     <section class="success-section">
 
-      <span class="success-icon">
+      <span
+        class="success-icon"
+        aria-hidden="true"
+      >
         ✓
       </span>
 
@@ -111,24 +145,41 @@
     </section>
 
 
-    <!-- PATIENT -->
+    <!-- ===================================================
+         PATIENT INFORMATION
+         =================================================== -->
 
-    <section class="patient-strip">
+    <section
+      class="patient-strip"
+      aria-label="Patient information"
+    >
 
       <span>
         PATIENT
       </span>
 
-      <strong id="patientName">
-        Patient Name
+      <strong
+        id="patientName"
+        data-field="patient-name"
+      >
+        Loading...
       </strong>
 
     </section>
 
 
-    <!-- TOKEN -->
+    <!-- ===================================================
+         TOKEN CARD
+         =================================================== -->
 
-    <section class="token-card">
+    <section
+      class="token-card"
+      id="tokenCard"
+      data-token-status="waiting"
+    >
+
+
+      <!-- TOKEN HEADER -->
 
       <div class="token-card-header">
 
@@ -136,9 +187,16 @@
           YOUR TOKEN NUMBER
         </span>
 
-        <div class="status-badge">
+        <div
+          class="status-badge"
+          id="statusBadge"
+          data-field="status"
+        >
 
-          <i class="status-dot"></i>
+          <i
+            class="status-dot"
+            aria-hidden="true"
+          ></i>
 
           <span id="statusText">
             Waiting
@@ -148,26 +206,38 @@
 
       </div>
 
+
+      <!-- TOKEN NUMBER -->
+
       <strong
         id="tokenNumber"
         class="token-number"
+        data-field="token"
       >
-        A-024
+        --
       </strong>
 
 
-      <!-- STATS -->
+      <!-- =================================================
+           TOKEN STATISTICS
+           ================================================= -->
 
       <div class="token-stats">
 
-        <div>
+
+        <!-- Ahead -->
+
+        <div class="token-stat">
 
           <span>
             AHEAD OF YOU
           </span>
 
-          <strong id="aheadOfYou">
-            4
+          <strong
+            id="aheadOfYou"
+            data-field="ahead"
+          >
+            --
           </strong>
 
           <small>
@@ -177,14 +247,19 @@
         </div>
 
 
-        <div>
+        <!-- Estimated wait -->
+
+        <div class="token-stat">
 
           <span>
             ESTIMATED WAIT
           </span>
 
-          <strong id="estimatedWait">
-            12
+          <strong
+            id="estimatedWait"
+            data-field="wait"
+          >
+            --
           </strong>
 
           <small>
@@ -194,14 +269,19 @@
         </div>
 
 
-        <div>
+        <!-- Position -->
+
+        <div class="token-stat">
 
           <span>
             YOUR POSITION
           </span>
 
-          <strong id="queuePosition">
-            5
+          <strong
+            id="queuePosition"
+            data-field="position"
+          >
+            --
           </strong>
 
           <small>
@@ -215,18 +295,24 @@
     </section>
 
 
-    <!-- PRIMARY TRACK -->
+    <!-- ===================================================
+         PRIMARY QUEUE ACTION
+         =================================================== -->
 
     <a
       href="queue.html"
       class="track-button"
+      id="trackQueueButton"
     >
 
-      <span>
+      <span
+        class="track-icon"
+        aria-hidden="true"
+      >
         ≡
       </span>
 
-      <span>
+      <span class="track-content">
 
         <strong>
           Track Live Queue
@@ -238,29 +324,50 @@
 
       </span>
 
-      <b>
+      <b
+        aria-hidden="true"
+      >
         →
       </b>
 
     </a>
 
 
-    <!-- REFRESH -->
+    <!-- ===================================================
+         REFRESH STATUS
+         =================================================== -->
 
     <button
       type="button"
       id="refreshButton"
       class="refresh-button"
+      aria-label="Refresh token status"
     >
-      ↻ &nbsp; Refresh Status
+
+      <span
+        class="refresh-icon"
+        aria-hidden="true"
+      >
+        ↻
+      </span>
+
+      <span>
+        Refresh Status
+      </span>
+
     </button>
 
 
-    <!-- INFORMATION -->
+    <!-- ===================================================
+         INFORMATION
+         =================================================== -->
 
     <section class="waiting-card">
 
-      <span class="waiting-icon">
+      <span
+        class="waiting-icon"
+        aria-hidden="true"
+      >
         i
       </span>
 
@@ -271,9 +378,9 @@
         </strong>
 
         <p>
-          You can leave this page open or check your live queue
-          anytime. Your position will change automatically
-          as consultations are completed.
+          You can leave this page open or check your live
+          queue anytime. Your position will update as
+          consultations are completed.
         </p>
 
       </div>
@@ -281,7 +388,9 @@
     </section>
 
 
-    <!-- ACTIONS -->
+    <!-- ===================================================
+         ACTIONS
+         =================================================== -->
 
     <section class="token-actions">
 
@@ -301,58 +410,157 @@
 
     </section>
 
+
+    <!-- ===================================================
+         SYSTEM STATUS
+         =================================================== -->
+
+    <div
+      class="data-status"
+      id="dataStatus"
+      aria-live="polite"
+    >
+      <span
+        class="data-status-dot"
+        aria-hidden="true"
+      ></span>
+
+      <span id="dataStatusText">
+        Queue status is up to date
+      </span>
+    </div>
+
+
   </main>
 
 
-  <!-- MOBILE NAV -->
+  <!-- =====================================================
+       MOBILE NAVIGATION
+       ===================================================== -->
 
   <nav
     class="mobile-navigation"
     aria-label="Patient navigation"
   >
 
+
+    <!-- Home -->
+
     <a
       href="index.html"
       class="mobile-nav-item"
     >
 
-      <span>⌂</span>
-      <small>Home</small>
+      <span
+        aria-hidden="true"
+      >
+        ⌂
+      </span>
+
+      <small>
+        Home
+      </small>
 
     </a>
+
+
+    <!-- Register -->
 
     <a
       href="registration.html"
       class="mobile-nav-item"
     >
 
-      <span>+</span>
-      <small>Register</small>
+      <span
+        aria-hidden="true"
+      >
+        +
+      </span>
+
+      <small>
+        Register
+      </small>
 
     </a>
+
+
+    <!-- Queue -->
 
     <a
       href="queue.html"
       class="mobile-nav-item"
     >
 
-      <span>≡</span>
-      <small>My Queue</small>
+      <span
+        aria-hidden="true"
+      >
+        ≡
+      </span>
+
+      <small>
+        My Queue
+      </small>
 
     </a>
+
+
+    <!-- Support -->
 
     <a
       href="support.html"
       class="mobile-nav-item"
     >
 
-      <span>?</span>
-      <small>Support</small>
+      <span
+        aria-hidden="true"
+      >
+        ?
+      </span>
+
+      <small>
+        Support
+      </small>
 
     </a>
 
   </nav>
 
+
+  <!-- =====================================================
+       TOKEN JAVASCRIPT
+       ===================================================== -->
+
+  <!--
+    =========================================================
+    BACKEND / API INTEGRATION POINT
+    =========================================================
+
+    token.js should retrieve the patient's active visit/token.
+
+    Example future API:
+
+      GET /api/patient/token
+
+    Expected response:
+
+      {
+        "patientName": "Rahul Sharma",
+        "token": "A-024",
+        "status": "waiting",
+        "ahead": 4,
+        "position": 5,
+        "estimatedWait": 12
+      }
+
+    The backend developer can replace the temporary
+    localStorage/demo data inside token.js with fetch():
+
+      fetch("/api/patient/token")
+
+    No HTML changes should be required.
+
+    =========================================================
+  -->
 
   <script src="js/token.js"></script>
 
