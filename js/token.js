@@ -1,407 +1,535 @@
-"use strict";
+/* =========================================================
+   CLINICCARE — PATIENT TOKEN
+   File: js/token.js
 
-document.addEventListener("DOMContentLoaded", () => {
+   V1 FEATURES
+   ---------------------------------------------------------
+   - Reads patient data from registration
+   - Displays the exact registered patient name
+   - Displays token generated during registration
+   - Displays queue information
+   - Refresh button
+   - Prepared for backend/API integration
+   - No hardcoded patient name
+   ========================================================= */
+
 
 /* =========================================================
-TOKEN PAGE — V1
-========================================================= */
+   STORAGE KEYS
+   ========================================================= */
+
+const REGISTRATION_STORAGE_KEY =
+  "cliniccare_registration";
+
 
 /* =========================================================
-ELEMENTS
-========================================================= */
+   DOM ELEMENTS
+   ========================================================= */
 
 const patientNameElement =
-document.getElementById("patientName");
+  document.getElementById("patientName");
 
 const tokenNumberElement =
-document.getElementById("tokenNumber");
+  document.getElementById("tokenNumber");
 
 const statusTextElement =
-document.getElementById("statusText");
+  document.getElementById("statusText");
 
 const aheadOfYouElement =
-document.getElementById("aheadOfYou");
+  document.getElementById("aheadOfYou");
 
 const estimatedWaitElement =
-document.getElementById("estimatedWait");
+  document.getElementById("estimatedWait");
 
 const queuePositionElement =
-document.getElementById("queuePosition");
+  document.getElementById("queuePosition");
 
 const refreshButton =
-document.getElementById("refreshButton");
+  document.getElementById("refreshButton");
+
 
 /* =========================================================
-GET TEMPORARY PATIENT DATA
-=========================================================
+   GET REGISTRATION DATA
+   ========================================================= */
 
- V1:
- Data comes from localStorage.
+function getRegistrationData() {
 
- BACKEND:
- This will later come from an authenticated API request,
- for example:
+  const savedData =
+    localStorage.getItem(
+      REGISTRATION_STORAGE_KEY
+    );
 
- GET /api/queue/my-status
 
- The backend should return:
+  if (!savedData) {
 
- {
-   "patient": {
-     "name": "RITVIK JADHAV"
-   },
-   "queue": {
-     "token": "A-024",
-     "status": "Waiting",
-     "aheadOfYou": 4,
-     "estimatedWait": 12,
-     "position": 5
-   }
- }
+    return null;
 
- ========================================================= */
+  }
 
-function getPatientData() {
 
-const storedData =
-  localStorage.getItem("clinicPatient");
+  try {
 
-if (!storedData) {
-  return null;
-}
+    return JSON.parse(savedData);
 
-try {
+  } catch (error) {
 
-  return JSON.parse(storedData);
+    console.error(
+      "Unable to read registration data:",
+      error
+    );
 
-} catch (error) {
+    return null;
 
-  console.error(
-    "Invalid patient data.",
-    error
-  );
-
-  return null;
-}
+  }
 
 }
+
 
 /* =========================================================
-RENDER PATIENT DATA
-========================================================= */
+   FORMAT PATIENT NAME
+   ========================================================= */
 
-function renderPatientData(patient) {
+function formatPatientName(name) {
 
-if (!patient) {
-  return;
+  if (!name) {
+
+    return "Patient";
+
+  }
+
+
+  /*
+   * Converts:
+   *
+   * "namaste"
+   *       ↓
+   * "Namaste"
+   *
+   * "RITVIK JADHAV"
+   *       ↓
+   * "Ritvik Jadhav"
+   *
+   * This is only presentation formatting.
+   */
+
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(
+      /\b\w/g,
+      character =>
+        character.toUpperCase()
+    );
+
 }
 
 
-/* ---------- PATIENT NAME ---------- */
+/* =========================================================
+   UPDATE PATIENT NAME
+   ========================================================= */
 
-if (patientNameElement) {
+function updatePatientName(data) {
+
+  if (!patientNameElement) {
+    return;
+  }
+
+
+  const name =
+    data?.patient?.name;
+
+
+  if (!name) {
+
+    patientNameElement.textContent =
+      "Patient";
+
+    return;
+
+  }
+
 
   patientNameElement.textContent =
-    patient.name || "Patient";
+    formatPatientName(name);
 
 }
 
-
-/* ---------- TOKEN ---------- */
-
-if (tokenNumberElement) {
-
-  tokenNumberElement.textContent =
-    patient.token || "A-024";
-
-}
-
-
-/* ---------- STATUS ---------- */
-
-if (statusTextElement) {
-
-  statusTextElement.textContent =
-    patient.status || "Waiting";
-
-}
-
-
-/* ---------- AHEAD OF YOU ---------- */
-
-if (aheadOfYouElement) {
-
-  aheadOfYouElement.textContent =
-    Number.isFinite(Number(patient.aheadOfYou))
-      ? patient.aheadOfYou
-      : "0";
-
-}
-
-
-/* ---------- ESTIMATED WAIT ---------- */
-
-if (estimatedWaitElement) {
-
-  estimatedWaitElement.textContent =
-    Number.isFinite(Number(patient.estimatedWait))
-      ? patient.estimatedWait
-      : "0";
-
-}
-
-
-/* ---------- POSITION ---------- */
-
-if (queuePositionElement) {
-
-  queuePositionElement.textContent =
-    Number.isFinite(Number(patient.queuePosition))
-      ? patient.queuePosition
-      : "1";
-
-}
-
-
-/* =======================================================
-   STATUS VISUAL
-   ======================================================= */
-
-updateStatusVisual(
-  patient.status || "Waiting"
-);
-
-}
 
 /* =========================================================
-STATUS VISUAL
-========================================================= */
+   UPDATE TOKEN INFORMATION
+   ========================================================= */
 
-function updateStatusVisual(status) {
+function updateTokenInformation(data) {
 
-if (!statusTextElement) {
-  return;
+  if (!data) {
+    return;
+  }
+
+
+  const queue =
+    data.queue || {};
+
+
+  /* -------------------------------------------------------
+     TOKEN
+     ------------------------------------------------------- */
+
+  if (tokenNumberElement) {
+
+    tokenNumberElement.textContent =
+      queue.token || "—";
+
+  }
+
+
+  /* -------------------------------------------------------
+     STATUS
+     ------------------------------------------------------- */
+
+  if (statusTextElement) {
+
+    statusTextElement.textContent =
+      queue.status || "Waiting";
+
+  }
+
+
+  /* -------------------------------------------------------
+     AHEAD OF YOU
+     ------------------------------------------------------- */
+
+  if (aheadOfYouElement) {
+
+    aheadOfYouElement.textContent =
+      Number.isFinite(
+        Number(queue.aheadOfYou)
+      )
+        ? queue.aheadOfYou
+        : "—";
+
+  }
+
+
+  /* -------------------------------------------------------
+     ESTIMATED WAIT
+     ------------------------------------------------------- */
+
+  if (estimatedWaitElement) {
+
+    estimatedWaitElement.textContent =
+      Number.isFinite(
+        Number(queue.estimatedWait)
+      )
+        ? queue.estimatedWait
+        : "—";
+
+  }
+
+
+  /* -------------------------------------------------------
+     POSITION
+     ------------------------------------------------------- */
+
+  if (queuePositionElement) {
+
+    queuePositionElement.textContent =
+      Number.isFinite(
+        Number(queue.position)
+      )
+        ? queue.position
+        : "—";
+
+  }
+
 }
 
-const status =
-  String(statusTextElement.textContent)
-    .toLowerCase();
+
+/* =========================================================
+   UPDATE COMPLETE PAGE
+   ========================================================= */
+
+function updateTokenPage(data) {
+
+  if (!data) {
+
+    handleMissingRegistration();
+
+    return;
+
+  }
 
 
-const statusBadge =
-  statusTextElement.closest(".status-badge");
+  updatePatientName(data);
 
-if (!statusBadge) {
-  return;
+  updateTokenInformation(data);
+
 }
 
 
-statusBadge.classList.remove(
-  "status-waiting",
-  "status-called",
-  "status-serving",
-  "status-completed"
-);
+/* =========================================================
+   MISSING REGISTRATION
+   ========================================================= */
 
+function handleMissingRegistration() {
 
-if (
-  status.includes("called")
-) {
-
-  statusBadge.classList.add(
-    "status-called"
+  console.warn(
+    "No active clinic registration found."
   );
 
-} else if (
-  status.includes("serving") ||
-  status.includes("consultation")
-) {
 
-  statusBadge.classList.add(
-    "status-serving"
-  );
+  if (patientNameElement) {
 
-} else if (
-  status.includes("completed") ||
-  status.includes("complete")
-) {
+    patientNameElement.textContent =
+      "No active registration";
 
-  statusBadge.classList.add(
-    "status-completed"
-  );
+  }
 
-} else {
 
-  statusBadge.classList.add(
-    "status-waiting"
-  );
+  if (tokenNumberElement) {
+
+    tokenNumberElement.textContent =
+      "—";
+
+  }
+
+
+  if (statusTextElement) {
+
+    statusTextElement.textContent =
+      "Not registered";
+
+  }
+
+
+  if (aheadOfYouElement) {
+
+    aheadOfYouElement.textContent =
+      "—";
+
+  }
+
+
+  if (estimatedWaitElement) {
+
+    estimatedWaitElement.textContent =
+      "—";
+
+  }
+
+
+  if (queuePositionElement) {
+
+    queuePositionElement.textContent =
+      "—";
+
+  }
 
 }
 
-}
 
 /* =========================================================
-LOAD PATIENT
-========================================================= */
+   REFRESH FROM TEMPORARY STORAGE
+   ========================================================= */
 
-const patient =
-getPatientData();
+function refreshTokenData() {
+
+  const data =
+    getRegistrationData();
+
+
+  updateTokenPage(data);
+
+}
+
 
 /* =========================================================
-NO REGISTRATION FOUND
-========================================================= */
-
-if (!patient) {
-
-/*
- * No registration exists in this browser.
- *
- * In production, the backend should determine whether
- * the patient has an active registration.
- */
-
-if (patientNameElement) {
-
-  patientNameElement.textContent =
-    "No active registration";
-
-}
-
-if (tokenNumberElement) {
-
-  tokenNumberElement.textContent =
-    "—";
-
-}
-
-if (statusTextElement) {
-
-  statusTextElement.textContent =
-    "Not registered";
-
-}
-
-if (aheadOfYouElement) {
-  aheadOfYouElement.textContent = "—";
-}
-
-if (estimatedWaitElement) {
-  estimatedWaitElement.textContent = "—";
-}
-
-if (queuePositionElement) {
-  queuePositionElement.textContent = "—";
-}
-
-return;
-
-}
-
-/* =========================================================
-INITIAL RENDER
-========================================================= */
-
-renderPatientData(patient);
-
-/* =========================================================
-REFRESH
-========================================================= */
+   REFRESH BUTTON
+   ========================================================= */
 
 if (refreshButton) {
 
-refreshButton.addEventListener(
-  "click",
-  async () => {
+  refreshButton.addEventListener(
+    "click",
+    async () => {
 
-    refreshButton.disabled = true;
+      refreshButton.disabled = true;
 
-    refreshButton.textContent =
-      "↻  Refreshing...";
-
-
-    /*
-     * ===================================================
-     * BACKEND INTEGRATION POINT
-     * ===================================================
-     *
-     * Replace the temporary localStorage refresh below
-     * with your API call.
-     *
-     * Example:
-     *
-     * const response = await fetch(
-     *   "/api/queue/my-status"
-     * );
-     *
-     * if (!response.ok) {
-     *   throw new Error("Unable to fetch queue status");
-     * }
-     *
-     * const latestData =
-     *   await response.json();
-     *
-     * renderPatientData({
-     *   name: latestData.patient.name,
-     *   token: latestData.queue.token,
-     *   status: latestData.queue.status,
-     *   aheadOfYou: latestData.queue.aheadOfYou,
-     *   estimatedWait: latestData.queue.estimatedWait,
-     *   queuePosition: latestData.queue.position
-     * });
-     *
-     * ===================================================
-     */
+      refreshButton.classList.add(
+        "is-loading"
+      );
 
 
-    /* ---------- TEMPORARY V1 REFRESH ---------- */
+      /*
+       * Small delay gives the refresh action a smooth
+       * visual response during V1.
+       */
 
-    await new Promise(resolve => {
-      setTimeout(resolve, 400);
-    });
+      await new Promise(
+        resolve =>
+          setTimeout(resolve, 250)
+      );
 
 
-    const latestPatient =
-      getPatientData();
+      refreshTokenData();
 
-    if (latestPatient) {
-      renderPatientData(latestPatient);
+
+      refreshButton.disabled = false;
+
+      refreshButton.classList.remove(
+        "is-loading"
+      );
+
     }
+  );
+
+}
 
 
-    refreshButton.disabled = false;
+/* =========================================================
+   BACKEND / API INTEGRATION
+   =========================================================
 
-    refreshButton.textContent =
-      "↻  Refresh Status";
+   CURRENT V1:
+   ---------------------------------------------------------
+   Patient data is read from localStorage.
+
+   FUTURE BACKEND:
+   ---------------------------------------------------------
+   The backend should identify the patient's active
+   registration using a secure patient/session/registration
+   identifier.
+
+   Example:
+
+   async function fetchTokenFromBackend() {
+
+     const response = await fetch(
+       "/api/patient/token",
+       {
+         method: "GET",
+         headers: {
+           "Content-Type": "application/json"
+         }
+       }
+     );
+
+     if (!response.ok) {
+       throw new Error(
+         "Unable to fetch token information."
+       );
+     }
+
+     const data = await response.json();
+
+     return data;
+   }
+
+   Expected backend response:
+
+   {
+     "success": true,
+     "patient": {
+       "id": 123,
+       "name": "Namaste"
+     },
+     "queue": {
+       "token": "A-024",
+       "status": "Waiting",
+       "currentlyServing": "A-019",
+       "aheadOfYou": 4,
+       "estimatedWait": 12,
+       "position": 5
+     }
+   }
+
+   IMPORTANT:
+   ---------------------------------------------------------
+   The backend should eventually become the source of truth
+   for:
+
+   - Patient identity
+   - Token number
+   - Queue position
+   - Patients ahead
+   - Estimated waiting time
+   - Current serving token
+   - Queue status
+
+   Do NOT generate or trust queue numbers from the browser
+   once the real database is connected.
+   ========================================================= */
+
+
+/* =========================================================
+   FUTURE LIVE QUEUE POLLING
+   =========================================================
+
+   Once the backend API exists, this can periodically
+   refresh the patient's queue status.
+
+   Example:
+
+   setInterval(async () => {
+
+     try {
+
+       const data =
+         await fetchTokenFromBackend();
+
+       updateTokenPage(data);
+
+     } catch (error) {
+
+       console.error(
+         "Queue update failed:",
+         error
+       );
+
+     }
+
+   }, 10000);
+
+   This would check the backend every 10 seconds.
+
+   For a real production system, WebSocket or Server-Sent
+   Events could be used for true real-time updates instead.
+   ========================================================= */
+
+
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    refreshTokenData();
 
   }
 );
 
-}
 
 /* =========================================================
-OPTIONAL AUTO REFRESH
-=========================================================
+   TAB / WINDOW RETURN
+   =========================================================
 
- V1:
- Refreshes localStorage every 15 seconds.
+   If the patient registers in another tab and comes back
+   to this page, refresh the displayed information.
+   ========================================================= */
 
- BACKEND:
- Change this to an API request when the backend is ready.
+window.addEventListener(
+  "storage",
+  event => {
 
- ========================================================= */
+    if (
+      event.key ===
+      REGISTRATION_STORAGE_KEY
+    ) {
 
-const AUTO_REFRESH_INTERVAL =
-15000;
+      refreshTokenData();
 
-setInterval(() => {
+    }
 
-const latestPatient =
-  getPatientData();
-
-if (latestPatient) {
-  renderPatientData(latestPatient);
-}
-
-}, AUTO_REFRESH_INTERVAL);
-
-});
+  }
+);
