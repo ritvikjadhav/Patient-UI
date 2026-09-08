@@ -1,153 +1,89 @@
-/* =========================================================
-   CLINIC AUTOMATION — PATIENT LIVE QUEUE
-   File: js/queue.js
-   Version: V1 Launch Ready
+/* Queue V1 */
 
-   DATABASE / API INTEGRATION
-   ---------------------------------------------------------
-   This V1 file uses demo/local data so the UI can be tested
-   without a backend.
+const $ = (id) => document.getElementById(id);
 
-   When the database/API is ready, replace the demo data inside
-   fetchQueueData() with the real API request.
+const currentToken = $("currentToken");
+const queueStatus = $("queueStatusText");
+const aheadOfYou = $("aheadOfYou");
+const estimatedMinutes = $("estimatedMinutes");
+const yourPosition = $("yourPosition");
+const servingToken = $("servingToken");
+const servingStatus = $("servingStatus");
+const queueList = $("queueList");
+const refreshButton = $("refreshQueueButton");
 
-   Example:
-
-   const response = await fetch("/api/queue/my-status", {
-     method: "GET",
-     headers: {
-       "Content-Type": "application/json"
-     }
-   });
-
-   const data = await response.json();
-
-   return data;
-
-   The backend should return data in this structure:
-
-   {
-     token: "A-024",
-     status: "Waiting",
-     aheadOfYou: 4,
-     estimatedMinutes: 12,
-     yourPosition: 5,
-     currentlyServing: "A-019",
-     servingStatus: "In consultation",
-     queue: [
-       {
-         token: "A-019",
-         status: "Serving"
-       },
-       {
-         token: "A-020",
-         status: "Next"
-       },
-       {
-         token: "A-021",
-         status: "Waiting"
-       },
-       {
-         token: "A-022",
-         status: "Waiting"
-       },
-       {
-         token: "A-023",
-         status: "Waiting"
-       },
-       {
-         token: "A-024",
-         status: "You",
-         estimatedMinutes: 12
-       }
-     ]
-   }
-
-   IMPORTANT:
-   Do not store sensitive patient information in
-   localStorage in the production version.
-   The backend should identify the authenticated patient
-   and return only the required queue information.
-   ========================================================= */
+let refreshTimer = null;
+let loading = false;
 
 
-/* =========================================================
-   DOM REFERENCES
-   ========================================================= */
-
-const currentTokenElement =
-  document.getElementById("currentToken");
-
-const queueStatusText =
-  document.getElementById("queueStatusText");
-
-const aheadOfYouElement =
-  document.getElementById("aheadOfYou");
-
-const estimatedMinutesElement =
-  document.getElementById("estimatedMinutes");
-
-const yourPositionElement =
-  document.getElementById("yourPosition");
-
-const servingTokenElement =
-  document.getElementById("servingToken");
-
-const servingStatusElement =
-  document.getElementById("servingStatus");
-
-const queueListElement =
-  document.getElementById("queueList");
-
-const refreshQueueButton =
-  document.getElementById("refreshQueueButton");
-
-
-/* =========================================================
-   DEMO QUEUE DATA
-   ---------------------------------------------------------
-   Replace this function with the API call when backend
-   integration is ready.
-   ========================================================= */
+/* Backend / API */
 
 async function fetchQueueData() {
 
   /*
-   ==========================================================
-   API / DATABASE CONNECTION POINT
-   ==========================================================
+    BACKEND CONNECTION POINT
 
-   Example production implementation:
+    Replace the demo return below with:
 
-   const response = await fetch("/api/queue/my-status", {
-     method: "GET",
-     headers: {
-       "Content-Type": "application/json"
-     }
-   });
+    const response = await fetch("/api/queue/my-status", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
 
-   if (!response.ok) {
-     throw new Error("Unable to load queue.");
-   }
+    if (!response.ok) {
+      throw new Error("Queue request failed");
+    }
 
-   return await response.json();
+    return await response.json();
 
-   ==========================================================
+    Expected response:
+
+    {
+      token: "A-024",
+      status: "Waiting",
+      aheadOfYou: 4,
+      estimatedMinutes: 12,
+      yourPosition: 5,
+      currentlyServing: "A-019",
+      servingStatus: "In consultation",
+      queue: [
+        {
+          token: "A-019",
+          status: "Serving"
+        },
+        {
+          token: "A-020",
+          status: "Next"
+        },
+        {
+          token: "A-021",
+          status: "Waiting"
+        },
+        {
+          token: "A-022",
+          status: "Waiting"
+        },
+        {
+          token: "A-023",
+          status: "Waiting"
+        },
+        {
+          token: "A-024",
+          status: "You",
+          estimatedMinutes: 12
+        }
+      ]
+    }
   */
-
-
-  /*
-   Temporary V1 demo data.
-   */
 
   return {
     token: "A-024",
     status: "Waiting",
-
     aheadOfYou: 4,
     estimatedMinutes: 12,
     yourPosition: 5,
-
     currentlyServing: "A-019",
     servingStatus: "In consultation",
 
@@ -182,496 +118,219 @@ async function fetchQueueData() {
 }
 
 
-/* =========================================================
-   UPDATE MAIN TOKEN INFORMATION
-   ========================================================= */
+/* Update token information */
 
-function updateTokenInformation(data) {
+function updateToken(data) {
 
-  if (currentTokenElement) {
-    currentTokenElement.textContent =
-      data.token || "—";
-  }
+  currentToken.textContent = data.token || "—";
+  queueStatus.textContent = data.status || "Waiting";
 
-  if (queueStatusText) {
-    queueStatusText.textContent =
-      data.status || "Waiting";
-  }
+  aheadOfYou.textContent =
+    Number.isFinite(data.aheadOfYou)
+      ? data.aheadOfYou
+      : "—";
 
-  if (aheadOfYouElement) {
-    aheadOfYouElement.textContent =
-      Number.isFinite(data.aheadOfYou)
-        ? data.aheadOfYou
-        : "—";
-  }
+  estimatedMinutes.textContent =
+    Number.isFinite(data.estimatedMinutes)
+      ? data.estimatedMinutes
+      : "—";
 
-  if (estimatedMinutesElement) {
-    estimatedMinutesElement.textContent =
-      Number.isFinite(data.estimatedMinutes)
-        ? data.estimatedMinutes
-        : "—";
-  }
+  yourPosition.textContent =
+    Number.isFinite(data.yourPosition)
+      ? data.yourPosition
+      : "—";
 
-  if (yourPositionElement) {
-    yourPositionElement.textContent =
-      Number.isFinite(data.yourPosition)
-        ? data.yourPosition
-        : "—";
-  }
+  servingToken.textContent =
+    data.currentlyServing || "—";
+
+  servingStatus.textContent =
+    data.servingStatus || "Waiting";
 }
 
 
-/* =========================================================
-   UPDATE CURRENTLY SERVING
-   ========================================================= */
-
-function updateServingInformation(data) {
-
-  if (servingTokenElement) {
-    servingTokenElement.textContent =
-      data.currentlyServing || "—";
-  }
-
-  if (servingStatusElement) {
-    servingStatusElement.textContent =
-      data.servingStatus || "Waiting";
-  }
-}
-
-
-/* =========================================================
-   CREATE QUEUE ROW
-   ========================================================= */
+/* Create queue row */
 
 function createQueueRow(item, index) {
 
-  const article =
-    document.createElement("article");
+  const row = document.createElement("article");
+  row.className = "queue-row";
 
-  article.className = "queue-row";
+  const serving = item.status === "Serving";
+  const you = item.status === "You";
 
-  const isServing =
-    item.status === "Serving";
-
-  const isNext =
-    item.status === "Next";
-
-  const isYou =
-    item.status === "You";
-
-  if (isServing) {
-    article.classList.add("current-row");
+  if (serving) {
+    row.classList.add("current-row");
   }
 
-  if (isYou) {
-    article.classList.add("your-row");
+  if (you) {
+    row.classList.add("your-row");
   }
 
-
-  /* =======================================================
-     NUMBER / STATUS ICON
-     ======================================================= */
-
-  const number =
-    document.createElement("span");
-
+  const number = document.createElement("span");
   number.className = "queue-number";
 
-  if (isServing) {
-    number.textContent = "✓";
-  } else if (isYou) {
-    number.textContent =
-      index + 1;
-  } else {
-    number.textContent =
-      index;
+  number.textContent = serving
+    ? "✓"
+    : you
+      ? index + 1
+      : index;
+
+  const content = document.createElement("div");
+
+  const title = document.createElement("strong");
+  title.textContent = `Token ${item.token}`;
+
+  if (you) {
+    const label = document.createElement("small");
+    label.textContent = "YOU";
+    title.appendChild(label);
   }
 
+  const description = document.createElement("span");
 
-  /* =======================================================
-     CONTENT
-     ======================================================= */
-
-  const content =
-    document.createElement("div");
-
-
-  const title =
-    document.createElement("strong");
-
-  title.textContent =
-    `Token ${item.token}`;
-
-
-  if (isYou) {
-
-    const youLabel =
-      document.createElement("small");
-
-    youLabel.textContent = "YOU";
-
-    title.appendChild(youLabel);
-  }
-
-
-  content.appendChild(title);
-
-
-  const description =
-    document.createElement("span");
-
-
-  if (isServing) {
-
+  if (serving) {
+    description.textContent = "Currently in consultation";
+  } else if (item.status === "Next") {
+    description.textContent = "Next in line";
+  } else if (you) {
     description.textContent =
-      "Currently in consultation";
-
-  } else if (isNext) {
-
-    description.textContent =
-      "Next in line";
-
-  } else if (isYou) {
-
-    if (
       Number.isFinite(item.estimatedMinutes)
-    ) {
-
-      description.textContent =
-        `Estimated wait ~${item.estimatedMinutes} minutes`;
-
-    } else {
-
-      description.textContent =
-        "Your current queue position";
-    }
-
+        ? `Estimated wait ~${item.estimatedMinutes} minutes`
+        : "Your current queue position";
   } else {
-
-    description.textContent =
-      "Waiting";
+    description.textContent = "Waiting";
   }
 
+  content.append(title, description);
+  row.append(number, content);
 
-  content.appendChild(description);
+  if (serving || you) {
 
+    const label = document.createElement("b");
 
-  /* =======================================================
-     RIGHT LABEL
-     ======================================================= */
+    label.textContent =
+      serving ? "Serving" : "Your token";
 
-  let rightLabel = null;
-
-
-  if (isServing || isYou) {
-
-    rightLabel =
-      document.createElement("b");
-
-    if (isServing) {
-      rightLabel.textContent =
-        "Serving";
-    }
-
-    if (isYou) {
-      rightLabel.textContent =
-        "Your token";
-    }
+    row.appendChild(label);
   }
 
-
-  /* =======================================================
-     APPEND
-     ======================================================= */
-
-  article.appendChild(number);
-  article.appendChild(content);
-
-  if (rightLabel) {
-    article.appendChild(rightLabel);
-  }
-
-  return article;
+  return row;
 }
 
 
-/* =========================================================
-   UPDATE QUEUE LIST
-   ========================================================= */
+/* Update queue */
 
-function updateQueueList(data) {
+function updateQueue(data) {
 
-  if (!queueListElement) {
+  if (!Array.isArray(data.queue)) {
     return;
   }
 
-  const fragment =
-    document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
-  if (
-    !Array.isArray(data.queue) ||
-    data.queue.length === 0
-  ) {
+  data.queue.forEach((item, index) => {
+    fragment.appendChild(
+      createQueueRow(item, index)
+    );
+  });
 
-    const emptyState =
-      document.createElement("div");
-
-    emptyState.className = "queue-row";
-
-    emptyState.innerHTML = `
-      <span class="queue-number">—</span>
-      <div>
-        <strong>No queue information</strong>
-        <span>Please refresh in a moment.</span>
-      </div>
-    `;
-
-    fragment.appendChild(emptyState);
-
-  } else {
-
-    data.queue.forEach((item, index) => {
-
-      fragment.appendChild(
-        createQueueRow(item, index)
-      );
-
-    });
-  }
-
-  queueListElement.replaceChildren(fragment);
+  queueList.replaceChildren(fragment);
 }
 
 
-/* =========================================================
-   LOAD QUEUE
-   ========================================================= */
+/* Loading state */
+
+function setLoading(state) {
+
+  loading = state;
+
+  refreshButton.classList.toggle(
+    "is-loading",
+    state
+  );
+
+  refreshButton.setAttribute(
+    "aria-busy",
+    String(state)
+  );
+
+  refreshButton.textContent =
+    state ? "↻ Updating..." : "↻ Refresh";
+}
+
+
+/* Load queue */
 
 async function loadQueue() {
 
-  try {
-
-    setRefreshState(true);
-
-
-    const data =
-      await fetchQueueData();
-
-
-    if (!data) {
-      throw new Error(
-        "No queue data received."
-      );
-    }
-
-
-    updateTokenInformation(data);
-
-    updateServingInformation(data);
-
-    updateQueueList(data);
-
-
-    /*
-     ========================================================
-     Optional future behaviour:
-
-     If the backend returns a queue version/timestamp,
-     it can be used to determine whether the UI actually
-     changed before animating the update.
-     ========================================================
-    */
-
-
-  } catch (error) {
-
-    console.error(
-      "Queue loading failed:",
-      error
-    );
-
-    showQueueError();
-
-  } finally {
-
-    setRefreshState(false);
-  }
-}
-
-
-/* =========================================================
-   REFRESH BUTTON STATE
-   ========================================================= */
-
-function setRefreshState(isLoading) {
-
-  if (!refreshQueueButton) {
+  if (loading) {
     return;
   }
 
-  refreshQueueButton.classList.toggle(
-    "is-loading",
-    isLoading
-  );
+  setLoading(true);
 
-  refreshQueueButton.setAttribute(
-    "aria-busy",
-    String(isLoading)
-  );
+  try {
 
+    const data = await fetchQueueData();
 
-  if (isLoading) {
+    updateToken(data);
+    updateQueue(data);
 
-    refreshQueueButton.dataset.originalText =
-      refreshQueueButton.textContent;
+  } catch (error) {
 
-    refreshQueueButton.textContent =
-      "↻ Updating...";
+    console.error("Queue update failed:", error);
 
-  } else {
-
-    refreshQueueButton.textContent =
-      "↻ Refresh";
-  }
-}
-
-
-/* =========================================================
-   ERROR STATE
-   ========================================================= */
-
-function showQueueError() {
-
-  if (queueStatusText) {
-    queueStatusText.textContent =
+    queueStatus.textContent =
       "Unable to update";
-  }
 
-  if (queueListElement) {
+  } finally {
 
-    const errorRow =
-      document.createElement("div");
-
-    errorRow.className = "queue-row";
-
-    errorRow.innerHTML = `
-      <span class="queue-number">!</span>
-
-      <div>
-        <strong>Queue update unavailable</strong>
-        <span>Please try refreshing again.</span>
-      </div>
-    `;
-
-    queueListElement.replaceChildren(
-      errorRow
-    );
+    setLoading(false);
   }
 }
 
 
-/* =========================================================
-   MANUAL REFRESH
-   ========================================================= */
+/* Manual refresh */
 
-if (refreshQueueButton) {
+refreshButton.addEventListener(
+  "click",
+  loadQueue
+);
 
-  refreshQueueButton.addEventListener(
-    "click",
-    loadQueue
+
+/* Automatic refresh */
+
+function startAutoRefresh() {
+
+  clearInterval(refreshTimer);
+
+  refreshTimer = setInterval(
+    loadQueue,
+    30000
   );
 }
 
 
-/* =========================================================
-   AUTOMATIC QUEUE REFRESH
-   =========================================================
-
-   V1:
-   Refresh every 30 seconds.
-
-   Production:
-   WebSocket / Server-Sent Events can replace this
-   polling mechanism for true real-time queue updates.
-
-   Example future architecture:
-
-   WebSocket
-       ↓
-   Queue event
-       ↓
-   Update UI
-       ↓
-   Patient sees new position
-
-   ========================================================= */
-
-const QUEUE_REFRESH_INTERVAL =
-  30000;
-
-let queueRefreshTimer =
-  null;
-
-
-function startQueueRefresh() {
-
-  if (queueRefreshTimer) {
-    clearInterval(queueRefreshTimer);
-  }
-
-  queueRefreshTimer =
-    setInterval(
-      loadQueue,
-      QUEUE_REFRESH_INTERVAL
-    );
-}
-
-
-/* =========================================================
-   PAGE VISIBILITY
-   ---------------------------------------------------------
-   Don't waste requests while the patient has another
-   browser tab/app open.
-   ========================================================= */
+/* Pause polling when page is hidden */
 
 document.addEventListener(
   "visibilitychange",
   () => {
 
-    if (
-      document.visibilityState === "visible"
-    ) {
+    if (document.visibilityState === "visible") {
 
       loadQueue();
-
-      startQueueRefresh();
+      startAutoRefresh();
 
     } else {
 
-      if (queueRefreshTimer) {
-
-        clearInterval(
-          queueRefreshTimer
-        );
-
-        queueRefreshTimer = null;
-      }
+      clearInterval(refreshTimer);
     }
   }
 );
 
 
-/* =========================================================
-   INITIAL LOAD
-   ========================================================= */
+/* Initial load */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    loadQueue();
-
-    startQueueRefresh();
-
-  }
-);
+loadQueue();
+startAutoRefresh();
