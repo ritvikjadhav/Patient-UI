@@ -1,483 +1,244 @@
-/* =========================================================
-   CLINICCARE — PATIENT REGISTRATION
-   File: js/register.js
-
-   V1:
-   - Validates registration form
-   - Stores patient data temporarily in localStorage
-   - Generates a temporary queue token
-   - Redirects to token.html
-   - Prepared for future backend/API integration
-
-   IMPORTANT:
-   token.js should read the same:
-   "cliniccare_registration"
-   localStorage key.
-   ========================================================= */
-
-
-/* =========================================================
-   CONFIGURATION
-   ========================================================= */
+// ClinicCare patient registration
 
 const STORAGE_KEY = "cliniccare_registration";
-
 const TOKEN_COUNTER_KEY = "cliniccare_token_counter";
-
 const TOKEN_PREFIX = "A-";
 
+const form = document.getElementById("registrationForm");
+const submitButton = document.getElementById("submitButton");
 
-/* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
+const nameInput = document.getElementById("name");
+const ageInput = document.getElementById("age");
+const mobileInput = document.getElementById("mobile");
+const reasonInput = document.getElementById("reason");
+const issueInput = document.getElementById("issue");
+const characterCount = document.getElementById("characterCount");
 
-const registrationForm =
-  document.getElementById("registrationForm");
-
-const submitButton =
-  document.getElementById("submitButton");
-
-const nameInput =
-  document.getElementById("name");
-
-const ageInput =
-  document.getElementById("age");
-
-const mobileInput =
-  document.getElementById("mobile");
-
-const reasonInput =
-  document.getElementById("reason");
-
-const issueInput =
-  document.getElementById("issue");
-
-const characterCount =
-  document.getElementById("characterCount");
+let isSubmitting = false;
 
 
-/* =========================================================
-   CHARACTER COUNT
-   ========================================================= */
+// Helpers
 
-if (issueInput && characterCount) {
-
-  const updateCharacterCount = () => {
-
-    const currentLength =
-      issueInput.value.length;
-
-    characterCount.textContent =
-      `${currentLength} / 300`;
-
-  };
-
-  issueInput.addEventListener(
-    "input",
-    updateCharacterCount
-  );
-
-  updateCharacterCount();
-
+function valueOf(input) {
+  return input ? input.value.trim() : "";
 }
 
-
-/* =========================================================
-   INPUT HELPERS
-   ========================================================= */
-
-function getInputValue(input) {
-
-  if (!input) {
-    return "";
-  }
-
-  return input.value.trim();
-
+function errorElement(id) {
+  return document.getElementById(id);
 }
 
+function setError(input, errorId, message) {
+  const group = input?.closest(".form-group");
+  const error = errorElement(errorId);
 
-/* =========================================================
-   ERROR HANDLING
-   ========================================================= */
+  group?.classList.add("has-error");
 
-function showError(input, errorId, message) {
+  input?.classList.add("input-error");
+  input?.setAttribute("aria-invalid", "true");
 
-  const errorElement =
-    document.getElementById(errorId);
-
-  if (input) {
-    input.classList.add("input-error");
-    input.setAttribute("aria-invalid", "true");
+  if (error) {
+    error.textContent = message;
   }
-
-  if (errorElement) {
-    errorElement.textContent = message;
-  }
-
 }
-
 
 function clearError(input, errorId) {
+  const group = input?.closest(".form-group");
+  const error = errorElement(errorId);
 
-  const errorElement =
-    document.getElementById(errorId);
+  group?.classList.remove("has-error");
 
-  if (input) {
-    input.classList.remove("input-error");
-    input.removeAttribute("aria-invalid");
+  input?.classList.remove("input-error");
+  input?.removeAttribute("aria-invalid");
+
+  if (error) {
+    error.textContent = "";
   }
+}
 
-  if (errorElement) {
-    errorElement.textContent = "";
-  }
-
+function clearErrors() {
+  clearError(nameInput, "nameError");
+  clearError(ageInput, "ageError");
+  clearError(mobileInput, "mobileError");
+  clearError(reasonInput, "reasonError");
 }
 
 
-/* =========================================================
-   CLEAR ALL ERRORS
-   ========================================================= */
+// Character counter
 
-function clearAllErrors() {
+function updateCharacterCount() {
+  if (!issueInput || !characterCount) return;
+
+  characterCount.textContent = `${issueInput.value.length} / 300`;
+}
+
+issueInput?.addEventListener("input", updateCharacterCount);
+updateCharacterCount();
+
+
+// Validation
+
+function validateName() {
+  const name = valueOf(nameInput);
 
   clearError(nameInput, "nameError");
 
-  clearError(ageInput, "ageError");
-
-  clearError(mobileInput, "mobileError");
-
-  clearError(reasonInput, "reasonError");
-
-}
-
-
-/* =========================================================
-   NAME VALIDATION
-   ========================================================= */
-
-function validateName() {
-
-  const name =
-    getInputValue(nameInput);
-
-  clearError(
-    nameInput,
-    "nameError"
-  );
-
   if (!name) {
-
-    showError(
+    setError(
       nameInput,
       "nameError",
       "Please enter your full name."
     );
-
     return false;
-
   }
 
   if (name.length < 2) {
-
-    showError(
+    setError(
       nameInput,
       "nameError",
       "Name must contain at least 2 characters."
     );
-
     return false;
-
   }
 
-  /*
-   * Allows:
-   * - Letters
-   * - Spaces
-   * - Apostrophes
-   * - Hyphens
-   */
-
-  const validName =
-    /^[A-Za-zÀ-ÿ' -]+$/.test(name);
-
-  if (!validName) {
-
-    showError(
+  if (!/^[A-Za-zÀ-ÿ' -]+$/.test(name)) {
+    setError(
       nameInput,
       "nameError",
       "Please enter a valid name."
     );
-
     return false;
-
   }
 
   return true;
-
 }
 
-
-/* =========================================================
-   AGE VALIDATION
-   ========================================================= */
-
 function validateAge() {
+  const age = Number(valueOf(ageInput));
 
-  const age =
-    Number(getInputValue(ageInput));
+  clearError(ageInput, "ageError");
 
-  clearError(
-    ageInput,
-    "ageError"
-  );
-
-  if (!age) {
-
-    showError(
+  if (!valueOf(ageInput)) {
+    setError(
       ageInput,
       "ageError",
       "Please enter your age."
     );
-
     return false;
-
   }
 
-  if (age < 1 || age > 120) {
-
-    showError(
+  if (!Number.isInteger(age) || age < 1 || age > 120) {
+    setError(
       ageInput,
       "ageError",
       "Please enter an age between 1 and 120."
     );
-
     return false;
-
   }
 
   return true;
-
 }
 
-
-/* =========================================================
-   MOBILE VALIDATION
-   ========================================================= */
-
 function validateMobile() {
+  const mobile = valueOf(mobileInput);
 
-  const mobile =
-    getInputValue(mobileInput);
-
-  clearError(
-    mobileInput,
-    "mobileError"
-  );
+  clearError(mobileInput, "mobileError");
 
   if (!mobile) {
-
-    showError(
+    setError(
       mobileInput,
       "mobileError",
       "Please enter your mobile number."
     );
-
     return false;
-
   }
 
   if (!/^[0-9]{10}$/.test(mobile)) {
-
-    showError(
+    setError(
       mobileInput,
       "mobileError",
       "Enter a valid 10-digit mobile number."
     );
-
     return false;
-
   }
 
   return true;
-
 }
 
-
-/* =========================================================
-   REASON VALIDATION
-   ========================================================= */
-
 function validateReason() {
+  const reason = valueOf(reasonInput);
 
-  const reason =
-    getInputValue(reasonInput);
-
-  clearError(
-    reasonInput,
-    "reasonError"
-  );
+  clearError(reasonInput, "reasonError");
 
   if (!reason) {
-
-    showError(
+    setError(
       reasonInput,
       "reasonError",
       "Please select a reason for your visit."
     );
-
     return false;
-
   }
 
   return true;
-
 }
-
-
-/* =========================================================
-   VALIDATE FORM
-   ========================================================= */
 
 function validateForm() {
-
-  const nameValid =
-    validateName();
-
-  const ageValid =
-    validateAge();
-
-  const mobileValid =
-    validateMobile();
-
-  const reasonValid =
-    validateReason();
+  const validName = validateName();
+  const validAge = validateAge();
+  const validMobile = validateMobile();
+  const validReason = validateReason();
 
   return (
-    nameValid &&
-    ageValid &&
-    mobileValid &&
-    reasonValid
+    validName &&
+    validAge &&
+    validMobile &&
+    validReason
   );
-
 }
 
 
-/* =========================================================
-   TEMPORARY TOKEN GENERATOR
-   =========================================================
-
-   This is ONLY for V1 frontend testing.
-
-   Backend version should generate the token on the
-   server/database side to avoid duplicate tokens when
-   multiple patients register at the same time.
-   ========================================================= */
+// Temporary V1 token
 
 function generateTemporaryToken() {
+  let number = Number(
+    localStorage.getItem(TOKEN_COUNTER_KEY)
+  );
 
-  let currentNumber =
-    Number(
-      localStorage.getItem(
-        TOKEN_COUNTER_KEY
-      )
-    );
-
-  /*
-   * Start V1 demo queue from A-024.
-   */
-
-  if (
-    !Number.isInteger(currentNumber) ||
-    currentNumber < 24
-  ) {
-
-    currentNumber = 23;
-
+  if (!Number.isInteger(number) || number < 23) {
+    number = 23;
   }
 
-  currentNumber += 1;
+  number += 1;
 
   localStorage.setItem(
     TOKEN_COUNTER_KEY,
-    String(currentNumber)
+    String(number)
   );
 
-  return (
-    TOKEN_PREFIX +
-    String(currentNumber).padStart(3, "0")
-  );
-
+  return `${TOKEN_PREFIX}${String(number).padStart(3, "0")}`;
 }
 
 
-/* =========================================================
-   TEMPORARY QUEUE DATA
-   ========================================================= */
+// Temporary queue data
 
 function createTemporaryQueueData(token) {
-
-  /*
-   * Temporary values for frontend demonstration.
-   *
-   * These values will eventually come from the backend
-   * queue API.
-   */
-
   return {
-
+    token,
     status: "Waiting",
-
     currentlyServing: "A-019",
-
     aheadOfYou: 4,
-
     estimatedWait: 12,
-
-    position: 5,
-
-    token: token
-
+    position: 5
   };
-
 }
 
 
-/* =========================================================
-   SAVE REGISTRATION
-   ========================================================= */
+// Backend integration point
 
-function saveRegistration(patientData) {
-
+async function registerPatient(patientData) {
   /*
-   =========================================================
-   TEMPORARY V1 STORAGE
-   =========================================================
+   Replace this temporary implementation with:
 
-   Currently the patient registration is stored locally
-   in the browser.
-
-   This allows the complete frontend to work before the
-   backend/database is connected.
-   */
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(patientData)
-  );
-
-
-  /*
-   =========================================================
-   BACKEND / API INTEGRATION
-   =========================================================
-
-   WHEN BACKEND IS READY:
-
-   Replace the localStorage registration logic with
-   something similar to:
-
-   fetch("/api/patients/register", {
+   const response = await fetch("/api/patients/register", {
      method: "POST",
      headers: {
        "Content-Type": "application/json"
@@ -485,435 +246,201 @@ function saveRegistration(patientData) {
      body: JSON.stringify(patientData)
    });
 
-   The backend should then:
-
-   1. Validate patient information.
-   2. Save patient information in the database.
-   3. Generate a unique queue token.
-   4. Calculate queue position.
-   5. Calculate estimated waiting time.
-   6. Return the registration/token information.
-
-   Example expected response:
-
-   {
-     success: true,
-     patientId: 123,
-     token: "A-024",
-     position: 5,
-     aheadOfYou: 4,
-     estimatedWait: 12,
-     status: "Waiting"
+   if (!response.ok) {
+     throw new Error("Registration failed.");
    }
 
-   IMPORTANT:
-   Token generation should eventually happen on the
-   backend/database, NOT inside this frontend JavaScript.
-   ========================================================= */
+   return await response.json();
+  */
 
+  const token = generateTemporaryToken();
+
+  return {
+    success: true,
+    patientId: null,
+    token,
+    position: 5,
+    aheadOfYou: 4,
+    estimatedWait: 12,
+    status: "Waiting"
+  };
 }
 
 
-/* =========================================================
-   SUBMIT REGISTRATION
-   ========================================================= */
+// Save temporary registration
 
-async function handleRegistrationSubmit(event) {
-
-  event.preventDefault();
-
-
-  clearAllErrors();
-
-
-  /* Validate */
-
-  const isValid =
-    validateForm();
-
-  if (!isValid) {
-
-    const firstError =
-      document.querySelector(
-        ".input-error"
-      );
-
-    if (firstError) {
-      firstError.focus();
-    }
-
-    return;
-
-  }
-
-
-  /* =======================================================
-     GET FORM DATA
-     ======================================================= */
-
-  const patientName =
-    getInputValue(nameInput);
-
-  const age =
-    Number(getInputValue(ageInput));
-
-  const mobile =
-    getInputValue(mobileInput);
-
-  const reason =
-    getInputValue(reasonInput);
-
-  const issue =
-    getInputValue(issueInput);
-
-
-  /* =======================================================
-     GENERATE TEMPORARY TOKEN
-     ======================================================= */
-
-  const token =
-    generateTemporaryToken();
-
-
-  /* =======================================================
-     CREATE PATIENT RECORD
-     ======================================================= */
-
-  const patientData = {
-
-    /*
-     * Patient information
-     */
-
-    patient: {
-
-      name: patientName,
-
-      age: age,
-
-      mobile: mobile,
-
-      reason: reason,
-
-      issue: issue
-
-    },
-
-
-    /*
-     * Queue information
-     */
-
-    queue: createTemporaryQueueData(token),
-
-
-    /*
-     * Registration information
-     */
-
+function saveRegistration(patient, queue) {
+  const registration = {
+    patient,
+    queue,
     registration: {
-
-      registeredAt:
-        new Date().toISOString(),
-
-      date:
-        new Date().toISOString().split("T")[0],
-
-      source:
-        "patient-portal"
-
+      registeredAt: new Date().toISOString(),
+      date: new Date().toISOString().split("T")[0],
+      source: "patient-portal"
     }
-
   };
 
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(registration)
+  );
+}
 
-  /* =======================================================
-     DISABLE BUTTON
-     ======================================================= */
 
-  if (submitButton) {
+// Button state
 
-    submitButton.disabled = true;
+function setLoading(loading) {
+  if (!submitButton) return;
 
-    submitButton.classList.add(
-      "is-loading"
-    );
+  submitButton.disabled = loading;
+  submitButton.classList.toggle("is-loading", loading);
+  submitButton.setAttribute(
+    "aria-busy",
+    String(loading)
+  );
 
-    const buttonText =
-      submitButton.querySelector("span");
+  const text =
+    submitButton.querySelector("span");
 
-    if (buttonText) {
+  if (text) {
+    text.textContent = loading
+      ? "Registering..."
+      : "Register & Get Token";
+  }
+}
 
-      buttonText.textContent =
-        "Registering...";
 
-    }
+// Submit
 
+async function handleSubmit(event) {
+  event.preventDefault();
+
+  if (isSubmitting) return;
+
+  clearErrors();
+
+  if (!validateForm()) {
+    const firstError =
+      form?.querySelector(".input-error");
+
+    firstError?.focus();
+    return;
   }
 
+  isSubmitting = true;
+  setLoading(true);
 
-  /* =======================================================
-     TEMPORARY FRONTEND SAVE
-     ======================================================= */
+  const patient = {
+    name: valueOf(nameInput),
+    age: Number(valueOf(ageInput)),
+    mobile: valueOf(mobileInput),
+    reason: valueOf(reasonInput),
+    issue: valueOf(issueInput)
+  };
 
   try {
+    const result =
+      await registerPatient(patient);
 
-    saveRegistration(
-      patientData
+    if (!result?.success || !result.token) {
+      throw new Error("Registration failed.");
+    }
+
+    const queue = {
+      ...createTemporaryQueueData(result.token),
+      position: result.position ?? 5,
+      aheadOfYou: result.aheadOfYou ?? 4,
+      estimatedWait: result.estimatedWait ?? 12,
+      status: result.status ?? "Waiting"
+    };
+
+    saveRegistration(patient, queue);
+
+    await new Promise(resolve =>
+      setTimeout(resolve, 250)
     );
 
-
-    /*
-     * Small delay gives the button/loading state a smooth
-     * transition instead of instantly changing pages.
-     */
-
-    await new Promise(
-      resolve =>
-        setTimeout(resolve, 350)
-    );
-
-
-    /* =====================================================
-       REDIRECT TO TOKEN PAGE
-       ===================================================== */
-
-    window.location.href =
-      "token.html";
-
+    window.location.href = "token.html";
 
   } catch (error) {
+    console.error("Registration failed:", error);
 
-    console.error(
-      "Registration failed:",
-      error
-    );
+    isSubmitting = false;
+    setLoading(false);
+
+    showSubmitError();
+  }
+}
 
 
-    if (submitButton) {
+// Submit error
 
-      submitButton.disabled = false;
+function showSubmitError() {
+  let message =
+    document.getElementById("registrationError");
 
-      submitButton.classList.remove(
-        "is-loading"
-      );
+  if (!message && form) {
+    message = document.createElement("p");
+    message.id = "registrationError";
+    message.className = "error-message";
+    message.setAttribute("role", "alert");
 
-      const buttonText =
-        submitButton.querySelector("span");
-
-      if (buttonText) {
-
-        buttonText.textContent =
-          "Register & Get Token";
-
-      }
-
-    }
-
-    alert(
-      "Something went wrong. Please try again."
-    );
-
+    form.prepend(message);
   }
 
+  if (message) {
+    message.textContent =
+      "Unable to complete registration. Please try again.";
+  }
 }
 
 
-/* =========================================================
-   FORM EVENT
-   ========================================================= */
+// Input cleanup + live error clearing
 
-if (registrationForm) {
+nameInput?.addEventListener("input", () => {
+  nameInput.value =
+    nameInput.value.replace(/\s{2,}/g, " ");
 
-  registrationForm.addEventListener(
-    "submit",
-    handleRegistrationSubmit
-  );
+  if (nameInput.classList.contains("input-error")) {
+    clearError(nameInput, "nameError");
+  }
+});
 
-}
+ageInput?.addEventListener("input", () => {
+  ageInput.value =
+    ageInput.value.replace(/\D/g, "").slice(0, 3);
 
+  if (ageInput.classList.contains("input-error")) {
+    clearError(ageInput, "ageError");
+  }
+});
 
-/* =========================================================
-   REAL-TIME INPUT CLEANUP
-   ========================================================= */
+mobileInput?.addEventListener("input", () => {
+  mobileInput.value =
+    mobileInput.value.replace(/\D/g, "").slice(0, 10);
 
+  if (mobileInput.classList.contains("input-error")) {
+    clearError(mobileInput, "mobileError");
+  }
+});
 
-/* Mobile: numbers only */
+reasonInput?.addEventListener("change", () => {
+  clearError(reasonInput, "reasonError");
+});
 
-if (mobileInput) {
 
-  mobileInput.addEventListener(
-    "input",
-    () => {
+// Clear server error when user edits
 
-      mobileInput.value =
-        mobileInput.value
-          .replace(/\D/g, "")
-          .slice(0, 10);
+form?.addEventListener("input", () => {
+  const error =
+    document.getElementById("registrationError");
 
-    }
-  );
+  if (error) {
+    error.textContent = "";
+  }
+});
 
-}
 
+// Form event
 
-/* Age: numbers only */
-
-if (ageInput) {
-
-  ageInput.addEventListener(
-    "input",
-    () => {
-
-      ageInput.value =
-        ageInput.value
-          .replace(/\D/g, "")
-          .slice(0, 3);
-
-    }
-  );
-
-}
-
-
-/* Name: remove unnecessary leading spaces */
-
-if (nameInput) {
-
-  nameInput.addEventListener(
-    "input",
-    () => {
-
-      nameInput.value =
-        nameInput.value
-          .replace(/\s{2,}/g, " ");
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   CLEAR VALIDATION ERROR WHILE TYPING
-   ========================================================= */
-
-if (nameInput) {
-
-  nameInput.addEventListener(
-    "input",
-    () => {
-
-      if (
-        nameInput.classList.contains(
-          "input-error"
-        )
-      ) {
-
-        clearError(
-          nameInput,
-          "nameError"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-if (ageInput) {
-
-  ageInput.addEventListener(
-    "input",
-    () => {
-
-      if (
-        ageInput.classList.contains(
-          "input-error"
-        )
-      ) {
-
-        clearError(
-          ageInput,
-          "ageError"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-if (mobileInput) {
-
-  mobileInput.addEventListener(
-    "input",
-    () => {
-
-      if (
-        mobileInput.classList.contains(
-          "input-error"
-        )
-      ) {
-
-        clearError(
-          mobileInput,
-          "mobileError"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-if (reasonInput) {
-
-  reasonInput.addEventListener(
-    "change",
-    () => {
-
-      if (
-        reasonInput.classList.contains(
-          "input-error"
-        )
-      ) {
-
-        clearError(
-          reasonInput,
-          "reasonError"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   DEVELOPMENT HELPER
-   =========================================================
-
-   Open browser console and run:
-
-   JSON.parse(
-     localStorage.getItem("cliniccare_registration")
-   )
-
-   to see the currently registered patient.
-
-   To completely clear V1 test data:
-
-   localStorage.removeItem("cliniccare_registration");
-
-   localStorage.removeItem("cliniccare_token_counter");
-
-   ========================================================= */
+form?.addEventListener("submit", handleSubmit);
