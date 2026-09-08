@@ -1,14 +1,4 @@
-/* =========================================================
-   CLINIC AUTOMATION — PATIENT LIVE QUEUE
-   File: css/queue.css
-   Version: V1 Launch Ready
-   ========================================================= */
-
-
-/* =========================================================
-   DESIGN TOKENS
-   ========================================================= */
-
+/* Design tokens */
 :root {
   --primary: #003c90;
   --primary-dark: #003275;
@@ -29,27 +19,16 @@
   --success: #087f5b;
   --success-bg: #d9f7ec;
 
-  --warning: #a15c00;
-  --warning-bg: #fff0d5;
-
-  --danger: #c0392b;
-  --danger-bg: #fdecea;
-
   --radius: 12px;
   --large-radius: 18px;
 
-  --shadow:
-    0 6px 24px rgba(17, 28, 45, 0.07);
+  --shadow: 0 6px 24px rgba(17, 28, 45, 0.07);
+  --shadow-hover: 0 12px 30px rgba(17, 28, 45, 0.11);
 
-  --shadow-hover:
-    0 12px 30px rgba(17, 28, 45, 0.11);
+  --ease: 180ms ease;
 }
 
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -63,9 +42,7 @@ html {
 
 body {
   min-height: 100vh;
-
   font-family: "Inter", sans-serif;
-
   color: var(--text);
 
   background:
@@ -86,23 +63,21 @@ textarea {
   font: inherit;
 }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
+/* Header */
 .app-header {
   width: 100%;
-
   background: rgba(255, 255, 255, 0.94);
-
   border-bottom: 1px solid var(--border-light);
-
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -110,7 +85,6 @@ a {
 .header-inner {
   width: 100%;
   max-width: 1100px;
-
   min-height: 74px;
 
   display: flex;
@@ -118,23 +92,15 @@ a {
   justify-content: space-between;
 
   gap: 20px;
-
   margin: 0 auto;
-
   padding: 14px 20px;
 }
 
-
-/* =========================================================
-   BRAND
-   ========================================================= */
-
+/* Brand */
 .brand {
   display: flex;
   align-items: center;
-
   gap: 11px;
-
   min-width: 0;
 }
 
@@ -142,18 +108,15 @@ a {
   width: 40px;
   height: 40px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 
   flex-shrink: 0;
 
   color: var(--primary);
-
-  background: #ffffff;
+  background: var(--surface);
 
   border: 1px solid #dbe3ef;
-
   border-radius: 10px;
 
   font-size: 22px;
@@ -162,14 +125,12 @@ a {
 
 .brand-copy {
   min-width: 0;
-
   display: flex;
   flex-direction: column;
 }
 
 .brand-copy strong {
   color: var(--text);
-
   font-size: 15px;
   line-height: 20px;
   font-weight: 700;
@@ -177,30 +138,22 @@ a {
 
 .brand-copy small {
   margin-top: 1px;
-
   color: var(--text-muted);
-
   font-size: 10px;
   line-height: 15px;
 }
 
-
-/* =========================================================
-   HEADER LIVE STATUS
-   ========================================================= */
-
+/* Header status */
 .header-live {
   display: inline-flex;
   align-items: center;
 
   gap: 6px;
-
   flex-shrink: 0;
 
   padding: 7px 10px;
 
   color: var(--success);
-
   background: var(--success-bg);
 
   border-radius: 999px;
@@ -210,32 +163,17 @@ a {
   font-weight: 700;
 }
 
-.header-live::first-letter {
-  font-size: 9px;
-}
-
-
-/* =========================================================
-   MAIN
-   ========================================================= */
-
+/* Main */
 .queue-main {
   width: 100%;
   max-width: 760px;
 
   margin: 0 auto;
-
   padding: 34px 20px 120px;
 }
 
-
-/* =========================================================
-   QUEUE INTRO
-   ========================================================= */
-
+/* Intro */
 .queue-intro {
-  position: relative;
-
   padding-bottom: 24px;
 }
 
@@ -249,12 +187,11 @@ a {
   line-height: 15px;
   font-weight: 700;
 
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
 }
 
 .queue-intro h1 {
   max-width: 580px;
-
   margin-top: 8px;
 
   color: var(--text);
@@ -268,7 +205,6 @@ a {
 
 .queue-intro p {
   max-width: 570px;
-
   margin-top: 12px;
 
   color: var(--text-muted);
@@ -277,6 +213,7 @@ a {
   line-height: 22px;
 }
 
+/* Live badge */
 .live-badge {
   width: fit-content;
 
@@ -284,17 +221,13 @@ a {
   align-items: center;
 
   gap: 7px;
-
   margin-top: 16px;
-
   padding: 7px 11px;
 
   color: var(--success);
-
   background: var(--success-bg);
 
-  border: 1px solid rgba(8, 127, 91, 0.10);
-
+  border: 1px solid rgba(8, 127, 91, 0.1);
   border-radius: 999px;
 
   font-size: 10px;
@@ -309,28 +242,19 @@ a {
   display: block;
 
   background: var(--success);
-
   border-radius: 50%;
-
-  box-shadow:
-    0 0 0 4px rgba(8, 127, 91, 0.10);
 
   animation: livePulse 2s ease-in-out infinite;
 }
 
-
-/* =========================================================
-   CURRENT TOKEN CARD
-   ========================================================= */
-
+/* Current token */
 .current-token-card {
   position: relative;
-
   overflow: hidden;
 
   padding: 26px 24px 22px;
 
-  color: #ffffff;
+  color: #fff;
 
   background:
     linear-gradient(
@@ -343,14 +267,20 @@ a {
   border-radius: 20px;
 
   box-shadow:
-    0 14px 34px rgba(0, 60, 144, 0.20);
+    0 14px 34px rgba(0, 60, 144, 0.2);
 }
 
-.current-token-card::before {
+.current-token-card::before,
+.current-token-card::after {
   content: "";
 
   position: absolute;
 
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.current-token-card::before {
   width: 220px;
   height: 220px;
 
@@ -358,15 +288,9 @@ a {
   right: -70px;
 
   background: rgba(255, 255, 255, 0.07);
-
-  border-radius: 50%;
 }
 
 .current-token-card::after {
-  content: "";
-
-  position: absolute;
-
   width: 170px;
   height: 170px;
 
@@ -374,8 +298,6 @@ a {
   left: -70px;
 
   background: rgba(255, 255, 255, 0.045);
-
-  border-radius: 50%;
 }
 
 .current-token-card > * {
@@ -383,11 +305,7 @@ a {
   z-index: 1;
 }
 
-
-/* =========================================================
-   TOKEN HEADER
-   ========================================================= */
-
+/* Token header */
 .token-card-header {
   display: flex;
   align-items: center;
@@ -397,13 +315,13 @@ a {
 }
 
 .token-card-header > span:first-child {
-  color: rgba(255, 255, 255, 0.70);
+  color: rgba(255, 255, 255, 0.7);
 
   font-size: 10px;
   line-height: 15px;
   font-weight: 700;
 
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
 }
 
 .queue-status {
@@ -411,15 +329,12 @@ a {
   align-items: center;
 
   gap: 6px;
-
   padding: 6px 9px;
 
-  color: #ffffff;
-
+  color: #fff;
   background: rgba(255, 255, 255, 0.12);
 
-  border: 1px solid rgba(255, 255, 255, 0.10);
-
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
 
   font-size: 10px;
@@ -434,41 +349,28 @@ a {
   display: block;
 
   background: #7de3bd;
-
   border-radius: 50%;
 }
 
-
-/* =========================================================
-   TOKEN NUMBER
-   ========================================================= */
-
+/* Token number */
 .current-token-number {
   display: block;
-
   margin-top: 7px;
 
-  color: #ffffff;
+  color: #fff;
 
   font-size: 52px;
   line-height: 60px;
   font-weight: 700;
 
   letter-spacing: 0.015em;
-
   font-variant-numeric: tabular-nums;
 }
 
-
-/* =========================================================
-   TOKEN STATISTICS
-   ========================================================= */
-
+/* Token statistics */
 .token-statistics {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   margin-top: 22px;
   padding-top: 20px;
@@ -505,8 +407,6 @@ a {
 }
 
 .token-stat > span {
-  display: block;
-
   margin-bottom: 5px;
 
   color: rgba(255, 255, 255, 0.82);
@@ -528,7 +428,7 @@ a {
 .token-stat strong {
   margin-top: 2px;
 
-  color: #ffffff;
+  color: #fff;
 
   font-size: 25px;
   line-height: 31px;
@@ -544,41 +444,29 @@ a {
 
   font-size: 9px;
   line-height: 14px;
-
   font-style: normal;
 }
 
-
-/* =========================================================
-   QUEUE OVERVIEW
-   ========================================================= */
-
+/* Queue overview */
 .queue-overview {
   margin-top: 24px;
-
   padding: 22px;
 
   background: var(--surface);
 
   border: 1px solid var(--border);
-
   border-radius: var(--large-radius);
 
   box-shadow: var(--shadow);
 }
 
-
-/* =========================================================
-   SECTION HEADING
-   ========================================================= */
-
+/* Section heading */
 .section-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   gap: 16px;
-
   margin-bottom: 17px;
 }
 
@@ -606,11 +494,7 @@ a {
   letter-spacing: -0.02em;
 }
 
-
-/* =========================================================
-   REFRESH BUTTON
-   ========================================================= */
-
+/* Refresh */
 .refresh-button {
   min-height: 36px;
 
@@ -619,17 +503,14 @@ a {
   justify-content: center;
 
   gap: 6px;
-
   flex-shrink: 0;
 
   padding: 0 11px;
 
   color: var(--primary);
-
   background: var(--primary-soft);
 
   border: 1px solid #dce7f8;
-
   border-radius: 9px;
 
   font-size: 10px;
@@ -639,14 +520,13 @@ a {
   cursor: pointer;
 
   transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.18s ease;
+    background var(--ease),
+    border-color var(--ease),
+    transform var(--ease);
 }
 
 .refresh-button:hover {
   background: var(--primary-light);
-
   border-color: #c8d8f0;
 }
 
@@ -655,32 +535,22 @@ a {
 }
 
 .refresh-button.is-loading {
-  opacity: 0.60;
-
+  opacity: 0.6;
   cursor: wait;
-}
-
-.refresh-button.is-loading {
   pointer-events: none;
 }
 
-
-/* =========================================================
-   CURRENTLY SERVING
-   ========================================================= */
-
+/* Serving card */
 .serving-card {
   display: flex;
   align-items: center;
 
   gap: 13px;
-
   padding: 15px;
 
   background: #f4f8ff;
 
   border: 1px solid #dce7f8;
-
   border-radius: 13px;
 }
 
@@ -688,14 +558,12 @@ a {
   width: 40px;
   height: 40px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 
   flex-shrink: 0;
 
   color: var(--primary);
-
   background: #e2ecfc;
 
   border-radius: 11px;
@@ -706,7 +574,6 @@ a {
 
 .serving-card > div {
   min-width: 0;
-
   flex: 1;
 }
 
@@ -724,7 +591,6 @@ a {
 
 .serving-card strong {
   display: block;
-
   margin-top: 2px;
 
   color: var(--primary);
@@ -749,7 +615,6 @@ a {
   padding: 6px 9px;
 
   color: var(--success);
-
   background: var(--success-bg);
 
   border-radius: 999px;
@@ -759,17 +624,12 @@ a {
   font-weight: 700;
 }
 
-
-/* =========================================================
-   QUEUE LIST
-   ========================================================= */
-
+/* Queue list */
 .queue-list {
   display: flex;
   flex-direction: column;
 
   gap: 7px;
-
   margin-top: 12px;
 }
 
@@ -780,26 +640,22 @@ a {
   align-items: center;
 
   gap: 11px;
-
   padding: 10px 11px;
 
   background: #fafbfe;
 
   border: 1px solid transparent;
-
   border-radius: 11px;
 
   transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.18s ease;
+    background var(--ease),
+    border-color var(--ease),
+    transform var(--ease);
 }
 
 .queue-row:hover {
   background: #f5f8fd;
-
   border-color: var(--border);
-
   transform: translateX(2px);
 }
 
@@ -807,14 +663,12 @@ a {
   width: 34px;
   height: 34px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 
   flex-shrink: 0;
 
   color: var(--primary);
-
   background: #e5edfc;
 
   border-radius: 50%;
@@ -825,7 +679,6 @@ a {
 
 .queue-row > div {
   min-width: 0;
-
   flex: 1;
 }
 
@@ -844,11 +697,9 @@ a {
   align-items: center;
 
   margin-left: 5px;
-
   padding: 2px 5px;
 
   color: var(--primary);
-
   background: var(--primary-light);
 
   border-radius: 999px;
@@ -862,7 +713,6 @@ a {
 
 .queue-row div > span {
   display: block;
-
   margin-top: 1px;
 
   color: var(--text-muted);
@@ -881,80 +731,57 @@ a {
   font-weight: 600;
 }
 
-
-/* =========================================================
-   CURRENTLY SERVING ROW
-   ========================================================= */
-
+/* Queue states */
 .queue-row.current-row {
   background: #eef4ff;
-
   border-color: #d7e4f8;
 }
 
 .queue-row.current-row .queue-number {
   color: var(--primary);
-
   background: #dbe8fc;
 }
 
-.queue-row.current-row strong {
-  color: var(--primary);
-}
-
+.queue-row.current-row strong,
 .queue-row.current-row > b {
   color: var(--primary);
 }
 
-
-/* =========================================================
-   YOUR TOKEN ROW
-   ========================================================= */
-
 .queue-row.your-row {
   background: #e5efff;
 
-  border: 1px solid #abc5ed;
+  border-color: #abc5ed;
 
   box-shadow:
     0 4px 14px rgba(0, 60, 144, 0.07);
 }
 
 .queue-row.your-row .queue-number {
-  color: #ffffff;
-
+  color: #fff;
   background: var(--primary);
 }
 
-.queue-row.your-row strong {
+.queue-row.your-row strong,
+.queue-row.your-row > b {
   color: var(--primary);
 }
 
 .queue-row.your-row > b {
-  color: var(--primary);
-
   font-weight: 700;
 }
 
-
-/* =========================================================
-   SMART NOTICE
-   ========================================================= */
-
+/* Notice */
 .queue-notice {
   display: flex;
   align-items: flex-start;
 
   gap: 11px;
-
   margin-top: 16px;
-
   padding: 15px;
 
   background: var(--surface-soft);
 
   border: 1px solid var(--border-light);
-
   border-radius: var(--radius);
 }
 
@@ -962,14 +789,12 @@ a {
   width: 28px;
   height: 28px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 
   flex-shrink: 0;
 
   color: var(--primary);
-
   background: var(--primary-light);
 
   border-radius: 50%;
@@ -1001,11 +826,7 @@ a {
   line-height: 16px;
 }
 
-
-/* =========================================================
-   QUICK TOKEN ACTION
-   ========================================================= */
-
+/* Token action */
 .queue-action {
   min-height: 72px;
 
@@ -1013,23 +834,20 @@ a {
   align-items: center;
 
   gap: 12px;
-
   margin-top: 12px;
-
   padding: 13px 15px;
 
-  background: #ffffff;
+  background: var(--surface);
 
   border: 1px solid var(--border);
-
   border-radius: var(--large-radius);
 
   box-shadow: var(--shadow);
 
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
+    transform var(--ease),
+    box-shadow var(--ease),
+    border-color var(--ease);
 }
 
 .queue-action:hover {
@@ -1044,14 +862,12 @@ a {
   width: 39px;
   height: 39px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 
   flex-shrink: 0;
 
   color: var(--primary);
-
   background: var(--primary-light);
 
   border-radius: 10px;
@@ -1062,7 +878,6 @@ a {
 
 .queue-action > div {
   min-width: 0;
-
   flex: 1;
 }
 
@@ -1078,7 +893,6 @@ a {
 
 .queue-action small {
   display: block;
-
   margin-top: 1px;
 
   color: var(--text-muted);
@@ -1095,14 +909,9 @@ a {
   font-size: 18px;
 }
 
-
-/* =========================================================
-   MOBILE NAVIGATION
-   ========================================================= */
-
+/* Mobile navigation */
 .mobile-navigation {
   position: fixed;
-
   z-index: 50;
 
   left: 50%;
@@ -1111,16 +920,13 @@ a {
   width: 100%;
   max-width: 520px;
 
-  transform: translateX(-50%);
-
   display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 
   gap: 3px;
-
   padding: 8px 10px;
+
+  transform: translateX(-50%);
 
   background: rgba(255, 255, 255, 0.96);
 
@@ -1152,8 +958,8 @@ a {
   font-weight: 500;
 
   transition:
-    color 0.18s ease,
-    background 0.18s ease;
+    color var(--ease),
+    background var(--ease);
 }
 
 .mobile-nav-item > span {
@@ -1167,8 +973,7 @@ a {
 }
 
 .mobile-nav-item.active {
-  color: #ffffff;
-
+  color: #fff;
   background: var(--primary);
 
   box-shadow:
@@ -1177,17 +982,11 @@ a {
 
 .mobile-nav-item:hover:not(.active) {
   color: var(--primary);
-
   background: #f1f5fc;
 }
 
-
-/* =========================================================
-   RESPONSIVE — TABLET / DESKTOP
-   ========================================================= */
-
+/* Desktop */
 @media (min-width: 700px) {
-
   .mobile-navigation {
     display: none;
   }
@@ -1195,25 +994,18 @@ a {
   .queue-main {
     padding-bottom: 50px;
   }
-
 }
 
-
-/* =========================================================
-   RESPONSIVE — MOBILE
-   ========================================================= */
-
+/* Mobile */
 @media (max-width: 699px) {
 
   .header-inner {
     min-height: 68px;
-
     padding: 13px 16px;
   }
 
   .queue-main {
-    padding:
-      25px 16px 105px;
+    padding: 25px 16px 105px;
   }
 
   .queue-intro {
@@ -1232,7 +1024,6 @@ a {
 
   .current-token-card {
     padding: 22px 17px 19px;
-
     border-radius: 18px;
   }
 
@@ -1243,7 +1034,6 @@ a {
 
   .token-statistics {
     margin-top: 19px;
-
     padding-top: 17px;
   }
 
@@ -1266,9 +1056,7 @@ a {
 
   .queue-overview {
     margin-top: 17px;
-
     padding: 17px;
-
     border-radius: 16px;
   }
 
@@ -1283,9 +1071,7 @@ a {
 
   .refresh-button {
     min-height: 34px;
-
     padding: 0 9px;
-
     font-size: 9px;
   }
 
@@ -1295,26 +1081,19 @@ a {
 
   .queue-row {
     min-height: 59px;
-
     padding: 9px;
   }
 
   .queue-row > b {
     display: none;
   }
-
 }
 
-
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
+/* Very small phones */
 @media (max-width: 380px) {
 
   .header-inner {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-inline: 12px;
   }
 
   .brand-copy strong {
@@ -1327,13 +1106,11 @@ a {
 
   .header-live {
     padding: 6px 8px;
-
     font-size: 9px;
   }
 
   .queue-main {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-inline: 12px;
   }
 
   .queue-intro h1 {
@@ -1342,8 +1119,7 @@ a {
   }
 
   .current-token-card {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-inline: 14px;
   }
 
   .current-token-number {
@@ -1352,7 +1128,7 @@ a {
   }
 
   .token-stat {
-    padding: 0 2px;
+    padding-inline: 2px;
   }
 
   .token-stat strong {
@@ -1365,10 +1141,6 @@ a {
 
   .queue-overview {
     padding: 14px;
-  }
-
-  .section-heading {
-   gap: 8px;
   }
 
   .section-heading h2 {
@@ -1391,17 +1163,11 @@ a {
   .queue-row strong {
     font-size: 11px;
   }
-
 }
 
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
+/* Accessibility */
 :focus-visible {
   outline: 3px solid rgba(0, 60, 144, 0.18);
-
   outline-offset: 3px;
 }
 
@@ -1414,32 +1180,22 @@ a {
   *,
   *::before,
   *::after {
-    transition: none !important;
     animation: none !important;
+    transition: none !important;
   }
-
 }
 
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
+/* Live animation */
 @keyframes livePulse {
 
   0%,
   100% {
     opacity: 1;
-
-    box-shadow:
-      0 0 0 4px rgba(8, 127, 91, 0.10);
+    box-shadow: 0 0 0 4px rgba(8, 127, 91, 0.1);
   }
 
   50% {
     opacity: 0.65;
-
-    box-shadow:
-      0 0 0 7px rgba(8, 127, 91, 0.03);
+    box-shadow: 0 0 0 7px rgba(8, 127, 91, 0.03);
   }
-
 }
