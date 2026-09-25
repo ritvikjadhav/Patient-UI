@@ -1,307 +1,482 @@
 "use strict";
 
 /*
-  =========================================================
-  CLINICCARE — HOME PAGE JAVASCRIPT
-  =========================================================
+=========================================================
+CLINIC CARE — PATIENT HOME
+Production-ready homepage interactions
+=========================================================
 
-  V1 PURPOSE:
-  - Smooth page interactions
-  - Smooth "How it works" navigation
-  - Lightweight reveal animations
-  - No unnecessary polling or heavy effects
-  - Safe for future backend/API integration
+Responsibilities:
+- Smooth anchor navigation
+- Scroll reveal animations
+- Staggered card entrance
+- Mobile navigation active state
+- Button press feedback
+- Live-status visual state
+- Reduced-motion accessibility
+- No fake queue data
+- No database/API logic
 
-  BACKEND / API:
-  The homepage does not need to call the backend directly in V1.
-  Queue data should be fetched on queue.js / token.js.
-
-  Future API example:
-
-  const API_BASE_URL = "https://your-api.com/api";
-
-  async function getClinicStatus() {
-    const response = await fetch(`${API_BASE_URL}/queue/status`);
-    return response.json();
-  }
-
-  Keep backend/API logic separate from UI animation logic.
+Backend queue data belongs in queue.js / token.js.
+=========================================================
 */
 
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* =======================================================
+  /* =====================================================
      ELEMENTS
-     ======================================================= */
+     ===================================================== */
 
-  const page = document.body;
+  const body = document.body;
 
-  const howItWorksLink = document.querySelector(
-    'a[href="#how-it-works"]'
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
   );
 
-  const sections = document.querySelectorAll(
-    ".hero-section, .visit-section, .services-section, .how-section, .privacy-notice"
+  const mobileNavItems = document.querySelectorAll(
+    ".mobile-nav-item"
   );
 
-  const cards = document.querySelectorAll(
-    ".tracking-card, .service-card, .step"
+  const revealSections = document.querySelectorAll(
+    ".hero-section, " +
+    ".visit-section, " +
+    ".services-section, " +
+    ".how-section, " +
+    ".privacy-notice"
+  );
+
+  const revealCards = document.querySelectorAll(
+    ".tracking-card, " +
+    ".service-card, " +
+    ".step"
   );
 
 
-  /* =======================================================
+  /* =====================================================
      PAGE READY
-     ======================================================= */
+     ===================================================== */
 
-  page.classList.add("page-ready");
+  requestAnimationFrame(() => {
+    body.classList.add("page-ready");
+    body.classList.add("initialized");
+  });
 
 
-  /* =======================================================
-     SMOOTH HOW-IT-WORKS SCROLL
-     ======================================================= */
+  /* =====================================================
+     REDUCED MOTION
+     ===================================================== */
 
-  if (howItWorksLink) {
+  const applyMotionPreference = () => {
 
-    howItWorksLink.addEventListener("click", (event) => {
+    if (reduceMotion.matches) {
 
-      const target = document.querySelector("#how-it-works");
+      document.documentElement.classList.add(
+        "reduce-motion"
+      );
 
-      if (!target) {
-        return;
-      }
+    } else {
 
-      event.preventDefault();
+      document.documentElement.classList.remove(
+        "reduce-motion"
+      );
 
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+    }
 
-      /*
-        Update the URL without forcing a page reload.
-      */
+  };
 
-      if (window.history && window.history.replaceState) {
+  applyMotionPreference();
 
-        window.history.replaceState(
-          null,
-          "",
-          "#how-it-works"
-        );
 
-      }
+  if (
+    typeof reduceMotion.addEventListener === "function"
+  ) {
 
-    });
+    reduceMotion.addEventListener(
+      "change",
+      applyMotionPreference
+    );
 
   }
 
 
-  /* =======================================================
-     SCROLL REVEAL
-     =======================================================
+  /* =====================================================
+     SMOOTH INTERNAL NAVIGATION
+     ===================================================== */
 
-     Uses IntersectionObserver instead of scroll events.
-     This keeps the page smooth and lightweight.
-  */
+  document
+    .querySelectorAll('a[href^="#"]')
+    .forEach((link) => {
 
-  if (
-    "IntersectionObserver" in window &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
+      link.addEventListener("click", (event) => {
 
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
+        const targetId = link
+          .getAttribute("href")
+          ?.substring(1);
 
-        entries.forEach((entry) => {
+        if (!targetId) {
+          return;
+        }
 
-          if (!entry.isIntersecting) {
-            return;
-          }
+        const target = document.getElementById(
+          targetId
+        );
 
-          entry.target.classList.add("is-visible");
+        if (!target) {
+          return;
+        }
 
-          observer.unobserve(entry.target);
+        event.preventDefault();
 
-        });
+        const header = document.querySelector(
+          ".app-header"
+        );
 
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px"
-      }
-    );
+        const headerHeight = header
+          ? header.offsetHeight
+          : 0;
+
+        const targetPosition =
+          target.getBoundingClientRect().top +
+          window.scrollY -
+          headerHeight -
+          20;
 
 
-    sections.forEach((section) => {
+        if (reduceMotion.matches) {
 
-      if (!section.classList.contains("hero-section")) {
+          window.scrollTo(
+            0,
+            Math.max(0, targetPosition)
+          );
 
-        section.classList.add("reveal-on-scroll");
+        } else {
 
-        revealObserver.observe(section);
+          window.scrollTo({
+            top: Math.max(0, targetPosition),
+            behavior: "smooth"
+          });
 
-      }
+        }
+
+
+        /* Update URL without reloading */
+
+        if (
+          window.history &&
+          typeof window.history.pushState === "function"
+        ) {
+
+          window.history.pushState(
+            null,
+            "",
+            `#${targetId}`
+          );
+
+        }
+
+      });
 
     });
 
 
-    cards.forEach((card) => {
+  /* =====================================================
+     SCROLL REVEAL
+     ===================================================== */
 
-      card.classList.add("reveal-card");
+  if (
+    "IntersectionObserver" in window &&
+    !reduceMotion.matches
+  ) {
+
+    const revealObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+
+          entries.forEach((entry) => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add(
+              "is-visible"
+            );
+
+            observer.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.08,
+
+          rootMargin:
+            "0px 0px -50px 0px"
+        }
+      );
+
+
+    /* Sections */
+
+    revealSections.forEach((section) => {
+
+      if (
+        section.classList.contains(
+          "hero-section"
+        )
+      ) {
+        return;
+      }
+
+      section.classList.add(
+        "reveal-on-scroll"
+      );
+
+      revealObserver.observe(section);
+
+    });
+
+
+    /* Cards */
+
+    revealCards.forEach((card, index) => {
+
+      card.classList.add(
+        "reveal-card"
+      );
+
+      /*
+        Small stagger without making the page
+        feel like a presentation animation.
+      */
+
+      card.style.setProperty(
+        "--reveal-delay",
+        `${Math.min(index * 70, 280)}ms`
+      );
 
       revealObserver.observe(card);
 
     });
 
-  }
-
-
-  /* =======================================================
-     REDUCED MOTION SUPPORT
-     ======================================================= */
-
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
-
-  if (reducedMotion.matches) {
-
-    document.documentElement.style.scrollBehavior = "auto";
-
-  }
-
-
-  /*
-    If the user changes their system motion preference
-    while the page is open, respect the new setting.
-  */
-
-  if (typeof reducedMotion.addEventListener === "function") {
-
-    reducedMotion.addEventListener("change", (event) => {
-
-      if (event.matches) {
-
-        document.documentElement.style.scrollBehavior = "auto";
-
-      } else {
-
-        document.documentElement.style.scrollBehavior = "smooth";
-
-      }
-
-    });
-
-  }
-
-
-  /* =======================================================
-     MOBILE NAV — ACTIVE STATE
-     =======================================================
-
-     The HTML already contains the correct active state.
-     This only prevents accidental double navigation logic.
-  */
-
-  const currentPage = "index.html";
-
-  document
-    .querySelectorAll(".mobile-nav-item")
-    .forEach((item) => {
-
-      const href = item.getAttribute("href");
-
-      if (
-        href === currentPage ||
-        href === "./" ||
-        href === ""
-      ) {
-
-        item.classList.add("active");
-
-      }
-
-    });
-
-
-  /* =======================================================
-     KEYBOARD / ACCESSIBILITY
-     ======================================================= */
-
-  document.addEventListener("keydown", (event) => {
+  } else {
 
     /*
-      Escape returns focus to the top-level page.
-      This is intentionally lightweight and does not
-      interfere with normal form or navigation behaviour.
+      Accessibility fallback:
+      everything is immediately visible.
     */
 
-    if (event.key === "Escape") {
+    revealSections.forEach((section) => {
+      section.classList.add("is-visible");
+    });
 
-      const activeElement = document.activeElement;
+    revealCards.forEach((card) => {
+      card.classList.add("is-visible");
+    });
 
-      if (
-        activeElement &&
-        typeof activeElement.blur === "function"
-      ) {
+  }
 
-        activeElement.blur();
 
-      }
+  /* =====================================================
+     MOBILE NAV ACTIVE STATE
+     ===================================================== */
+
+  const currentPath =
+    window.location.pathname
+      .split("/")
+      .pop() || "index.html";
+
+
+  mobileNavItems.forEach((item) => {
+
+    const href = item.getAttribute("href");
+
+    if (!href) {
+      return;
+    }
+
+    const itemPath =
+      href.split("/").pop() || "index.html";
+
+    item.classList.remove("active");
+
+    if (
+      itemPath === currentPath ||
+      (
+        currentPath === "" &&
+        itemPath === "index.html"
+      )
+    ) {
+
+      item.classList.add("active");
+
+      item.setAttribute(
+        "aria-current",
+        "page"
+      );
+
+    } else {
+
+      item.removeAttribute(
+        "aria-current"
+      );
 
     }
 
   });
 
 
-  /* =======================================================
-     BACKEND PLACEHOLDER
-     =======================================================
+  /* =====================================================
+     BUTTON PRESS FEEDBACK
+     ===================================================== */
 
-     Do NOT connect the homepage directly to the database.
-
-     Recommended architecture:
-
-       Registration
-          ↓
-       Backend API
-          ↓
-       Database
-          ↓
-       Queue / Token API
-          ↓
-       queue.js / token.js
-
-     The homepage only provides navigation.
-
-     Example future API:
-
-       GET /api/clinic/status
-
-     Example response:
-
-       {
-         "isOpen": true,
-         "queueStatus": "live"
-       }
-
-     Then the clinic-status UI can be updated here.
-
-     IMPORTANT:
-     Never put database credentials, API secrets,
-     passwords or private keys inside this JavaScript file.
-  */
+  const interactiveElements =
+    document.querySelectorAll(
+      ".hero-primary-action, " +
+      ".hero-secondary-action, " +
+      ".tracking-card, " +
+      ".service-card, " +
+      ".mobile-nav-item"
+    );
 
 
-  /* =======================================================
-     CLEAN PAGE INITIALIZATION
-     ======================================================= */
+  interactiveElements.forEach((element) => {
 
-  requestAnimationFrame(() => {
+    element.addEventListener(
+      "pointerdown",
+      () => {
 
-    page.classList.add("initialized");
+        if (reduceMotion.matches) {
+          return;
+        }
+
+        element.classList.add(
+          "is-pressed"
+        );
+
+      }
+    );
+
+
+    const removePressedState = () => {
+
+      element.classList.remove(
+        "is-pressed"
+      );
+
+    };
+
+
+    element.addEventListener(
+      "pointerup",
+      removePressedState
+    );
+
+    element.addEventListener(
+      "pointercancel",
+      removePressedState
+    );
+
+    element.addEventListener(
+      "pointerleave",
+      removePressedState
+    );
 
   });
+
+
+  /* =====================================================
+     LIVE STATUS
+     ===================================================== */
+
+  const liveIndicators =
+    document.querySelectorAll(
+      ".status-live, .live-badge"
+    );
+
+
+  liveIndicators.forEach((indicator) => {
+
+    indicator.setAttribute(
+      "aria-label",
+      "Clinic queue is currently live"
+    );
+
+  });
+
+
+  /* =====================================================
+     KEYBOARD ACCESSIBILITY
+     ===================================================== */
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+
+      /*
+        Escape only removes temporary interaction
+        states. It does not interfere with forms.
+      */
+
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      document
+        .querySelectorAll(".is-pressed")
+        .forEach((element) => {
+
+          element.classList.remove(
+            "is-pressed"
+          );
+
+        });
+
+    }
+  );
+
+
+  /* =====================================================
+     PAGE VISIBILITY
+     ===================================================== */
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      /*
+        The homepage does not poll the backend.
+        When the user returns to the page, queue.js
+        can handle fresh queue data if required.
+      */
+
+      if (
+        document.visibilityState === "visible"
+      ) {
+
+        body.classList.add(
+          "page-active"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =====================================================
+     FINAL INITIALIZATION
+     ===================================================== */
+
+  window.setTimeout(() => {
+
+    body.classList.add(
+      "home-loaded"
+    );
+
+  }, reduceMotion.matches ? 0 : 120);
 
 });
