@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,17 +12,18 @@
 
   <meta
     name="description"
-    content="Clinic Automation patient portal. Register for your visit, join the queue and receive live queue updates."
+    content="Clinic Care patient portal for visit registration and live queue tracking."
   >
 
   <meta
     name="theme-color"
-    content="#0284c7"
+    content="#0284C7"
   >
 
-  <title>Clinic Automation | Patient Portal</title>
+  <title>Clinic Care | Patient Portal</title>
 
   <!-- Font -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link
@@ -35,14 +37,18 @@
     rel="stylesheet"
   >
 
+  <!-- Page CSS -->
+
   <link
     rel="stylesheet"
     href="css/home.css"
   >
+
 </head>
 
 
 <body>
+
 
   <!-- =====================================================
        BACKGROUND
@@ -52,8 +58,11 @@
     class="page-background"
     aria-hidden="true"
   >
-    <span class="background-blob background-blob-blue"></span>
-    <span class="background-blob background-blob-mint"></span>
+
+    <span class="background-orb background-orb-blue"></span>
+
+    <span class="background-orb background-orb-mint"></span>
+
   </div>
 
 
@@ -65,28 +74,25 @@
 
     <div class="header-inner">
 
+
       <a
         href="index.html"
         class="brand"
-        aria-label="Clinic Automation Patient Portal Home"
+        aria-label="Clinic Care home"
       >
 
         <span
-          class="brand-icon"
+          class="brand-mark"
           aria-hidden="true"
         >
           +
         </span>
 
-        <span class="brand-content">
+        <span class="brand-text">
 
-          <strong>
-            Clinic Automation
-          </strong>
+          <strong>Clinic Care</strong>
 
-          <small>
-            Patient Portal
-          </small>
+          <small>Patient Portal</small>
 
         </span>
 
@@ -149,7 +155,8 @@
 
     <section class="hero-section">
 
-      <div class="hero-copy">
+
+      <div class="hero-content">
 
         <span class="eyebrow">
           PATIENT SERVICES
@@ -160,34 +167,41 @@
           <span>made simpler.</span>
         </h1>
 
-        <p>
-          Register for your consultation, join the queue,
-          and follow your visit without waiting at the desk.
+        <p class="hero-description">
+          Register for your consultation and follow your
+          queue from your phone — without waiting at the desk.
         </p>
 
-
-        <!-- Main actions -->
 
         <div class="hero-actions">
 
           <a
             href="registration.html"
-            class="hero-primary-action"
+            class="primary-button"
           >
 
             <span
-              class="action-icon"
+              class="button-icon"
               aria-hidden="true"
             >
-              +
+
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 5v14M5 12h14"
+                />
+              </svg>
+
             </span>
 
             <span>
-              Register &amp; Join Queue
+              Register for a Visit
             </span>
 
             <span
-              class="action-arrow"
+              class="button-arrow"
               aria-hidden="true"
             >
               →
@@ -198,57 +212,75 @@
 
           <a
             href="queue.html"
-            class="hero-secondary-action"
+            class="secondary-button"
           >
             Track My Queue
           </a>
 
         </div>
 
+
+        <p class="hero-note">
+          No account required. Start your visit in seconds.
+        </p>
+
       </div>
 
 
-      <!-- Clinic status -->
+      <!-- =================================================
+           LIVE STATUS
+           ================================================= -->
 
       <aside
-        class="clinic-status"
+        class="status-card"
         aria-label="Current clinic status"
       >
 
-        <div
-          class="status-icon"
-          aria-hidden="true"
-        >
-          ≡
+        <div class="status-card-top">
+
+          <span
+            class="status-icon"
+            aria-hidden="true"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 12h14M8 7v10M16 7v10"
+              />
+            </svg>
+
+          </span>
+
+          <span class="live-badge">
+
+            <span class="live-dot"></span>
+
+            Live
+
+          </span>
+
         </div>
 
-        <div class="status-content">
 
-          <span class="status-label">
+        <div class="status-copy">
+
+          <span class="status-eyebrow">
             CLINIC STATUS
           </span>
 
-          <strong>
+          <h2>
             Queue is live
-          </strong>
+          </h2>
 
           <p>
-            Your position and estimated waiting time
+            Queue position and estimated waiting time
             update as patients are served.
           </p>
 
         </div>
-
-        <span class="status-live">
-
-          <span
-            class="status-pulse"
-            aria-hidden="true"
-          ></span>
-
-          Live
-
-        </span>
 
       </aside>
 
@@ -259,9 +291,10 @@
          AFTER REGISTRATION
          =================================================== -->
 
-    <section class="visit-section">
+    <section class="section visit-section">
 
-      <div class="section-header">
+
+      <div class="section-heading">
 
         <div>
 
@@ -274,16 +307,11 @@
           </h2>
 
           <p>
-            Keep your phone nearby and follow your queue
-            from anywhere in the clinic.
+            Keep your phone nearby and follow your visit
+            without staying at the desk.
           </p>
 
         </div>
-
-        <span class="section-live-status">
-          <span aria-hidden="true"></span>
-          Live
-        </span>
 
       </div>
 
@@ -291,39 +319,50 @@
       <div class="visit-grid">
 
 
-        <!-- Live queue -->
+        <!-- Live Queue -->
 
         <a
           href="queue.html"
-          class="visit-card visit-card-primary"
+          class="feature-card feature-card-primary"
         >
 
           <span
-            class="visit-card-icon"
+            class="feature-icon blue-icon"
             aria-hidden="true"
           >
-            ≡
+
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 7h14M5 12h14M5 17h8"
+              />
+            </svg>
+
           </span>
 
-          <div class="visit-card-content">
 
-            <span class="visit-card-label">
+          <div class="feature-content">
+
+            <span class="card-label">
               LIVE QUEUE
             </span>
 
-            <strong>
+            <h3>
               My Live Queue
-            </strong>
+            </h3>
 
             <p>
-              View your token, queue position and
-              estimated waiting time.
+              View your queue position and estimated
+              waiting time.
             </p>
 
           </div>
 
+
           <span
-            class="visit-card-arrow"
+            class="card-arrow"
             aria-hidden="true"
           >
             →
@@ -332,42 +371,56 @@
         </a>
 
 
-        <!-- Notifications -->
+        <!-- Token -->
 
-        <div class="visit-card notification-card">
+        <a
+          href="queue.html"
+          class="feature-card"
+        >
 
           <span
-            class="visit-card-icon"
+            class="feature-icon mint-icon"
             aria-hidden="true"
           >
-            ♢
+
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M7 4h10v16H7zM10 8h4M10 12h4M10 16h2"
+              />
+            </svg>
+
           </span>
 
-          <div class="visit-card-content">
 
-            <span class="visit-card-label">
-              QUEUE ALERTS
+          <div class="feature-content">
+
+            <span class="card-label mint-label">
+              VISIT DETAILS
             </span>
 
-            <strong>
-              Know when you're next
-            </strong>
+            <h3>
+              My Token
+            </h3>
 
             <p>
-              Get an alert when your consultation
-              is getting close.
+              Check your consultation token and
+              current queue status.
             </p>
 
           </div>
 
+
           <span
-            class="notification-status"
-            id="notificationStatus"
+            class="card-arrow"
+            aria-hidden="true"
           >
-            Alerts
+            →
           </span>
 
-        </div>
+        </a>
 
       </div>
 
@@ -378,44 +431,38 @@
          HOW IT WORKS
          =================================================== -->
 
-    <section
-      class="how-section"
-      id="how-it-works"
-    >
+    <section class="section process-section">
 
-      <div class="section-header">
 
-        <div>
+      <div class="section-heading">
 
-          <span class="section-eyebrow">
-            SIMPLE PROCESS
-          </span>
+        <span class="section-eyebrow">
+          SIMPLE PROCESS
+        </span>
 
-          <h2>
-            Three simple steps.
-          </h2>
-
-        </div>
+        <h2>
+          Your visit in 3 steps.
+        </h2>
 
       </div>
 
 
-      <div class="steps">
+      <div class="process-grid">
 
 
-        <!-- Step 01 -->
+        <!-- Step 1 -->
 
-        <article class="step">
+        <article class="process-card">
 
           <span class="step-number">
             01
           </span>
 
-          <div class="step-content">
+          <div>
 
-            <strong>
+            <h3>
               Register
-            </strong>
+            </h3>
 
             <p>
               Enter your basic details and reason
@@ -427,23 +474,23 @@
         </article>
 
 
-        <!-- Step 02 -->
+        <!-- Step 2 -->
 
-        <article class="step">
+        <article class="process-card">
 
           <span class="step-number">
             02
           </span>
 
-          <div class="step-content">
+          <div>
 
-            <strong>
+            <h3>
               Join the queue
-            </strong>
+            </h3>
 
             <p>
-              Receive your token and see your position
-              in the live queue.
+              Complete registration and receive
+              your consultation token.
             </p>
 
           </div>
@@ -451,23 +498,23 @@
         </article>
 
 
-        <!-- Step 03 -->
+        <!-- Step 3 -->
 
-        <article class="step">
+        <article class="process-card">
 
           <span class="step-number">
             03
           </span>
 
-          <div class="step-content">
+          <div>
 
-            <strong>
-              Get notified
-            </strong>
+            <h3>
+              Track your visit
+            </h3>
 
             <p>
-              Follow your queue and know when it is
-              time to head to the doctor.
+              Follow your queue position and
+              estimated waiting time.
             </p>
 
           </div>
@@ -483,20 +530,35 @@
          PRIVACY
          =================================================== -->
 
-    <section class="privacy-notice">
+    <section class="privacy-card">
 
       <span
         class="privacy-icon"
         aria-hidden="true"
       >
-        ✓
+
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 3l7 3v5c0 4.5-3 7.8-7 10-4-2.2-7-5.5-7-10V6l7-3z"
+          />
+
+          <path
+            d="m9 12 2 2 4-4"
+          />
+
+        </svg>
+
       </span>
+
 
       <div>
 
-        <strong>
+        <h3>
           Your visit stays private
-        </strong>
+        </h3>
 
         <p>
           Your registration details are used only
@@ -507,44 +569,11 @@
 
     </section>
 
-
-    <!-- ===================================================
-         FINAL CTA
-         =================================================== -->
-
-    <section class="final-cta">
-
-      <div>
-
-        <span class="section-eyebrow">
-          READY WHEN YOU ARE
-        </span>
-
-        <h2>
-          Start your visit.
-        </h2>
-
-        <p>
-          Register now and join the clinic queue.
-        </p>
-
-      </div>
-
-      <a
-        href="registration.html"
-        class="final-cta-button"
-      >
-        Register &amp; Join Queue
-        <span aria-hidden="true">→</span>
-      </a>
-
-    </section>
-
   </main>
 
 
   <!-- =====================================================
-       MOBILE BOTTOM NAVIGATION
+       MOBILE NAVIGATION
        ===================================================== -->
 
   <nav
@@ -552,18 +581,21 @@
     aria-label="Patient navigation"
   >
 
+
     <a
       href="index.html"
       class="mobile-nav-item active"
       aria-current="page"
     >
 
-      <span
-        class="mobile-nav-icon"
+      <svg
+        viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        ⌂
-      </span>
+        <path
+          d="m4 10 8-7 8 7v10a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"
+        />
+      </svg>
 
       <span>
         Home
@@ -577,12 +609,14 @@
       class="mobile-nav-item"
     >
 
-      <span
-        class="mobile-nav-icon"
+      <svg
+        viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        +
-      </span>
+        <path
+          d="M12 5v14M5 12h14"
+        />
+      </svg>
 
       <span>
         Register
@@ -596,12 +630,14 @@
       class="mobile-nav-item"
     >
 
-      <span
-        class="mobile-nav-icon"
+      <svg
+        viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        ≡
-      </span>
+        <path
+          d="M5 7h14M5 12h14M5 17h9"
+        />
+      </svg>
 
       <span>
         My Queue
@@ -615,12 +651,18 @@
       class="mobile-nav-item"
     >
 
-      <span
-        class="mobile-nav-icon"
+      <svg
+        viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        ?
-      </span>
+        <circle cx="12" cy="12" r="9" />
+        <path
+          d="M9.5 9a2.5 2.5 0 1 1 4.3 1.7c-.9.9-1.8 1.2-1.8 2.3"
+        />
+        <path
+          d="M12 16h.01"
+        />
+      </svg>
 
       <span>
         Support
@@ -629,12 +671,5 @@
     </a>
 
   </nav>
-
-
-  <!-- JavaScript -->
-
-  <script src="js/home.js"></script>
-
 </body>
-
 </html>
