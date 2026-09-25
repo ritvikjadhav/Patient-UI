@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -12,7 +11,7 @@
 
   <meta
     name="description"
-    content="Clinic Automation patient portal for registration, token tracking and live queue status."
+    content="Clinic Automation patient portal. Register for your visit, join the queue and receive live queue updates."
   >
 
   <meta
@@ -22,15 +21,8 @@
 
   <title>Clinic Automation | Patient Portal</title>
 
-
-  <!-- =====================================================
-       FONT
-       ===================================================== -->
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link
     rel="preconnect"
@@ -47,44 +39,36 @@
     rel="stylesheet"
     href="css/home.css"
   >
-
 </head>
 
 
 <body>
 
-
   <!-- =====================================================
-       BACKGROUND DEPTH
+       BACKGROUND
        ===================================================== -->
 
   <div
     class="page-background"
     aria-hidden="true"
   >
-
     <span class="background-blob background-blob-blue"></span>
-
     <span class="background-blob background-blob-mint"></span>
-
   </div>
 
 
   <!-- =====================================================
-       APP HEADER
+       HEADER
        ===================================================== -->
 
   <header class="app-header">
 
     <div class="header-inner">
 
-
-      <!-- Brand -->
-
       <a
         href="index.html"
         class="brand"
-        aria-label="Clinic Automation Home"
+        aria-label="Clinic Automation Patient Portal Home"
       >
 
         <span
@@ -97,7 +81,7 @@
         <span class="brand-content">
 
           <strong>
-            Clinic Care
+            Clinic Automation
           </strong>
 
           <small>
@@ -109,7 +93,7 @@
       </a>
 
 
-      <!-- Desktop Navigation -->
+      <!-- Desktop navigation -->
 
       <nav
         class="desktop-nav"
@@ -128,7 +112,7 @@
           href="registration.html"
           class="nav-link"
         >
-          Registration
+          Register
         </a>
 
         <a
@@ -147,20 +131,23 @@
 
       </nav>
 
-
     </div>
 
   </header>
 
 
   <!-- =====================================================
-       MAIN / Hero
+       MAIN
        ===================================================== -->
 
   <main class="home-main">
 
-    <section class="hero-section">
 
+    <!-- ===================================================
+         HERO
+         =================================================== -->
+
+    <section class="hero-section">
 
       <div class="hero-copy">
 
@@ -174,12 +161,12 @@
         </h1>
 
         <p>
-          Register for your consultation, get your token,
-          and follow the live queue without waiting at the desk.
+          Register for your consultation, join the queue,
+          and follow your visit without waiting at the desk.
         </p>
 
 
-        <!-- Hero Actions -->
+        <!-- Main actions -->
 
         <div class="hero-actions">
 
@@ -196,7 +183,7 @@
             </span>
 
             <span>
-              Register &amp; Get Token
+              Register &amp; Join Queue
             </span>
 
             <span
@@ -221,14 +208,17 @@
       </div>
 
 
-      <!-- Queue Status -->
+      <!-- Clinic status -->
 
       <aside
         class="clinic-status"
-        aria-label="Clinic queue status"
+        aria-label="Current clinic status"
       >
 
-        <div class="status-icon">
+        <div
+          class="status-icon"
+          aria-hidden="true"
+        >
           ≡
         </div>
 
@@ -243,8 +233,8 @@
           </strong>
 
           <p>
-            Follow your position and estimated
-            waiting time in real time.
+            Your position and estimated waiting time
+            update as patients are served.
           </p>
 
         </div>
@@ -264,6 +254,126 @@
 
     </section>
 
+
+    <!-- ===================================================
+         AFTER REGISTRATION
+         =================================================== -->
+
+    <section class="visit-section">
+
+      <div class="section-header">
+
+        <div>
+
+          <span class="section-eyebrow">
+            AFTER REGISTRATION
+          </span>
+
+          <h2>
+            Stay updated while you wait.
+          </h2>
+
+          <p>
+            Keep your phone nearby and follow your queue
+            from anywhere in the clinic.
+          </p>
+
+        </div>
+
+        <span class="section-live-status">
+          <span aria-hidden="true"></span>
+          Live
+        </span>
+
+      </div>
+
+
+      <div class="visit-grid">
+
+
+        <!-- Live queue -->
+
+        <a
+          href="queue.html"
+          class="visit-card visit-card-primary"
+        >
+
+          <span
+            class="visit-card-icon"
+            aria-hidden="true"
+          >
+            ≡
+          </span>
+
+          <div class="visit-card-content">
+
+            <span class="visit-card-label">
+              LIVE QUEUE
+            </span>
+
+            <strong>
+              My Live Queue
+            </strong>
+
+            <p>
+              View your token, queue position and
+              estimated waiting time.
+            </p>
+
+          </div>
+
+          <span
+            class="visit-card-arrow"
+            aria-hidden="true"
+          >
+            →
+          </span>
+
+        </a>
+
+
+        <!-- Notifications -->
+
+        <div class="visit-card notification-card">
+
+          <span
+            class="visit-card-icon"
+            aria-hidden="true"
+          >
+            ♢
+          </span>
+
+          <div class="visit-card-content">
+
+            <span class="visit-card-label">
+              QUEUE ALERTS
+            </span>
+
+            <strong>
+              Know when you're next
+            </strong>
+
+            <p>
+              Get an alert when your consultation
+              is getting close.
+            </p>
+
+          </div>
+
+          <span
+            class="notification-status"
+            id="notificationStatus"
+          >
+            Alerts
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
     <!-- ===================================================
          HOW IT WORKS
          =================================================== -->
@@ -272,7 +382,6 @@
       class="how-section"
       id="how-it-works"
     >
-
 
       <div class="section-header">
 
@@ -283,7 +392,7 @@
           </span>
 
           <h2>
-            Your visit in 3 steps
+            Three simple steps.
           </h2>
 
         </div>
@@ -294,7 +403,7 @@
       <div class="steps">
 
 
-        <!-- Step 1 -->
+        <!-- Step 01 -->
 
         <article class="step">
 
@@ -318,7 +427,7 @@
         </article>
 
 
-        <!-- Step 2 -->
+        <!-- Step 02 -->
 
         <article class="step">
 
@@ -329,12 +438,12 @@
           <div class="step-content">
 
             <strong>
-              Get your token
+              Join the queue
             </strong>
 
             <p>
-              Receive your consultation token after
-              your registration is completed.
+              Receive your token and see your position
+              in the live queue.
             </p>
 
           </div>
@@ -342,7 +451,7 @@
         </article>
 
 
-        <!-- Step 3 -->
+        <!-- Step 03 -->
 
         <article class="step">
 
@@ -353,12 +462,12 @@
           <div class="step-content">
 
             <strong>
-              Track live
+              Get notified
             </strong>
 
             <p>
-              Follow your queue position and estimated
-              waiting time while you wait.
+              Follow your queue and know when it is
+              time to head to the doctor.
             </p>
 
           </div>
@@ -371,7 +480,7 @@
 
 
     <!-- ===================================================
-         PATIENT PRIVACY
+         PRIVACY
          =================================================== -->
 
     <section class="privacy-notice">
@@ -390,7 +499,7 @@
         </strong>
 
         <p>
-          Your registration information is used
+          Your registration details are used only
           to manage your clinic visit.
         </p>
 
@@ -398,6 +507,38 @@
 
     </section>
 
+
+    <!-- ===================================================
+         FINAL CTA
+         =================================================== -->
+
+    <section class="final-cta">
+
+      <div>
+
+        <span class="section-eyebrow">
+          READY WHEN YOU ARE
+        </span>
+
+        <h2>
+          Start your visit.
+        </h2>
+
+        <p>
+          Register now and join the clinic queue.
+        </p>
+
+      </div>
+
+      <a
+        href="registration.html"
+        class="final-cta-button"
+      >
+        Register &amp; Join Queue
+        <span aria-hidden="true">→</span>
+      </a>
+
+    </section>
 
   </main>
 
@@ -410,9 +551,6 @@
     class="mobile-navigation"
     aria-label="Patient navigation"
   >
-
-
-    <!-- Home -->
 
     <a
       href="index.html"
@@ -434,8 +572,6 @@
     </a>
 
 
-    <!-- Registration -->
-
     <a
       href="registration.html"
       class="mobile-nav-item"
@@ -454,8 +590,6 @@
 
     </a>
 
-
-    <!-- Queue -->
 
     <a
       href="queue.html"
@@ -476,8 +610,6 @@
     </a>
 
 
-    <!-- Support -->
-
     <a
       href="support.html"
       class="mobile-nav-item"
@@ -497,6 +629,9 @@
     </a>
 
   </nav>
+
+
+  <!-- JavaScript -->
 
   <script src="js/home.js"></script>
 
