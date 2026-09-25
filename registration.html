@@ -12,15 +12,20 @@
 
   <meta
     name="description"
-    content="Register for your clinic consultation and receive a queue token."
+    content="Register for your clinic consultation and receive your queue token."
   >
 
   <meta
     name="theme-color"
-    content="#003c90"
+    content="#0284C7"
   >
 
-  <title>Registration | Clinic Automation</title>
+  <meta
+    name="color-scheme"
+    content="light"
+  >
+
+  <title>Register | Clinic Care Patient Portal</title>
 
 
   <!-- =====================================================
@@ -45,7 +50,7 @@
 
 
   <!-- =====================================================
-       REGISTRATION STYLESHEET
+       STYLES
        ===================================================== -->
 
   <link
@@ -60,7 +65,23 @@
 
 
   <!-- =====================================================
-       APP HEADER
+       BACKGROUND
+       ===================================================== -->
+
+  <div
+    class="page-background"
+    aria-hidden="true"
+  >
+
+    <span class="background-blob background-blob-blue"></span>
+
+    <span class="background-blob background-blob-mint"></span>
+
+  </div>
+
+
+  <!-- =====================================================
+       HEADER
        ===================================================== -->
 
   <header class="app-header">
@@ -73,15 +94,32 @@
       <a
         href="index.html"
         class="brand"
-        aria-label="Clinic Automation Home"
+        aria-label="Clinic Care home"
       >
 
         <span
           class="brand-icon"
           aria-hidden="true"
         >
-          +
+
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+          >
+
+            <path d="M12 5v14"></path>
+
+            <path d="M5 12h14"></path>
+
+          </svg>
+
         </span>
+
 
         <span class="brand-content">
 
@@ -98,7 +136,7 @@
       </a>
 
 
-      <!-- Desktop Navigation -->
+      <!-- Desktop navigation -->
 
       <nav
         class="desktop-nav"
@@ -159,274 +197,51 @@
       </span>
 
       <h1>
-        Register for your consultation
+        Register for your visit.
       </h1>
 
       <p>
-        Enter your details below to join today's
-        clinic queue and receive your consultation token.
+        Enter a few details to join the clinic queue.
+        Your token will be shown after registration.
       </p>
 
     </section>
 
 
     <!-- ===================================================
-         REGISTRATION FORM CARD
+         REGISTRATION LAYOUT
          =================================================== -->
 
-    <section class="registration-card">
-
-
-      <!-- Form Header -->
-
-      <div class="form-header">
-
-        <div>
-
-          <span class="section-eyebrow">
-            PATIENT DETAILS
-          </span>
-
-          <h2>
-            Tell us about yourself
-          </h2>
-
-        </div>
-
-        <span class="required-note">
-          * Required
-        </span>
-
-      </div>
+    <div class="registration-layout">
 
 
       <!-- =================================================
-           FORM
+           FORM CARD
            ================================================= -->
 
-      <form
-        id="registrationForm"
-        novalidate
+      <section
+        class="registration-card"
+        aria-labelledby="registration-title"
       >
 
 
-        <!-- =================================================
-             NAME
-             ================================================= -->
+        <!-- Form heading -->
 
-        <div class="form-group">
-
-          <label for="name">
-            Full Name
-            <span>*</span>
-          </label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your full name"
-            autocomplete="name"
-            maxlength="80"
-            required
-          >
-
-          <small
-            class="field-hint"
-            id="nameHint"
-          >
-            Enter your name as you would like it on your visit record.
-          </small>
-
-          <small
-            class="error-message"
-            id="nameError"
-          ></small>
-
-        </div>
-
-
-        <!-- =================================================
-             AGE + MOBILE
-             ================================================= -->
-
-        <div class="form-row">
-
-
-          <!-- Age -->
-
-          <div class="form-group">
-
-            <label for="age">
-              Age
-              <span>*</span>
-            </label>
-
-            <input
-              type="number"
-              id="age"
-              name="age"
-              placeholder="Age"
-              min="1"
-              max="120"
-              inputmode="numeric"
-              required
-            >
-
-            <small
-              class="error-message"
-              id="ageError"
-            ></small>
-
-          </div>
-
-
-          <!-- Mobile -->
-
-          <div class="form-group">
-
-            <label for="mobile">
-              Mobile Number
-              <span>*</span>
-            </label>
-
-            <input
-              type="tel"
-              id="mobile"
-              name="mobile"
-              placeholder="10-digit number"
-              inputmode="numeric"
-              maxlength="10"
-              autocomplete="tel"
-              required
-            >
-
-            <small
-              class="error-message"
-              id="mobileError"
-            ></small>
-
-          </div>
-
-        </div>
-
-
-        <!-- =================================================
-             REASON
-             ================================================= -->
-
-        <div class="form-group">
-
-          <label for="reason">
-            Reason for Visit
-            <span>*</span>
-          </label>
-
-          <select
-            id="reason"
-            name="reason"
-            required
-          >
-
-            <option
-              value=""
-              selected
-              disabled
-            >
-              Select reason for your visit
-            </option>
-
-            <option value="General Consultation">
-              General Consultation
-            </option>
-
-            <option value="Follow-up">
-              Follow-up Visit
-            </option>
-
-            <option value="Fever or Infection">
-              Fever or Infection
-            </option>
-
-            <option value="Pain or Discomfort">
-              Pain or Discomfort
-            </option>
-
-            <option value="Routine Check-up">
-              Routine Check-up
-            </option>
-
-            <option value="Other">
-              Other
-            </option>
-
-          </select>
-
-          <small
-            class="error-message"
-            id="reasonError"
-          ></small>
-
-        </div>
-
-
-        <!-- =================================================
-             ISSUE / MESSAGE
-             ================================================= -->
-
-        <div class="form-group">
-
-          <label for="issue">
-            Briefly describe your issue
-            <span class="optional">
-              Optional
-            </span>
-          </label>
-
-          <textarea
-            id="issue"
-            name="issue"
-            rows="4"
-            maxlength="300"
-            placeholder="Tell the doctor briefly what you are visiting for..."
-          ></textarea>
-
-          <div class="textarea-footer">
-
-            <small>
-              Keep it brief. You can explain more during consultation.
-            </small>
-
-            <span id="characterCount">
-              0 / 300
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <!-- =================================================
-             PRIVACY
-             ================================================= -->
-
-        <div class="form-notice">
-
-          <span
-            class="notice-icon"
-            aria-hidden="true"
-          >
-            ✓
-          </span>
+        <div class="form-header">
 
           <div>
 
-            <strong>
-              Your information is secure
-            </strong>
+            <span class="section-eyebrow">
+              PATIENT DETAILS
+            </span>
 
-            <p>
-              Your details are used only for clinic visit .
+            <h2 id="registration-title">
+              Tell us about yourself
+            </h2>
+
+            <p class="form-description">
+              Fields marked with <span aria-hidden="true">*</span>
+              are required.
             </p>
 
           </div>
@@ -435,45 +250,604 @@
 
 
         <!-- =================================================
-             SUBMIT
+             FORM
              ================================================= -->
 
-        <button
-          type="submit"
-          class="submit-button"
-          id="submitButton"
+        <form
+          id="registrationForm"
+          novalidate
+          autocomplete="on"
         >
 
-          <span>
-            Register &amp; Get Token
+
+          <!-- ===============================================
+               PERSONAL INFORMATION
+               =============================================== -->
+
+          <div class="form-section">
+
+            <div class="form-section-heading">
+
+              <span class="form-section-number">
+                01
+              </span>
+
+              <div>
+
+                <strong>
+                  Personal information
+                </strong>
+
+                <span>
+                  Basic details for your visit record
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Full name -->
+
+            <div class="form-group">
+
+              <label for="name">
+
+                Full Name
+
+                <span
+                  class="required-mark"
+                  aria-hidden="true"
+                >
+                  *
+                </span>
+
+              </label>
+
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                maxlength="80"
+                autocapitalize="words"
+                spellcheck="false"
+                required
+              >
+
+              <small
+                class="field-hint"
+                id="nameHint"
+              >
+                Use the name you would like on your visit record.
+              </small>
+
+              <small
+                class="error-message"
+                id="nameError"
+                role="alert"
+              ></small>
+
+            </div>
+
+
+            <!-- Age + Mobile -->
+
+            <div class="form-row">
+
+
+              <!-- Age -->
+
+              <div class="form-group">
+
+                <label for="age">
+
+                  Age
+
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+
+                </label>
+
+                <div class="input-with-suffix">
+
+                  <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    placeholder="Your age"
+                    min="1"
+                    max="120"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    required
+                  >
+
+                  <span
+                    class="input-suffix"
+                    aria-hidden="true"
+                  >
+                    yrs
+                  </span>
+
+                </div>
+
+                <small
+                  class="error-message"
+                  id="ageError"
+                  role="alert"
+                ></small>
+
+              </div>
+
+
+              <!-- Mobile -->
+
+              <div class="form-group">
+
+                <label for="mobile">
+
+                  Mobile Number
+
+                  <span
+                    class="required-mark"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+
+                </label>
+
+                <input
+                  type="tel"
+                  id="mobile"
+                  name="mobile"
+                  placeholder="10-digit number"
+                  inputmode="numeric"
+                  maxlength="10"
+                  minlength="10"
+                  autocomplete="tel"
+                  pattern="[0-9]{10}"
+                  required
+                >
+
+                <small
+                  class="field-hint"
+                >
+                  Used for your visit and queue updates.
+                </small>
+
+                <small
+                  class="error-message"
+                  id="mobileError"
+                  role="alert"
+                ></small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===============================================
+               VISIT INFORMATION
+               =============================================== -->
+
+          <div class="form-section">
+
+            <div class="form-section-heading">
+
+              <span class="form-section-number">
+                02
+              </span>
+
+              <div>
+
+                <strong>
+                  Visit information
+                </strong>
+
+                <span>
+                  Help us understand your visit
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Reason -->
+
+            <div class="form-group">
+
+              <label for="reason">
+
+                Reason for Visit
+
+                <span
+                  class="required-mark"
+                  aria-hidden="true"
+                >
+                  *
+                </span>
+
+              </label>
+
+              <select
+                id="reason"
+                name="reason"
+                required
+              >
+
+                <option
+                  value=""
+                  selected
+                  disabled
+                >
+                  Select a reason
+                </option>
+
+                <option value="General Consultation">
+                  General Consultation
+                </option>
+
+                <option value="Follow-up">
+                  Follow-up Visit
+                </option>
+
+                <option value="Fever or Infection">
+                  Fever or Infection
+                </option>
+
+                <option value="Pain or Discomfort">
+                  Pain or Discomfort
+                </option>
+
+                <option value="Routine Check-up">
+                  Routine Check-up
+                </option>
+
+                <option value="Other">
+                  Other
+                </option>
+
+              </select>
+
+              <small
+                class="error-message"
+                id="reasonError"
+                role="alert"
+              ></small>
+
+            </div>
+
+
+            <!-- Issue -->
+
+            <div class="form-group">
+
+              <label for="issue">
+
+                Briefly describe your issue
+
+                <span class="optional-label">
+                  Optional
+                </span>
+
+              </label>
+
+              <textarea
+                id="issue"
+                name="issue"
+                rows="4"
+                maxlength="300"
+                placeholder="Briefly describe what you are visiting for..."
+                autocomplete="off"
+              ></textarea>
+
+
+              <div class="textarea-footer">
+
+                <small>
+                  Keep it brief. You can explain more during consultation.
+                </small>
+
+                <span
+                  id="characterCount"
+                  aria-live="polite"
+                >
+                  0 / 300
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===============================================
+               PRIVACY NOTICE
+               =============================================== -->
+
+          <div
+            class="form-notice"
+            role="note"
+          >
+
+            <span
+              class="notice-icon"
+              aria-hidden="true"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+
+                <path d="M20 6 9 17l-5-5"></path>
+
+              </svg>
+
+            </span>
+
+
+            <div>
+
+              <strong>
+                Your information stays private
+              </strong>
+
+              <p>
+                Your details are used to manage your clinic visit
+                and queue registration.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===============================================
+               SUBMIT
+               =============================================== -->
+
+          <button
+            type="submit"
+            class="submit-button"
+            id="submitButton"
+          >
+
+            <span class="submit-content">
+
+              <span>
+                Register &amp; Get Token
+              </span>
+
+              <span
+                class="submit-arrow"
+                aria-hidden="true"
+              >
+                →
+              </span>
+
+            </span>
+
+            <span
+              class="submit-loading"
+              aria-hidden="true"
+            >
+              Processing...
+            </span>
+
+          </button>
+
+
+          <!-- Existing registration -->
+
+          <p class="existing-note">
+
+            Already registered today?
+
+            <a href="queue.html">
+              Track My Queue
+              <span aria-hidden="true">→</span>
+            </a>
+
+          </p>
+
+
+        </form>
+
+      </section>
+
+
+      <!-- =================================================
+           SIDE INFORMATION
+           ================================================= -->
+
+      <aside
+        class="registration-sidebar"
+        aria-label="Registration information"
+      >
+
+
+        <!-- Queue card -->
+
+        <div class="visit-card">
+
+          <div class="visit-card-top">
+
+            <span
+              class="visit-card-icon"
+              aria-hidden="true"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+
+                <path d="M3 12h4l2-7 4 14 2-7h6"></path>
+
+              </svg>
+
+            </span>
+
+            <span class="live-status">
+
+              <span
+                class="live-dot"
+                aria-hidden="true"
+              ></span>
+
+              Queue live
+
+            </span>
+
+          </div>
+
+
+          <span class="visit-card-label">
+            TODAY'S VISIT
           </span>
+
+          <h2>
+            What happens next?
+          </h2>
+
+          <p>
+            Complete registration and your consultation
+            token will be generated for today's queue.
+          </p>
+
+
+          <div class="registration-flow">
+
+            <div class="flow-item">
+
+              <span class="flow-number">
+                01
+              </span>
+
+              <div>
+
+                <strong>
+                  Submit details
+                </strong>
+
+                <span>
+                  Complete the registration form.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="flow-line"></div>
+
+
+            <div class="flow-item">
+
+              <span class="flow-number">
+                02
+              </span>
+
+              <div>
+
+                <strong>
+                  Receive token
+                </strong>
+
+                <span>
+                  Your queue token is generated.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="flow-line"></div>
+
+
+            <div class="flow-item">
+
+              <span class="flow-number">
+                03
+              </span>
+
+              <div>
+
+                <strong>
+                  Track your queue
+                </strong>
+
+                <span>
+                  Follow your position while you wait.
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Help card -->
+
+        <div class="sidebar-help">
 
           <span
-            class="submit-arrow"
+            class="help-icon"
             aria-hidden="true"
           >
-            →
+            ?
           </span>
 
-        </button>
+          <div>
 
+            <strong>
+              Need help?
+            </strong>
 
-        <!-- Existing registration -->
+            <p>
+              Having trouble registering?
+            </p>
 
-        <p class="existing-note">
+            <a href="support.html">
+              Visit Support
+              <span aria-hidden="true">→</span>
+            </a>
 
-          Already registered today?
+          </div>
 
-          <a href="queue.html">
-            Track My Queue
-          </a>
+        </div>
 
-        </p>
+      </aside>
 
-
-      </form>
-
-    </section>
+    </div>
 
   </main>
 
@@ -488,6 +862,8 @@
   >
 
 
+    <!-- Home -->
+
     <a
       href="index.html"
       class="mobile-nav-item"
@@ -497,7 +873,26 @@
         class="mobile-nav-icon"
         aria-hidden="true"
       >
-        ⌂
+
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+
+          <path d="m3 10 9-7 9 7"></path>
+
+          <path d="M5 9v11h14V9"></path>
+
+          <path d="M9 20v-6h6v6"></path>
+
+        </svg>
+
       </span>
 
       <span>
@@ -506,6 +901,8 @@
 
     </a>
 
+
+    <!-- Registration -->
 
     <a
       href="registration.html"
@@ -517,7 +914,23 @@
         class="mobile-nav-icon"
         aria-hidden="true"
       >
-        +
+
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+        >
+
+          <path d="M12 5v14"></path>
+
+          <path d="M5 12h14"></path>
+
+        </svg>
+
       </span>
 
       <span>
@@ -526,6 +939,8 @@
 
     </a>
 
+
+    <!-- Queue -->
 
     <a
       href="queue.html"
@@ -536,7 +951,25 @@
         class="mobile-nav-icon"
         aria-hidden="true"
       >
-        ≡
+
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+
+          <path d="M5 7h14"></path>
+
+          <path d="M5 12h14"></path>
+
+          <path d="M5 17h14"></path>
+
+        </svg>
+
       </span>
 
       <span>
@@ -545,6 +978,8 @@
 
     </a>
 
+
+    <!-- Support -->
 
     <a
       href="support.html"
@@ -561,13 +996,15 @@
       <span>
         Support
       </span>
-
     </a>
-
   </nav>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
 
   <script src="js/register.js"></script>
 
 </body>
-
 </html>
