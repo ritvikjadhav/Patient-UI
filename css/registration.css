@@ -93,18 +93,6 @@ body {
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-
-  opacity: 0;
-  transform: translateY(4px);
-
-  transition:
-    opacity 420ms ease,
-    transform 600ms var(--ease);
-}
-
-body.page-ready {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 button,
@@ -130,6 +118,34 @@ a {
 
 
 /* =========================================================
+   PAGE INITIAL LOAD
+   ========================================================= */
+
+/*
+   IMPORTANT:
+   Do NOT hide the body before JavaScript loads.
+   This prevents a completely blank page if JS fails.
+*/
+
+body.page-ready {
+  animation:
+    page-enter 500ms var(--ease) both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0.96;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
    HEADER
    ========================================================= */
 
@@ -140,7 +156,8 @@ a {
 
   width: 100%;
 
-  background: rgba(249, 249, 255, 0.90);
+  background:
+    rgba(249, 249, 255, 0.90);
 
   border-bottom:
     1px solid rgba(195, 198, 213, 0.55);
@@ -169,7 +186,9 @@ a {
 }
 
 
-/* Brand */
+/* =========================================================
+   BRAND
+   ========================================================= */
 
 .brand {
   min-width: 0;
@@ -212,7 +231,9 @@ a {
 }
 
 .brand:hover .brand-icon {
-  transform: translateY(-1px) rotate(-2deg);
+  transform:
+    translateY(-1px)
+    rotate(-2deg);
 
   box-shadow:
     0 9px 20px rgba(0, 60, 144, 0.20);
@@ -243,11 +264,14 @@ a {
 }
 
 
-/* Desktop navigation */
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
 
 .desktop-nav {
   display: flex;
   align-items: center;
+
   gap: 4px;
 }
 
@@ -318,17 +342,20 @@ a {
 
   text-align: center;
 
-  opacity: 0;
-  transform: translateY(18px);
-
-  transition:
-    opacity 650ms ease,
-    transform 700ms var(--ease);
+  animation:
+    intro-enter 700ms var(--ease) both;
 }
 
-body.initialized .registration-intro {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes intro-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .eyebrow {
@@ -391,22 +418,22 @@ body.initialized .registration-intro {
    REVEAL ANIMATIONS
    ========================================================= */
 
-.reveal-on-scroll,
-.reveal-card {
+.reveal-on-scroll {
   opacity: 0;
 
   transform:
-    translateY(22px);
+    translateY(20px);
 
   transition:
     opacity 650ms ease,
     transform 700ms var(--ease);
 }
 
-.reveal-on-scroll.is-visible,
-.reveal-card.is-visible {
+.reveal-on-scroll.is-visible {
   opacity: 1;
-  transform: translateY(0);
+
+  transform:
+    translateY(0);
 }
 
 
@@ -504,6 +531,7 @@ body.initialized .registration-intro {
 #registrationForm {
   display: flex;
   flex-direction: column;
+
   gap: 18px;
 }
 
@@ -513,6 +541,11 @@ body.initialized .registration-intro {
   transition:
     transform 180ms var(--ease);
 }
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
 
 .form-group label {
   display: flex;
@@ -554,12 +587,14 @@ body.initialized .registration-intro {
 
   color: var(--text);
 
-  background: var(--surface-lowest);
+  background:
+    var(--surface-lowest);
 
   border:
     1px solid var(--outline-variant);
 
-  border-radius: var(--radius);
+  border-radius:
+    var(--radius);
 
   outline: none;
 
@@ -574,7 +609,8 @@ body.initialized .registration-intro {
 .form-group select {
   height: 46px;
 
-  padding: 0 14px;
+  padding:
+    0 14px;
 
   font-size: 14px;
   line-height: 20px;
@@ -583,7 +619,8 @@ body.initialized .registration-intro {
 .form-group textarea {
   min-height: 108px;
 
-  padding: 12px 14px;
+  padding:
+    12px 14px;
 
   resize: vertical;
 
@@ -599,22 +636,27 @@ body.initialized .registration-intro {
 .form-group input:hover,
 .form-group select:hover,
 .form-group textarea:hover {
-  border-color: var(--outline);
+  border-color:
+    var(--outline);
 
-  background: #ffffff;
+  background:
+    #ffffff;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: var(--primary);
+  border-color:
+    var(--primary);
 
-  background: #ffffff;
+  background:
+    #ffffff;
 
   box-shadow:
     0 0 0 3px rgba(0, 60, 144, 0.12);
 
-  transform: translateY(-1px);
+  transform:
+    translateY(-1px);
 }
 
 
@@ -647,9 +689,11 @@ body.initialized .registration-intro {
     calc(100% - 12px) 19px;
 
   background-size:
+    5px 5px,
     5px 5px;
 
-  background-repeat: no-repeat;
+  background-repeat:
+    no-repeat;
 }
 
 
@@ -669,7 +713,7 @@ body.initialized .registration-intro {
 
 
 /* =========================================================
-   HINT
+   FIELD HINT
    ========================================================= */
 
 .field-hint {
@@ -704,7 +748,8 @@ body.initialized .registration-intro {
 .form-group.has-error input,
 .form-group.has-error select,
 .form-group.has-error textarea {
-  border-color: var(--error);
+  border-color:
+    var(--error);
 
   background:
     rgba(255, 218, 214, 0.20);
@@ -721,7 +766,6 @@ body.initialized .registration-intro {
 }
 
 @keyframes input-error-shake {
-
   0%,
   100% {
     transform: translateX(0);
@@ -761,15 +805,13 @@ body.initialized .registration-intro {
 
 #characterCount {
   flex-shrink: 0;
-  white-space: nowrap;
 
-  transition:
-    color 180ms ease;
+  white-space: nowrap;
 }
 
 
 /* =========================================================
-   PRIVACY
+   PRIVACY NOTICE
    ========================================================= */
 
 .form-notice {
@@ -778,14 +820,17 @@ body.initialized .registration-intro {
 
   gap: 11px;
 
-  padding: 13px 14px;
+  padding:
+    13px 14px;
 
-  background: var(--surface-low);
+  background:
+    var(--surface-low);
 
   border:
     1px solid var(--secondary-container);
 
-  border-radius: var(--radius);
+  border-radius:
+    var(--radius);
 
   transition:
     transform 180ms var(--ease),
@@ -793,7 +838,8 @@ body.initialized .registration-intro {
 }
 
 .form-notice:hover {
-  transform: translateY(-1px);
+  transform:
+    translateY(-1px);
 
   box-shadow:
     0 6px 18px rgba(17, 28, 45, 0.05);
@@ -802,6 +848,7 @@ body.initialized .registration-intro {
 .notice-icon {
   width: 28px;
   height: 28px;
+
   flex: 0 0 28px;
 
   display: grid;
@@ -809,7 +856,8 @@ body.initialized .registration-intro {
 
   color: var(--primary);
 
-  background: var(--primary-fixed);
+  background:
+    var(--primary-fixed);
 
   border-radius: 50%;
 
@@ -848,9 +896,11 @@ body.initialized .registration-intro {
 
   min-height: 0;
 
-  margin: -6px 0 -6px;
+  margin:
+    -6px 0 -6px;
 
-  color: var(--error);
+  color:
+    var(--error);
 
   font-size: 12px;
   line-height: 17px;
@@ -867,7 +917,8 @@ body.initialized .registration-intro {
   width: 100%;
   min-height: 50px;
 
-  padding: 0 16px;
+  padding:
+    0 16px;
 
   display: flex;
   align-items: center;
@@ -875,13 +926,16 @@ body.initialized .registration-intro {
 
   gap: 14px;
 
-  color: var(--on-primary);
+  color:
+    var(--on-primary);
 
-  background: var(--primary);
+  background:
+    var(--primary);
 
   border: 0;
 
-  border-radius: var(--radius);
+  border-radius:
+    var(--radius);
 
   cursor: pointer;
 
@@ -899,22 +953,27 @@ body.initialized .registration-intro {
 }
 
 .submit-button:hover {
-  background: var(--primary-container);
+  background:
+    var(--primary-container);
 
   box-shadow:
     0 12px 26px rgba(0, 60, 144, 0.20);
 
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
 }
 
 .submit-button:active {
-  transform: translateY(0) scale(0.99);
+  transform:
+    translateY(0)
+    scale(0.99);
 }
 
 .submit-button:disabled {
   opacity: 0.65;
 
-  cursor: not-allowed;
+  cursor:
+    not-allowed;
 
   transform: none;
 
@@ -932,11 +991,14 @@ body.initialized .registration-intro {
 }
 
 .submit-button:hover .submit-arrow {
-  transform: translateX(3px);
+  transform:
+    translateX(3px);
 }
 
 
-/* Loading */
+/* =========================================================
+   LOADING
+   ========================================================= */
 
 .submit-button.is-loading {
   pointer-events: none;
@@ -949,9 +1011,11 @@ body.initialized .registration-intro {
   border:
     2px solid rgba(255, 255, 255, 0.40);
 
-  border-top-color: #ffffff;
+  border-top-color:
+    #ffffff;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   font-size: 0;
 
@@ -961,7 +1025,8 @@ body.initialized .registration-intro {
 
 @keyframes registration-spin {
   to {
-    transform: rotate(360deg);
+    transform:
+      rotate(360deg);
   }
 }
 
@@ -971,30 +1036,42 @@ body.initialized .registration-intro {
    ========================================================= */
 
 .existing-note {
-  margin: -2px 0 0;
+  margin:
+    -2px 0 0;
 
-  color: var(--text-variant);
+  color:
+    var(--text-variant);
 
-  text-align: center;
+  text-align:
+    center;
 
-  font-size: 12px;
-  line-height: 16px;
+  font-size:
+    12px;
+
+  line-height:
+    16px;
 }
 
 .existing-note a {
-  color: var(--primary);
+  color:
+    var(--primary);
 
-  font-weight: 600;
+  font-weight:
+    600;
 
   transition:
     color 160ms ease;
 }
 
 .existing-note a:hover {
-  color: var(--primary-container);
+  color:
+    var(--primary-container);
 
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration:
+    underline;
+
+  text-underline-offset:
+    3px;
 }
 
 
@@ -1003,42 +1080,76 @@ body.initialized .registration-intro {
    ========================================================= */
 
 .registration-process {
-  margin-top: 52px;
+  margin-top:
+    52px;
+
+  animation:
+    process-enter 800ms var(--ease) 150ms both;
+}
+
+@keyframes process-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .process-heading {
-  margin-bottom: 20px;
+  margin-bottom:
+    20px;
 }
 
 .process-heading h2 {
-  margin: 0;
+  margin:
+    0;
 
-  color: var(--text);
+  color:
+    var(--text);
 
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 600;
+  font-size:
+    20px;
+
+  line-height:
+    28px;
+
+  font-weight:
+    600;
 }
 
 .process-steps {
-  display: grid;
+  display:
+    grid;
 
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
-  gap: 12px;
+  gap:
+    12px;
 }
 
 .process-step {
-  min-height: 140px;
+  min-height:
+    140px;
 
-  padding: 18px;
+  padding:
+    18px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display:
+    flex;
 
-  gap: 16px;
+  flex-direction:
+    column;
+
+  justify-content:
+    space-between;
+
+  gap:
+    16px;
 
   background:
     rgba(255, 255, 255, 0.62);
@@ -1046,7 +1157,8 @@ body.initialized .registration-intro {
   border:
     1px solid var(--outline-variant);
 
-  border-radius: var(--radius-lg);
+  border-radius:
+    var(--radius-lg);
 
   box-shadow:
     0 6px 20px rgba(17, 28, 45, 0.05);
@@ -1058,7 +1170,8 @@ body.initialized .registration-intro {
 }
 
 .process-step:hover {
-  transform: translateY(-4px);
+  transform:
+    translateY(-4px);
 
   border-color:
     var(--secondary-container);
@@ -1068,34 +1181,54 @@ body.initialized .registration-intro {
 }
 
 .process-number {
-  color: var(--primary);
+  color:
+    var(--primary);
 
-  font-size: 11px;
-  line-height: 16px;
-  font-weight: 700;
+  font-size:
+    11px;
 
-  letter-spacing: 0.06em;
+  line-height:
+    16px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.06em;
 }
 
 .process-step strong {
-  display: block;
+  display:
+    block;
 
-  margin-bottom: 5px;
+  margin-bottom:
+    5px;
 
-  color: var(--text);
+  color:
+    var(--text);
 
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
+  font-size:
+    14px;
+
+  line-height:
+    20px;
+
+  font-weight:
+    600;
 }
 
 .process-step p {
-  margin: 0;
+  margin:
+    0;
 
-  color: var(--text-variant);
+  color:
+    var(--text-variant);
 
-  font-size: 12px;
-  line-height: 18px;
+  font-size:
+    12px;
+
+  line-height:
+    18px;
 }
 
 
@@ -1104,7 +1237,8 @@ body.initialized .registration-intro {
    ========================================================= */
 
 .mobile-navigation {
-  display: none;
+  display:
+    none;
 }
 
 
@@ -1116,13 +1250,33 @@ body.initialized .registration-intro {
   outline:
     3px solid rgba(0, 60, 144, 0.16);
 
-  outline-offset: 2px;
+  outline-offset:
+    2px;
 }
 
 .form-group input:focus-visible,
 .form-group select:focus-visible,
 .form-group textarea:focus-visible {
-  outline: none;
+  outline:
+    none;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .registration-main {
+    max-width:
+      760px;
+  }
+
+  .process-steps {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
 }
 
 
@@ -1133,11 +1287,13 @@ body.initialized .registration-intro {
 @media (max-width: 767px) {
 
   .desktop-nav {
-    display: none;
+    display:
+      none;
   }
 
   .header-inner {
-    min-height: 66px;
+    min-height:
+      66px;
 
     padding:
       11px 16px;
@@ -1149,72 +1305,104 @@ body.initialized .registration-intro {
   }
 
   .registration-intro {
-    margin-bottom: 28px;
+    margin-bottom:
+      28px;
   }
 
   .registration-intro h1 {
-    font-size: 24px;
-    line-height: 32px;
+    font-size:
+      24px;
 
-    letter-spacing: -0.01em;
+    line-height:
+      32px;
+
+    letter-spacing:
+      -0.01em;
   }
 
   .registration-intro p {
-    font-size: 14px;
-    line-height: 20px;
+    font-size:
+      14px;
+
+    line-height:
+      20px;
   }
 
   .registration-card {
-    padding: 20px;
+    padding:
+      20px;
 
-    border-radius: var(--radius-lg);
+    border-radius:
+      var(--radius-lg);
   }
 
   .form-header {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 6px;
+    gap:
+      6px;
 
-    padding-bottom: 18px;
-    margin-bottom: 20px;
+    padding-bottom:
+18px;
+
+    margin-bottom:
+      20px;
   }
 
   .form-row {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
 
-    gap: 18px;
+    gap:
+      18px;
   }
 
   .process-steps {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
   .process-step {
-    min-height: auto;
+    min-height:
+      auto;
   }
 
 
-  /* Mobile bottom navigation */
+  /* =======================================================
+     MOBILE BOTTOM NAV
+     ======================================================= */
 
   .mobile-navigation {
-    position: fixed;
+    position:
+      fixed;
 
-    left: 12px;
-    right: 12px;
-    bottom: 10px;
+    left:
+      12px;
 
-    z-index: 200;
+    right:
+      12px;
 
-    min-height: 62px;
+    bottom:
+      10px;
 
-    padding: 6px;
+    z-index:
+      200;
 
-    display: grid;
+    min-height:
+      62px;
+
+    padding:
+      6px;
+
+    display:
+      grid;
 
     grid-template-columns:
       repeat(4, 1fr);
 
-    gap: 3px;
+    gap:
+      3px;
 
     background:
       rgba(249, 249, 255, 0.94);
@@ -1222,35 +1410,58 @@ body.initialized .registration-intro {
     border:
       1px solid rgba(195, 198, 213, 0.70);
 
-    border-radius: var(--radius-lg);
+    border-radius:
+      var(--radius-lg);
 
     box-shadow:
       0 14px 32px rgba(17, 28, 45, 0.14);
 
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter:
+      blur(16px);
+
+    -webkit-backdrop-filter:
+      blur(16px);
 
     animation:
-      mobile-nav-enter 600ms var(--ease) both;
+      mobile-nav-enter
+      600ms
+      var(--ease)
+      both;
   }
 
   .mobile-nav-item {
-    min-height: 50px;
+    min-height:
+      50px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display:
+      flex;
 
-    gap: 2px;
+    flex-direction:
+      column;
 
-    color: var(--text-variant);
+    align-items:
+      center;
 
-    border-radius: var(--radius);
+    justify-content:
+      center;
 
-    font-size: 9px;
-    line-height: 14px;
-    font-weight: 600;
+    gap:
+      2px;
+
+    color:
+      var(--text-variant);
+
+    border-radius:
+      var(--radius);
+
+    font-size:
+      9px;
+
+    line-height:
+      14px;
+
+    font-weight:
+      600;
 
     transition:
       color 160ms ease,
@@ -1259,51 +1470,54 @@ body.initialized .registration-intro {
   }
 
   .mobile-nav-item:hover {
-    transform: translateY(-1px);
+    transform:
+      translateY(-1px);
   }
 
   .mobile-nav-item:active {
-    transform: scale(0.95);
+    transform:
+      scale(0.95);
   }
 
-  .mobile-nav-item span:first-child {
-    display: grid;
-    place-items: center;
+  .mobile-nav-item
+  .mobile-nav-icon {
+    min-height:
+      20px;
 
-    min-height: 20px;
+    display:
+      grid;
 
-    font-size: 18px;
-    line-height: 1;
+    place-items:
+      center;
+
+    font-size:
+      18px;
+
+    line-height:
+      1;
 
     transition:
       transform 180ms var(--ease);
   }
 
-  .mobile-nav-item:hover span:first-child {
-    transform: translateY(-1px);
+  .mobile-nav-item:hover
+  .mobile-nav-icon {
+    transform:
+      translateY(-1px);
   }
 
   .mobile-nav-item.active {
-    color: var(--primary);
+    color:
+      var(--primary);
 
- background:
+    background:
       var(--primary-fixed);
   }
 
-  body {
-    padding-bottom: 82px;
-  }
-}
-
-@keyframes mobile-nav-enter {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .mobile-nav-item.active
+  .mobile-nav-icon {
+    transform:
+      translateY(-1px);
   }
 }
 
@@ -1312,46 +1526,67 @@ body.initialized .registration-intro {
    SMALL MOBILE
    ========================================================= */
 
-@media (max-width: 520px) {
+@media (max-width: 420px) {
 
   .header-inner {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding:
+      10px 14px;
+  }
+
+  .brand-icon {
+    width:
+      36px;
+
+    height:
+      36px;
+
+    flex-basis:
+      36px;
+
+    font-size:
+      19px;
+  }
+
+  .brand-content strong {
+    font-size:
+      14px;
   }
 
   .registration-main {
     padding:
-      28px 14px 94px;
+      30px 12px 98px;
   }
 
   .registration-card {
-    padding: 17px;
+    padding:
+      17px;
   }
 
-  .registration-intro {
-    margin-bottom: 24px;
+  .registration-intro h1 {
+    font-size:
+      23px;
+
+    line-height:
+      31px;
   }
 
-  .form-group input,
-  .form-group select {
-    height: 46px;
-  }
+  .form-header h2 {
+    font-size:
+      18px;
 
-  .submit-button {
-    min-height: 50px;
-  }
-
-  .registration-process {
-    margin-top: 42px;
-  }
-
-  .process-step {
-    padding: 16px;
+    line-height:
+      26px;
   }
 
   .mobile-navigation {
-    left: 8px;
-    right: 8px;
+    left:
+      8px;
+
+    right:
+      8px;
+
+    bottom:
+      8px;
   }
 }
 
@@ -1363,25 +1598,35 @@ body.initialized .registration-intro {
 @media (prefers-reduced-motion: reduce) {
 
   html {
-    scroll-behavior: auto;
+    scroll-behavior:
+      auto;
   }
 
   *,
   *::before,
   *::after {
-    animation: none !important;
-    transition: none !important;
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
   }
 
-  body {
-    opacity: 1;
-    transform: none;
+  body.page-ready {
+    animation:
+      none;
   }
 
   .registration-intro,
-  .reveal-on-scroll,
-  .reveal-card {
-    opacity: 1;
-    transform: none;
+  .registration-process,
+  .reveal-on-scroll {
+    opacity:
+      1;
+
+    transform:
+      none;
   }
 }
