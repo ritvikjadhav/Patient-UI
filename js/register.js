@@ -1,4 +1,4 @@
-// ClinicCare patient registration
+// ClinicCare — Patient Registration
 
 const STORAGE_KEY = "cliniccare_registration";
 const TOKEN_COUNTER_KEY = "cliniccare_token_counter";
@@ -17,7 +17,9 @@ const characterCount = document.getElementById("characterCount");
 let isSubmitting = false;
 
 
+// ============================================================
 // Helpers
+// ============================================================
 
 function valueOf(input) {
   return input ? input.value.trim() : "";
@@ -59,23 +61,34 @@ function clearErrors() {
   clearError(nameInput, "nameError");
   clearError(ageInput, "ageError");
   clearError(mobileInput, "mobileError");
-  clearError(reasonInput, "reasonError");
+
+  // Reason of visit is OPTIONAL.
+  // No validation is required for it.
 }
 
 
-// Character counter
+// ============================================================
+// Character Counter
+// ============================================================
 
 function updateCharacterCount() {
   if (!issueInput || !characterCount) return;
 
-  characterCount.textContent = `${issueInput.value.length} / 300`;
+  characterCount.textContent =
+    `${issueInput.value.length} / 300`;
 }
 
-issueInput?.addEventListener("input", updateCharacterCount);
+issueInput?.addEventListener(
+  "input",
+  updateCharacterCount
+);
+
 updateCharacterCount();
 
 
+// ============================================================
 // Validation
+// ============================================================
 
 function validateName() {
   const name = valueOf(nameInput);
@@ -88,6 +101,7 @@ function validateName() {
       "nameError",
       "Please enter your full name."
     );
+
     return false;
   }
 
@@ -97,46 +111,62 @@ function validateName() {
       "nameError",
       "Name must contain at least 2 characters."
     );
+
     return false;
   }
 
-  if (!/^[A-Za-zÀ-ÿ' -]+$/.test(name)) {
+  // Supports normal Indian/English names and
+  // common punctuation such as apostrophes, dots and hyphens.
+  const validName =
+    /^[A-Za-zÀ-ÿ' .-]+$/.test(name);
+
+  if (!validName) {
     setError(
       nameInput,
       "nameError",
       "Please enter a valid name."
     );
+
     return false;
   }
 
   return true;
 }
 
+
 function validateAge() {
-  const age = Number(valueOf(ageInput));
+  const ageValue = valueOf(ageInput);
+  const age = Number(ageValue);
 
   clearError(ageInput, "ageError");
 
-  if (!valueOf(ageInput)) {
+  if (!ageValue) {
     setError(
       ageInput,
       "ageError",
       "Please enter your age."
     );
+
     return false;
   }
 
-  if (!Number.isInteger(age) || age < 1 || age > 120) {
+  if (
+    !Number.isInteger(age) ||
+    age < 1 ||
+    age > 120
+  ) {
     setError(
       ageInput,
       "ageError",
       "Please enter an age between 1 and 120."
     );
+
     return false;
   }
 
   return true;
 }
+
 
 function validateMobile() {
   const mobile = valueOf(mobileInput);
@@ -149,6 +179,7 @@ function validateMobile() {
       "mobileError",
       "Please enter your mobile number."
     );
+
     return false;
   }
 
@@ -158,52 +189,43 @@ function validateMobile() {
       "mobileError",
       "Enter a valid 10-digit mobile number."
     );
+
     return false;
   }
 
   return true;
 }
 
-function validateReason() {
-  const reason = valueOf(reasonInput);
 
-  clearError(reasonInput, "reasonError");
-
-  if (!reason) {
-    setError(
-      reasonInput,
-      "reasonError",
-      "Please select a reason for your visit."
-    );
-    return false;
-  }
-
-  return true;
-}
+// Reason of Visit is intentionally NOT validated.
+// It can be left blank.
 
 function validateForm() {
   const validName = validateName();
   const validAge = validateAge();
   const validMobile = validateMobile();
-  const validReason = validateReason();
 
   return (
     validName &&
     validAge &&
-    validMobile &&
-    validReason
+    validMobile
   );
 }
 
 
-// Temporary V1 token
+// ============================================================
+// Temporary V1 Token System
+// ============================================================
 
 function generateTemporaryToken() {
   let number = Number(
     localStorage.getItem(TOKEN_COUNTER_KEY)
   );
 
-  if (!Number.isInteger(number) || number < 23) {
+  if (
+    !Number.isInteger(number) ||
+    number < 23
+  ) {
     number = 23;
   }
 
@@ -214,11 +236,16 @@ function generateTemporaryToken() {
     String(number)
   );
 
-  return `${TOKEN_PREFIX}${String(number).padStart(3, "0")}`;
+  return (
+    TOKEN_PREFIX +
+    String(number).padStart(3, "0")
+  );
 }
 
 
-// Temporary queue data
+// ============================================================
+// Temporary Queue Data
+// ============================================================
 
 function createTemporaryQueueData(token) {
   return {
@@ -232,27 +259,47 @@ function createTemporaryQueueData(token) {
 }
 
 
-// Backend integration point
+// ============================================================
+// Backend Integration Point
+// ============================================================
 
 async function registerPatient(patientData) {
+
   /*
-   Replace this temporary implementation with:
+    ----------------------------------------------------------
+    PRODUCTION BACKEND
 
-   const response = await fetch("/api/patients/register", {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json"
-     },
-     body: JSON.stringify(patientData)
-   });
+    Replace the temporary implementation below with your API:
 
-   if (!response.ok) {
-     throw new Error("Registration failed.");
-   }
+    const response = await fetch("/api/patients/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(patientData)
+    });
 
-   return await response.json();
+    if (!response.ok) {
+      throw new Error("Registration failed.");
+    }
+
+    return await response.json();
+
+    Expected response example:
+
+    {
+      success: true,
+      patientId: "12345",
+      token: "A-024",
+      position: 5,
+      aheadOfYou: 4,
+      estimatedWait: 12,
+      status: "Waiting"
+    }
+    ----------------------------------------------------------
   */
 
+  // Temporary V1 frontend-only registration
   const token = generateTemporaryToken();
 
   return {
@@ -267,15 +314,25 @@ async function registerPatient(patientData) {
 }
 
 
-// Save temporary registration
+// ============================================================
+// Save Registration
+// ============================================================
 
 function saveRegistration(patient, queue) {
+  const now = new Date();
+
   const registration = {
     patient,
+
     queue,
+
     registration: {
-      registeredAt: new Date().toISOString(),
-      date: new Date().toISOString().split("T")[0],
+      registeredAt: now.toISOString(),
+
+      date: now
+        .toISOString()
+        .split("T")[0],
+
       source: "patient-portal"
     }
   };
@@ -287,30 +344,41 @@ function saveRegistration(patient, queue) {
 }
 
 
-// Button state
+// ============================================================
+// Button State
+// ============================================================
 
 function setLoading(loading) {
   if (!submitButton) return;
 
   submitButton.disabled = loading;
-  submitButton.classList.toggle("is-loading", loading);
+
+  submitButton.classList.toggle(
+    "is-loading",
+    loading
+  );
+
   submitButton.setAttribute(
     "aria-busy",
     String(loading)
   );
 
-  const text =
-    submitButton.querySelector("span");
+  // Updated registration HTML uses .submit-label
+  // instead of selecting the first generic span.
+  const label =
+    submitButton.querySelector(".submit-label");
 
-  if (text) {
-    text.textContent = loading
+  if (label) {
+    label.textContent = loading
       ? "Registering..."
       : "Register & Get Token";
   }
 }
 
 
+// ============================================================
 // Submit
+// ============================================================
 
 async function handleSubmit(event) {
   event.preventDefault();
@@ -319,11 +387,14 @@ async function handleSubmit(event) {
 
   clearErrors();
 
-  if (!validateForm()) {
+  const valid = validateForm();
+
+  if (!valid) {
     const firstError =
       form?.querySelector(".input-error");
 
     firstError?.focus();
+
     return;
   }
 
@@ -332,40 +403,81 @@ async function handleSubmit(event) {
 
   const patient = {
     name: valueOf(nameInput),
-    age: Number(valueOf(ageInput)),
+
+    age: Number(
+      valueOf(ageInput)
+    ),
+
     mobile: valueOf(mobileInput),
-    reason: valueOf(reasonInput),
-    issue: valueOf(issueInput)
+
+    // OPTIONAL
+    reason: valueOf(reasonInput) || null,
+
+    issue: valueOf(issueInput) || null
   };
 
   try {
+
     const result =
       await registerPatient(patient);
 
-    if (!result?.success || !result.token) {
-      throw new Error("Registration failed.");
+    if (
+      !result?.success ||
+      !result?.token
+    ) {
+      throw new Error(
+        "Registration failed."
+      );
     }
 
+    const temporaryQueue =
+      createTemporaryQueueData(
+        result.token
+      );
+
     const queue = {
-      ...createTemporaryQueueData(result.token),
-      position: result.position ?? 5,
-      aheadOfYou: result.aheadOfYou ?? 4,
-      estimatedWait: result.estimatedWait ?? 12,
-      status: result.status ?? "Waiting"
+      ...temporaryQueue,
+
+      position:
+        result.position ??
+        temporaryQueue.position,
+
+      aheadOfYou:
+        result.aheadOfYou ??
+        temporaryQueue.aheadOfYou,
+
+      estimatedWait:
+        result.estimatedWait ??
+        temporaryQueue.estimatedWait,
+
+      status:
+        result.status ??
+        temporaryQueue.status
     };
 
-    saveRegistration(patient, queue);
+    saveRegistration(
+      patient,
+      queue
+    );
 
+    // Small delay so the button transition
+    // can finish smoothly.
     await new Promise(resolve =>
       setTimeout(resolve, 250)
     );
 
-    window.location.href = "token.html";
+    window.location.href =
+      "token.html";
 
   } catch (error) {
-    console.error("Registration failed:", error);
+
+    console.error(
+      "Registration failed:",
+      error
+    );
 
     isSubmitting = false;
+
     setLoading(false);
 
     showSubmitError();
@@ -373,17 +485,36 @@ async function handleSubmit(event) {
 }
 
 
-// Submit error
+// ============================================================
+// Submit Error
+// ============================================================
 
 function showSubmitError() {
   let message =
-    document.getElementById("registrationError");
+    document.getElementById(
+      "registrationError"
+    );
 
   if (!message && form) {
-    message = document.createElement("p");
-    message.id = "registrationError";
-    message.className = "error-message";
-    message.setAttribute("role", "alert");
+
+    message =
+      document.createElement("p");
+
+    message.id =
+      "registrationError";
+
+    message.className =
+      "form-status";
+
+    message.setAttribute(
+      "role",
+      "alert"
+    );
+
+    message.setAttribute(
+      "aria-live",
+      "polite"
+    );
 
     form.prepend(message);
   }
@@ -395,52 +526,300 @@ function showSubmitError() {
 }
 
 
-// Input cleanup + live error clearing
+// ============================================================
+// Input Cleanup + Live Error Clearing
+// ============================================================
 
-nameInput?.addEventListener("input", () => {
-  nameInput.value =
-    nameInput.value.replace(/\s{2,}/g, " ");
+nameInput?.addEventListener(
+  "input",
+  () => {
 
-  if (nameInput.classList.contains("input-error")) {
-    clearError(nameInput, "nameError");
+    nameInput.value =
+      nameInput.value
+        .replace(/\s{2,}/g, " ");
+
+    if (
+      nameInput.classList.contains(
+        "input-error"
+      )
+    ) {
+      clearError(
+        nameInput,
+        "nameError"
+      );
+    }
   }
-});
+);
 
-ageInput?.addEventListener("input", () => {
-  ageInput.value =
-    ageInput.value.replace(/\D/g, "").slice(0, 3);
 
-  if (ageInput.classList.contains("input-error")) {
-    clearError(ageInput, "ageError");
+ageInput?.addEventListener(
+  "input",
+  () => {
+
+    ageInput.value =
+      ageInput.value
+        .replace(/\D/g, "")
+        .slice(0, 3);
+
+    if (
+      ageInput.classList.contains(
+        "input-error"
+      )
+    ) {
+      clearError(
+        ageInput,
+        "ageError"
+      );
+    }
   }
-});
+);
 
-mobileInput?.addEventListener("input", () => {
-  mobileInput.value =
-    mobileInput.value.replace(/\D/g, "").slice(0, 10);
 
-  if (mobileInput.classList.contains("input-error")) {
-    clearError(mobileInput, "mobileError");
+mobileInput?.addEventListener(
+  "input",
+  () => {
+
+    mobileInput.value =
+      mobileInput.value
+        .replace(/\D/g, "")
+        .slice(0, 10);
+
+    if (
+      mobileInput.classList.contains(
+        "input-error"
+      )
+    ) {
+      clearError(
+        mobileInput,
+        "mobileError"
+      );
+    }
   }
-});
-
-reasonInput?.addEventListener("change", () => {
-  clearError(reasonInput, "reasonError");
-});
+);
 
 
-// Clear server error when user edits
+// Reason is optional.
+// No validation is triggered when it changes.
+reasonInput?.addEventListener(
+  "change",
+  () => {
+    reasonInput.classList.remove(
+      "input-error"
+    );
 
-form?.addEventListener("input", () => {
-  const error =
-    document.getElementById("registrationError");
+    reasonInput.removeAttribute(
+      "aria-invalid"
+    );
 
-  if (error) {
-    error.textContent = "";
+    reasonInput
+      .closest(".form-group")
+      ?.classList.remove("has-error");
   }
-});
+);
 
 
-// Form event
+// ============================================================
+// Clear Registration Error While Editing
+// ============================================================
 
-form?.addEventListener("submit", handleSubmit);
+form?.addEventListener(
+  "input",
+  () => {
+
+    const error =
+      document.getElementById(
+        "registrationError"
+      );
+
+    if (error) {
+      error.textContent = "";
+    }
+  }
+);
+
+
+// ============================================================
+// Registration Page Animations
+// Matches ClinicCare Home Page
+// ============================================================
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const page =
+      document.body;
+
+    page.classList.add(
+      "page-ready"
+    );
+
+    const reducedMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      );
+
+    function initRevealAnimations() {
+
+      const sections =
+        document.querySelectorAll(
+          ".registration-card"
+        );
+
+      const cards =
+        document.querySelectorAll(
+          ".form-header, .form-group, .form-notice, .existing-note"
+        );
+
+      // Reduced motion:
+      // show everything immediately.
+      if (reducedMotion.matches) {
+
+        sections.forEach(section => {
+          section.classList.add(
+            "reveal-on-scroll",
+            "is-visible"
+          );
+        });
+
+        cards.forEach(card => {
+          card.classList.add(
+            "reveal-card",
+            "is-visible"
+          );
+        });
+
+        return;
+      }
+
+      const observer =
+        new IntersectionObserver(
+          entries => {
+
+            entries.forEach(entry => {
+
+              if (
+                !entry.isIntersecting
+              ) {
+                return;
+              }
+
+              entry.target.classList.add(
+                "is-visible"
+              );
+
+              observer.unobserve(
+                entry.target
+              );
+            });
+
+          },
+          {
+            threshold: 0.08,
+            rootMargin:
+              "0px 0px -40px 0px"
+          }
+        );
+
+
+      sections.forEach(section => {
+
+        section.classList.add(
+          "reveal-on-scroll"
+        );
+
+        observer.observe(section);
+      });
+
+
+      cards.forEach(
+        (card, index) => {
+
+          card.classList.add(
+            "reveal-card"
+          );
+
+          card.style.setProperty(
+            "--reveal-delay",
+            `${index * 45}ms`
+          );
+
+          observer.observe(card);
+        }
+      );
+    }
+
+    initRevealAnimations();
+
+
+    // Smooth scrolling
+    document.documentElement.style.scrollBehavior =
+      reducedMotion.matches
+        ? "auto"
+        : "smooth";
+
+
+    // Mobile navigation
+    const currentPage =
+      window.location.pathname
+        .split("/")
+        .pop() ||
+      "index.html";
+
+    document
+      .querySelectorAll(
+        ".mobile-nav a"
+      )
+      .forEach(link => {
+
+        const href =
+          link.getAttribute("href");
+
+        if (
+          href === currentPage ||
+          (
+            currentPage === "" &&
+            href === "index.html"
+          )
+        ) {
+          link.classList.add(
+            "active"
+          );
+        }
+      });
+
+
+    // Escape removes focus
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape"
+        ) {
+          document.activeElement?.blur();
+        }
+      }
+    );
+
+
+    // Final initialization frame
+    requestAnimationFrame(
+      () => {
+        page.classList.add(
+          "initialized"
+        );
+      }
+    );
+  }
+);
+
+
+// ============================================================
+// Form Event
+// ============================================================
+
+form?.addEventListener(
+  "submit",
+  handleSubmit
+);
