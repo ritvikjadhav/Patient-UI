@@ -12,7 +12,7 @@
 
   <meta
     name="description"
-    content="View your ClinicCare consultation token and live queue status."
+    content="View your ClinicCare consultation token and current queue status."
   >
 
   <meta
@@ -96,12 +96,18 @@
       </a>
 
 
+      <!-- Current clinic status -->
+
       <span
         class="header-live"
         id="headerLiveStatus"
+        aria-label="Clinic status: live"
       >
+
         <i aria-hidden="true"></i>
+
         Live
+
       </span>
 
     </div>
@@ -117,7 +123,7 @@
 
 
     <!-- ===================================================
-         REGISTRATION SUCCESS
+         SUCCESS / PAGE INTRO
          =================================================== -->
 
     <section class="success-section">
@@ -138,15 +144,15 @@
       </h1>
 
       <p>
-        Keep your token handy. We'll update your position
-        as patients are served.
+        Your token is ready. Keep this page handy
+        while you wait for your consultation.
       </p>
 
     </section>
 
 
     <!-- ===================================================
-         PATIENT INFORMATION
+         PATIENT
          =================================================== -->
 
     <section
@@ -176,21 +182,24 @@
       class="token-card"
       id="tokenCard"
       data-token-status="waiting"
+      aria-label="Your consultation token"
     >
 
 
-      <!-- TOKEN HEADER -->
+      <!-- Token header -->
 
       <div class="token-card-header">
 
         <span>
-          YOUR TOKEN NUMBER
+          YOUR TOKEN
         </span>
+
 
         <div
           class="status-badge"
           id="statusBadge"
           data-field="status"
+          aria-live="polite"
         >
 
           <i
@@ -207,7 +216,7 @@
       </div>
 
 
-      <!-- TOKEN NUMBER -->
+      <!-- Token number -->
 
       <strong
         id="tokenNumber"
@@ -218,11 +227,37 @@
       </strong>
 
 
+      <!-- Token action -->
+
+      <button
+        type="button"
+        class="copy-token-button"
+        id="copyTokenButton"
+        aria-label="Copy your token number"
+      >
+
+        <span
+          class="copy-icon"
+          aria-hidden="true"
+        >
+          ⧉
+        </span>
+
+        <span id="copyTokenText">
+          Copy Token
+        </span>
+
+      </button>
+
+
       <!-- =================================================
-           TOKEN STATISTICS
+           QUEUE SNAPSHOT
            ================================================= -->
 
-      <div class="token-stats">
+      <div
+        class="token-stats"
+        aria-label="Current queue summary"
+      >
 
 
         <!-- Ahead -->
@@ -230,7 +265,7 @@
         <div class="token-stat">
 
           <span>
-            AHEAD OF YOU
+            AHEAD
           </span>
 
           <strong
@@ -252,7 +287,7 @@
         <div class="token-stat">
 
           <span>
-            ESTIMATED WAIT
+            EST. WAIT
           </span>
 
           <strong
@@ -274,7 +309,7 @@
         <div class="token-stat">
 
           <span>
-            YOUR POSITION
+            POSITION
           </span>
 
           <strong
@@ -296,44 +331,6 @@
 
 
     <!-- ===================================================
-         PRIMARY QUEUE ACTION
-         =================================================== -->
-
-    <a
-      href="queue.html"
-      class="track-button"
-      id="trackQueueButton"
-    >
-
-      <span
-        class="track-icon"
-        aria-hidden="true"
-      >
-        ≡
-      </span>
-
-      <span class="track-content">
-
-        <strong>
-          Track Live Queue
-        </strong>
-
-        <small>
-          See who's being served now
-        </small>
-
-      </span>
-
-      <b
-        aria-hidden="true"
-      >
-        →
-      </b>
-
-    </a>
-
-
-    <!-- ===================================================
          REFRESH STATUS
          =================================================== -->
 
@@ -341,7 +338,7 @@
       type="button"
       id="refreshButton"
       class="refresh-button"
-      aria-label="Refresh token status"
+      aria-label="Refresh queue status"
     >
 
       <span
@@ -359,10 +356,13 @@
 
 
     <!-- ===================================================
-         INFORMATION
+         WAITING INFORMATION
          =================================================== -->
 
-    <section class="waiting-card">
+    <section
+      class="waiting-card"
+      aria-label="What happens next"
+    >
 
       <span
         class="waiting-icon"
@@ -378,9 +378,8 @@
         </strong>
 
         <p>
-          You can leave this page open or check your live
-          queue anytime. Your position will update as
-          consultations are completed.
+          Keep your phone nearby. Your queue position
+          will update as consultations are completed.
         </p>
 
       </div>
@@ -389,30 +388,7 @@
 
 
     <!-- ===================================================
-         ACTIONS
-         =================================================== -->
-
-    <section class="token-actions">
-
-      <a
-        href="index.html"
-        class="secondary-action"
-      >
-        ← Home
-      </a>
-
-      <a
-        href="support.html"
-        class="secondary-action"
-      >
-        Need Help?
-      </a>
-
-    </section>
-
-
-    <!-- ===================================================
-         SYSTEM STATUS
+         DATA STATUS
          =================================================== -->
 
     <div
@@ -420,6 +396,7 @@
       id="dataStatus"
       aria-live="polite"
     >
+
       <span
         class="data-status-dot"
         aria-hidden="true"
@@ -428,6 +405,7 @@
       <span id="dataStatusText">
         Queue status is up to date
       </span>
+
     </div>
 
 
@@ -488,7 +466,8 @@
 
     <a
       href="queue.html"
-      class="mobile-nav-item"
+      class="mobile-nav-item active"
+      aria-current="page"
     >
 
       <span
@@ -535,7 +514,7 @@
     BACKEND / API INTEGRATION POINT
     =========================================================
 
-    token.js should retrieve the patient's active visit/token.
+    token.js should retrieve the patient's active visit.
 
     Example future API:
 
@@ -557,7 +536,16 @@
 
       fetch("/api/patient/token")
 
-    No HTML changes should be required.
+    Existing IDs are intentionally preserved so the
+    JavaScript can update the page without changing
+    the HTML structure.
+
+    Additional frontend feature:
+
+      #copyTokenButton
+
+    can copy #tokenNumber to the clipboard and update
+    #copyTokenText to "Copied".
 
     =========================================================
   -->
