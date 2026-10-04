@@ -1,4 +1,3 @@
-/* Queue V1 */
 
 const $ = (id) => document.getElementById(id);
 
@@ -14,6 +13,8 @@ const refreshButton = $("refreshQueueButton");
 
 let refreshTimer = null;
 let loading = false;
+let lastQueueData = null;
+let waitStartedAt = null;
 
 
 /* Backend / API */
@@ -23,7 +24,7 @@ async function fetchQueueData() {
   /*
     BACKEND CONNECTION POINT
 
-    Replace the demo return below with:
+    Replace the demo return with:
 
     const response = await fetch("/api/queue/my-status", {
       method: "GET",
@@ -38,39 +39,51 @@ async function fetchQueueData() {
 
     return await response.json();
 
-    Expected response:
+    Recommended response:
 
     {
+      patientName: "Ritvik",
       token: "A-024",
       status: "Waiting",
       aheadOfYou: 4,
       estimatedMinutes: 12,
       yourPosition: 5,
-      currentlyServing: "A-019",
-      servingStatus: "In consultation",
+
+      currentlyServing: {
+        token: "A-019",
+        name: "Patient Name",
+        status: "In consultation"
+      },
+
       queue: [
         {
           token: "A-019",
+          name: "Patient Name",
           status: "Serving"
         },
         {
           token: "A-020",
+          name: "Patient Name",
           status: "Next"
         },
         {
           token: "A-021",
+          name: "Patient Name",
           status: "Waiting"
         },
         {
           token: "A-022",
+          name: "Patient Name",
           status: "Waiting"
         },
         {
           token: "A-023",
+          name: "Patient Name",
           status: "Waiting"
         },
         {
           token: "A-024",
+          name: "Ritvik",
           status: "You",
           estimatedMinutes: 12
         }
@@ -79,41 +92,77 @@ async function fetchQueueData() {
   */
 
   return {
+    patientName: "Ritvik",
     token: "A-024",
     status: "Waiting",
     aheadOfYou: 4,
     estimatedMinutes: 12,
     yourPosition: 5,
-    currentlyServing: "A-019",
-    servingStatus: "In consultation",
+
+    currentlyServing: {
+      token: "A-019",
+      name: "Patient A",
+      status: "In consultation"
+    },
 
     queue: [
       {
         token: "A-019",
+        name: "Patient A",
         status: "Serving"
       },
       {
         token: "A-020",
+        name: "Patient B",
         status: "Next"
       },
       {
         token: "A-021",
+        name: "Patient C",
         status: "Waiting"
       },
       {
         token: "A-022",
+        name: "Patient D",
         status: "Waiting"
       },
       {
         token: "A-023",
+        name: "Patient E",
         status: "Waiting"
       },
       {
         token: "A-024",
+        name: "Ritvik",
         status: "You",
         estimatedMinutes: 12
       }
     ]
+  };
+}
+
+
+/* Normalize queue data */
+
+function normalizeQueue(data) {
+
+  if (!data || !Array.isArray(data.queue)) {
+    return {
+      ...data,
+      queue: []
+    };
+  }
+
+  return {
+    ...data,
+    queue: data.queue.filter(
+      (item) =>
+        item &&
+        item.token &&
+        item.status !== "Completed" &&
+        item.status !== "Served" &&
+        item.status !== "Removed"
+    )
   };
 }
 
@@ -123,7 +172,9 @@ async function fetchQueueData() {
 function updateToken(data) {
 
   currentToken.textContent = data.token || "—";
-  queueStatus.textContent = data.status || "Waiting";
+
+  queueStatus.textContent =
+    data.status || "Waiting";
 
   aheadOfYou.textContent =
     Number.isFinite(data.aheadOfYou)
@@ -139,12 +190,37 @@ function updateToken(data) {
     Number.isFinite(data.yourPosition)
       ? data.yourPosition
       : "—";
+}
+
+
+/* Update currently serving patient */
+
+function updateCurrentlyServing(data) {
+
+  const serving = data.currentlyServing;
+
+  if (!serving) {
+
+    servingToken.textContent = "—";
+    servingStatus.textContent = "No consultation";
+
+    return;
+  }
+
+  if (typeof serving === "string") {
+
+    servingToken.textContent = serving;
+    servingStatus.textContent =
+      data.servingStatus || "In consultation";
+
+    return;
+  }
 
   servingToken.textContent =
-    data.currentlyServing || "—";
+    serving.token || "—";
 
   servingStatus.textContent =
-    data.servingStatus || "Waiting";
+    serving.status || "In consultation";
 }
 
 
@@ -153,10 +229,17 @@ function updateToken(data) {
 function createQueueRow(item, index) {
 
   const row = document.createElement("article");
+
   row.className = "queue-row";
 
-  const serving = item.status === "Serving";
-  const you = item.status === "You";
+  const serving =
+    item.status === "Serving";
+
+  const next =
+    item.status === "Next";
+
+  const you =
+    item.status === "You";
 
   if (serving) {
     row.classList.add("current-row");
@@ -166,50 +249,83 @@ function createQueueRow(item, index) {
     row.classList.add("your-row");
   }
 
-  const number = document.createElement("span");
-  number.className = "queue-number";
+  const number =
+    document.createElement("span");
 
-  number.textContent = serving
-    ? "✓"
-    : you
-      ? index + 1
-      : index;
+  number.className =
+    "queue-number";
 
-  const content = document.createElement("div");
+  number.textContent =
+    serving
+      ? "✓"
+      : you
+        ? index + 1
+        : index;
 
-  const title = document.createElement("strong");
-  title.textContent = `Token ${item.token}`;
+  const content =
+    document.createElement("div");
+
+  const title =
+    document.createElement("strong");
+
+  title.textContent =
+    `Token ${item.token}`;
 
   if (you) {
-    const label = document.createElement("small");
+
+    const label =
+      document.createElement("small");
+
     label.textContent = "YOU";
+
     title.appendChild(label);
   }
 
-  const description = document.createElement("span");
+  const description =
+    document.createElement("span");
 
   if (serving) {
-    description.textContent = "Currently in consultation";
-  } else if (item.status === "Next") {
-    description.textContent = "Next in line";
+
+    description.textContent =
+      item.name
+        ? `${item.name} is currently in consultation`
+        : "Currently in consultation";
+
+  } else if (next) {
+
+    description.textContent =
+      item.name
+        ? `${item.name} is next in line`
+        : "Next in line";
+
   } else if (you) {
+
     description.textContent =
       Number.isFinite(item.estimatedMinutes)
         ? `Estimated wait ~${item.estimatedMinutes} minutes`
         : "Your current queue position";
+
   } else {
-    description.textContent = "Waiting";
+
+    description.textContent =
+      item.name
+        ? `${item.name} is waiting`
+        : "Waiting";
   }
 
   content.append(title, description);
+
   row.append(number, content);
 
   if (serving || you) {
 
-    const label = document.createElement("b");
+    const label =
+      document.createElement("b");
 
     label.textContent =
-      serving ? "Serving" : "Your token";
+      serving
+        ? "Serving"
+        : "Your token";
 
     row.appendChild(label);
   }
@@ -226,19 +342,124 @@ function updateQueue(data) {
     return;
   }
 
-  const fragment = document.createDocumentFragment();
+  const fragment =
+    document.createDocumentFragment();
 
-  data.queue.forEach((item, index) => {
-    fragment.appendChild(
-      createQueueRow(item, index)
-    );
-  });
+  data.queue.forEach(
+    (item, index) => {
+
+      fragment.appendChild(
+        createQueueRow(item, index)
+      );
+    }
+  );
 
   queueList.replaceChildren(fragment);
 }
 
 
-/* Loading state */
+/* Recalculate patient position */
+
+function calculateQueuePosition(data) {
+
+  if (!Array.isArray(data.queue)) {
+    return;
+  }
+
+  const myIndex =
+    data.queue.findIndex(
+      (item) =>
+        item.status === "You" ||
+        item.token === data.token
+    );
+
+  if (myIndex === -1) {
+
+    aheadOfYou.textContent = "—";
+    yourPosition.textContent = "—";
+
+    return;
+  }
+
+  const patientsAhead =
+    data.queue
+      .slice(0, myIndex)
+      .filter(
+        (item) =>
+          item.status !== "Serving" &&
+          item.status !== "Completed"
+      )
+      .length;
+
+  aheadOfYou.textContent =
+    patientsAhead;
+
+  yourPosition.textContent =
+    myIndex + 1;
+}
+
+
+/* Calculate estimated wait */
+
+function calculateEstimatedWait(data) {
+
+  if (!Array.isArray(data.queue)) {
+    return;
+  }
+
+  const myIndex =
+    data.queue.findIndex(
+      (item) =>
+        item.status === "You" ||
+        item.token === data.token
+    );
+
+  if (myIndex === -1) {
+    estimatedMinutes.textContent = "—";
+    return;
+  }
+
+  const patientsAhead =
+    data.queue
+      .slice(0, myIndex)
+      .filter(
+        (item) =>
+          item.status !== "Serving" &&
+          item.status !== "Completed"
+      )
+      .length;
+
+  const minutesPerPatient =
+    Number.isFinite(data.minutesPerPatient)
+      ? data.minutesPerPatient
+      : 3;
+
+  let minutes =
+    patientsAhead * minutesPerPatient;
+
+  if (
+    waitStartedAt &&
+    minutes > 0
+  ) {
+
+    const elapsed =
+      Math.floor(
+        (Date.now() - waitStartedAt) / 60000
+      );
+
+    minutes =
+      Math.max(
+        0,
+        minutes - elapsed
+      );
+  }
+
+  estimatedMinutes.textContent =
+    minutes;
+}
+
+
+/* Set loading state */
 
 function setLoading(state) {
 
@@ -255,7 +476,21 @@ function setLoading(state) {
   );
 
   refreshButton.textContent =
-    state ? "↻ Updating..." : "↻ Refresh";
+    state
+      ? "↻ Updating..."
+      : "↻ Refresh";
+}
+
+
+/* Show queue error */
+
+function showQueueError() {
+
+  queueStatus.textContent =
+    "Unable to update";
+
+  servingStatus.textContent =
+    "Live queue unavailable";
 }
 
 
@@ -271,17 +506,32 @@ async function loadQueue() {
 
   try {
 
-    const data = await fetchQueueData();
+    const rawData =
+      await fetchQueueData();
+
+    const data =
+      normalizeQueue(rawData);
+
+    lastQueueData = data;
+
+    if (!waitStartedAt) {
+      waitStartedAt = Date.now();
+    }
 
     updateToken(data);
+    updateCurrentlyServing(data);
     updateQueue(data);
+    calculateQueuePosition(data);
+    calculateEstimatedWait(data);
 
   } catch (error) {
 
-    console.error("Queue update failed:", error);
+    console.error(
+      "Queue update failed:",
+      error
+    );
 
-    queueStatus.textContent =
-      "Unable to update";
+    showQueueError();
 
   } finally {
 
@@ -290,7 +540,7 @@ async function loadQueue() {
 }
 
 
-/* Manual refresh */
+/* Refresh queue */
 
 refreshButton.addEventListener(
   "click",
@@ -298,16 +548,33 @@ refreshButton.addEventListener(
 );
 
 
-/* Automatic refresh */
+/* Refresh estimated wait */
+
+function updateWaitTimer() {
+
+  if (!lastQueueData) {
+    return;
+  }
+
+  calculateEstimatedWait(
+    lastQueueData
+  );
+}
+
+
+/* Automatic queue refresh */
 
 function startAutoRefresh() {
 
-  clearInterval(refreshTimer);
-
-  refreshTimer = setInterval(
-    loadQueue,
-    30000
+  clearInterval(
+    refreshTimer
   );
+
+  refreshTimer =
+    setInterval(
+      loadQueue,
+      30000
+    );
 }
 
 
@@ -317,16 +584,29 @@ document.addEventListener(
   "visibilitychange",
   () => {
 
-    if (document.visibilityState === "visible") {
+    if (
+      document.visibilityState ===
+      "visible"
+    ) {
 
       loadQueue();
       startAutoRefresh();
 
     } else {
 
-      clearInterval(refreshTimer);
+      clearInterval(
+        refreshTimer
+      );
     }
   }
+);
+
+
+/* Update timer every minute */
+
+setInterval(
+  updateWaitTimer,
+  60000
 );
 
 
