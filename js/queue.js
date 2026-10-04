@@ -1,3 +1,4 @@
+/* Queue V2 */
 
 const $ = (id) => document.getElementById(id);
 
@@ -14,7 +15,6 @@ const refreshButton = $("refreshQueueButton");
 let refreshTimer = null;
 let loading = false;
 let lastQueueData = null;
-let waitStartedAt = null;
 
 
 /* Backend / API */
@@ -38,65 +38,19 @@ async function fetchQueueData() {
     }
 
     return await response.json();
-
-    Recommended response:
-
-    {
-      patientName: "Ritvik",
-      token: "A-024",
-      status: "Waiting",
-      aheadOfYou: 4,
-      estimatedMinutes: 12,
-      yourPosition: 5,
-
-      currentlyServing: {
-        token: "A-019",
-        name: "Patient Name",
-        status: "In consultation"
-      },
-
-      queue: [
-        {
-          token: "A-019",
-          name: "Patient Name",
-          status: "Serving"
-        },
-        {
-          token: "A-020",
-          name: "Patient Name",
-          status: "Next"
-        },
-        {
-          token: "A-021",
-          name: "Patient Name",
-          status: "Waiting"
-        },
-        {
-          token: "A-022",
-          name: "Patient Name",
-          status: "Waiting"
-        },
-        {
-          token: "A-023",
-          name: "Patient Name",
-          status: "Waiting"
-        },
-        {
-          token: "A-024",
-          name: "Ritvik",
-          status: "You",
-          estimatedMinutes: 12
-        }
-      ]
-    }
   */
 
   return {
     patientName: "Ritvik",
+
     token: "A-024",
+
     status: "Waiting",
+
     aheadOfYou: 4,
+
     estimatedMinutes: 12,
+
     yourPosition: 5,
 
     currentlyServing: {
@@ -105,12 +59,12 @@ async function fetchQueueData() {
       status: "In consultation"
     },
 
+    /*
+      Currently serving patient is NOT included here.
+      Doctor/backend removes completed patients.
+    */
+
     queue: [
-      {
-        token: "A-019",
-        name: "Patient A",
-        status: "Serving"
-      },
       {
         token: "A-020",
         name: "Patient B",
@@ -142,27 +96,49 @@ async function fetchQueueData() {
 }
 
 
-/* Normalize queue data */
+/* Normalize queue */
 
 function normalizeQueue(data) {
 
   if (!data || !Array.isArray(data.queue)) {
+
     return {
       ...data,
       queue: []
     };
   }
 
+  const servingTokenValue =
+    typeof data.currentlyServing === "object"
+      ? data.currentlyServing?.token
+      : data.currentlyServing;
+
   return {
     ...data,
-    queue: data.queue.filter(
-      (item) =>
-        item &&
-        item.token &&
-        item.status !== "Completed" &&
-        item.status !== "Served" &&
-        item.status !== "Removed"
-    )
+
+    queue: data.queue.filter((item) => {
+
+      if (!item || !item.token) {
+        return false;
+      }
+
+      if (
+        item.status === "Completed" ||
+        item.status === "Served" ||
+        item.status === "Removed"
+      ) {
+        return false;
+      }
+
+      if (
+        servingTokenValue &&
+        item.token === servingTokenValue
+      ) {
+        return false;
+      }
+
+      return true;
+    })
   };
 }
 
@@ -171,7 +147,8 @@ function normalizeQueue(data) {
 
 function updateToken(data) {
 
-  currentToken.textContent = data.token || "—";
+  currentToken.textContent =
+    data.token || "—";
 
   queueStatus.textContent =
     data.status || "Waiting";
@@ -193,25 +170,31 @@ function updateToken(data) {
 }
 
 
-/* Update currently serving patient */
+/* Update currently serving */
 
 function updateCurrentlyServing(data) {
 
-  const serving = data.currentlyServing;
+  const serving =
+    data.currentlyServing;
 
   if (!serving) {
 
     servingToken.textContent = "—";
-    servingStatus.textContent = "No consultation";
+
+    servingStatus.textContent =
+      "No consultation";
 
     return;
   }
 
   if (typeof serving === "string") {
 
-    servingToken.textContent = serving;
+    servingToken.textContent =
+      serving;
+
     servingStatus.textContent =
-      data.servingStatus || "In consultation";
+      data.servingStatus ||
+      "In consultation";
 
     return;
   }
@@ -220,30 +203,26 @@ function updateCurrentlyServing(data) {
     serving.token || "—";
 
   servingStatus.textContent =
-    serving.status || "In consultation";
+    serving.status ||
+    "In consultation";
 }
 
 
 /* Create queue row */
 
-function createQueueRow(item, index) {
+function createQueueRow(item, position) {
 
-  const row = document.createElement("article");
+  const row =
+    document.createElement("article");
 
-  row.className = "queue-row";
-
-  const serving =
-    item.status === "Serving";
+  row.className =
+    "queue-row";
 
   const next =
     item.status === "Next";
 
   const you =
     item.status === "You";
-
-  if (serving) {
-    row.classList.add("current-row");
-  }
 
   if (you) {
     row.classList.add("your-row");
@@ -256,14 +235,12 @@ function createQueueRow(item, index) {
     "queue-number";
 
   number.textContent =
-    serving
-      ? "✓"
-      : you
-        ? index + 1
-        : index;
+    position;
+
 
   const content =
     document.createElement("div");
+
 
   const title =
     document.createElement("strong");
@@ -271,27 +248,24 @@ function createQueueRow(item, index) {
   title.textContent =
     `Token ${item.token}`;
 
+
   if (you) {
 
     const label =
       document.createElement("small");
 
-    label.textContent = "YOU";
+    label.textContent =
+      "YOU";
 
     title.appendChild(label);
   }
 
+
   const description =
     document.createElement("span");
 
-  if (serving) {
 
-    description.textContent =
-      item.name
-        ? `${item.name} is currently in consultation`
-        : "Currently in consultation";
-
-  } else if (next) {
+  if (next) {
 
     description.textContent =
       item.name
@@ -313,22 +287,30 @@ function createQueueRow(item, index) {
         : "Waiting";
   }
 
-  content.append(title, description);
 
-  row.append(number, content);
+  content.append(
+    title,
+    description
+  );
 
-  if (serving || you) {
+
+  row.append(
+    number,
+    content
+  );
+
+
+  if (you) {
 
     const label =
       document.createElement("b");
 
     label.textContent =
-      serving
-        ? "Serving"
-        : "Your token";
+      "Your token";
 
     row.appendChild(label);
   }
+
 
   return row;
 }
@@ -339,26 +321,36 @@ function createQueueRow(item, index) {
 function updateQueue(data) {
 
   if (!Array.isArray(data.queue)) {
+    queueList.replaceChildren();
     return;
   }
 
   const fragment =
     document.createDocumentFragment();
 
-  data.queue.forEach(
-    (item, index) => {
+  let position = 1;
 
-      fragment.appendChild(
-        createQueueRow(item, index)
-      );
-    }
+
+  data.queue.forEach((item) => {
+
+    fragment.appendChild(
+      createQueueRow(
+        item,
+        position
+      )
+    );
+
+    position++;
+  });
+
+
+  queueList.replaceChildren(
+    fragment
   );
-
-  queueList.replaceChildren(fragment);
 }
 
 
-/* Recalculate patient position */
+/* Calculate queue position */
 
 function calculateQueuePosition(data) {
 
@@ -373,39 +365,68 @@ function calculateQueuePosition(data) {
         item.token === data.token
     );
 
+
   if (myIndex === -1) {
 
-    aheadOfYou.textContent = "—";
-    yourPosition.textContent = "—";
+    aheadOfYou.textContent =
+      "—";
+
+    yourPosition.textContent =
+      "—";
 
     return;
   }
+
 
   const patientsAhead =
     data.queue
       .slice(0, myIndex)
       .filter(
         (item) =>
-          item.status !== "Serving" &&
-          item.status !== "Completed"
+          item.status !== "Completed" &&
+          item.status !== "Served" &&
+          item.status !== "Removed"
       )
       .length;
 
+
   aheadOfYou.textContent =
     patientsAhead;
+
 
   yourPosition.textContent =
     myIndex + 1;
 }
 
 
-/* Calculate estimated wait */
+/* Update estimated wait */
 
-function calculateEstimatedWait(data) {
+function updateEstimatedWait(data) {
 
-  if (!Array.isArray(data.queue)) {
+  if (
+    Number.isFinite(
+      data.estimatedMinutes
+    )
+  ) {
+
+    estimatedMinutes.textContent =
+      Math.max(
+        0,
+        data.estimatedMinutes
+      );
+
     return;
   }
+
+
+  if (!Array.isArray(data.queue)) {
+
+    estimatedMinutes.textContent =
+      "—";
+
+    return;
+  }
+
 
   const myIndex =
     data.queue.findIndex(
@@ -414,52 +435,43 @@ function calculateEstimatedWait(data) {
         item.token === data.token
     );
 
+
   if (myIndex === -1) {
-    estimatedMinutes.textContent = "—";
+
+    estimatedMinutes.textContent =
+      "—";
+
     return;
   }
+
 
   const patientsAhead =
     data.queue
       .slice(0, myIndex)
       .filter(
         (item) =>
-          item.status !== "Serving" &&
-          item.status !== "Completed"
+          item.status !== "Completed" &&
+          item.status !== "Served" &&
+          item.status !== "Removed"
       )
       .length;
 
+
   const minutesPerPatient =
-    Number.isFinite(data.minutesPerPatient)
+    Number.isFinite(
+      data.minutesPerPatient
+    )
       ? data.minutesPerPatient
       : 3;
 
-  let minutes =
-    patientsAhead * minutesPerPatient;
-
-  if (
-    waitStartedAt &&
-    minutes > 0
-  ) {
-
-    const elapsed =
-      Math.floor(
-        (Date.now() - waitStartedAt) / 60000
-      );
-
-    minutes =
-      Math.max(
-        0,
-        minutes - elapsed
-      );
-  }
 
   estimatedMinutes.textContent =
-    minutes;
+    patientsAhead *
+    minutesPerPatient;
 }
 
 
-/* Set loading state */
+/* Loading state */
 
 function setLoading(state) {
 
@@ -482,7 +494,7 @@ function setLoading(state) {
 }
 
 
-/* Show queue error */
+/* Queue error */
 
 function showQueueError() {
 
@@ -504,25 +516,31 @@ async function loadQueue() {
 
   setLoading(true);
 
+
   try {
 
     const rawData =
       await fetchQueueData();
 
+
     const data =
       normalizeQueue(rawData);
 
-    lastQueueData = data;
 
-    if (!waitStartedAt) {
-      waitStartedAt = Date.now();
-    }
+    lastQueueData =
+      data;
+
 
     updateToken(data);
+
     updateCurrentlyServing(data);
+
     updateQueue(data);
+
     calculateQueuePosition(data);
-    calculateEstimatedWait(data);
+
+    updateEstimatedWait(data);
+
 
   } catch (error) {
 
@@ -533,6 +551,7 @@ async function loadQueue() {
 
     showQueueError();
 
+
   } finally {
 
     setLoading(false);
@@ -540,7 +559,7 @@ async function loadQueue() {
 }
 
 
-/* Refresh queue */
+/* Manual refresh */
 
 refreshButton.addEventListener(
   "click",
@@ -548,27 +567,14 @@ refreshButton.addEventListener(
 );
 
 
-/* Refresh estimated wait */
-
-function updateWaitTimer() {
-
-  if (!lastQueueData) {
-    return;
-  }
-
-  calculateEstimatedWait(
-    lastQueueData
-  );
-}
-
-
-/* Automatic queue refresh */
+/* Automatic refresh */
 
 function startAutoRefresh() {
 
   clearInterval(
     refreshTimer
   );
+
 
   refreshTimer =
     setInterval(
@@ -578,7 +584,7 @@ function startAutoRefresh() {
 }
 
 
-/* Pause polling when page is hidden */
+/* Pause polling when hidden */
 
 document.addEventListener(
   "visibilitychange",
@@ -590,6 +596,7 @@ document.addEventListener(
     ) {
 
       loadQueue();
+
       startAutoRefresh();
 
     } else {
@@ -602,15 +609,8 @@ document.addEventListener(
 );
 
 
-/* Update timer every minute */
-
-setInterval(
-  updateWaitTimer,
-  60000
-);
-
-
 /* Initial load */
 
 loadQueue();
+
 startAutoRefresh();
