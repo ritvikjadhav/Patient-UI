@@ -13,14 +13,25 @@
   --color-success: #16a34a;
   --color-success-bg: #dcfce7;
   --color-success-text: #166534;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
+
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-card: 0 4px 12px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.05);
   --shadow-lg: 0 10px 25px rgba(0, 60, 144, 0.10);
+
+  --transition: 180ms cubic-bezier(0.22, 1, 0.36, 1);
   --content-width: 1180px;
 }
 
@@ -39,8 +50,7 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif;
+  font-family: "Inter", sans-serif;
   color: var(--color-text-primary);
   background: linear-gradient(
     180deg,
@@ -60,35 +70,34 @@ a {
 
 button {
   font: inherit;
-  cursor: pointer;
 }
 
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible {
-  outline: 3px solid rgba(0, 60, 144, 0.20);
-  outline-offset: 2px;
+  outline: 3px solid rgba(0, 60, 144, 0.2);
+  outline-offset: 3px;
 }
 
 ::selection {
-  background: var(--color-primary-light);
   color: var(--color-primary);
+  background: var(--color-primary-light);
 }
 
 /* Header */
 
 .app-header {
   position: relative;
-  z-index: 50;
+  z-index: 10;
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--color-outline-light);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .header-inner {
-  width: min(calc(100% - 48px), 1180px);
+  width: min(calc(100% - 48px), var(--content-width));
   min-height: 76px;
   margin: 0 auto;
   display: flex;
@@ -109,17 +118,18 @@ summary:focus-visible {
   width: 52px;
   height: 52px;
   flex: 0 0 52px;
-  display: grid;
-  place-items: center;
-  border: 0;
-  border-radius: 14px;
-  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #ffffff;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 14px;
   font-size: 30px;
   font-weight: 500;
   line-height: 1;
   box-shadow: 0 5px 14px rgba(0, 60, 144, 0.14);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .brand:hover .brand-icon {
@@ -151,12 +161,12 @@ summary:focus-visible {
   font-weight: 500;
 }
 
-/* Support content */
+/* Main content */
 
 .support-main {
-  width: min(calc(100% - 48px), 980px);
+  width: min(calc(100% - 48px), 900px);
   margin: 0 auto;
-  padding: 58px 0 90px;
+  padding: var(--space-6) 0 100px;
 }
 
 .support-intro {
@@ -173,7 +183,7 @@ summary:focus-visible {
   font-size: 11px;
   line-height: 16px;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
 }
 
 .support-intro .eyebrow {
@@ -182,8 +192,8 @@ summary:focus-visible {
 
 .support-intro h1 {
   color: var(--color-text-primary);
-  font-size: clamp(34px, 5vw, 48px);
-  line-height: 1.08;
+  font-size: clamp(34px, 5vw, 46px);
+  line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.045em;
 }
@@ -193,10 +203,10 @@ summary:focus-visible {
   margin: 15px auto 0;
   color: var(--color-text-secondary);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
-/* Support cards */
+/* Help cards */
 
 .support-options {
   display: grid;
@@ -213,12 +223,14 @@ summary:focus-visible {
   align-items: center;
   gap: 16px;
   padding: 18px;
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--color-surface);
   border: 1px solid var(--color-outline-light);
-  border-radius: 16px;
-  box-shadow: var(--shadow-card);
-  transition: transform 0.2s ease, border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
   animation: supportFadeUp 400ms ease both;
 }
 
@@ -247,14 +259,15 @@ summary:focus-visible {
 .support-icon {
   width: 52px;
   height: 52px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary);
   background: var(--color-primary-light);
   border-radius: 14px;
   font-size: 21px;
   font-weight: 700;
-  transition: background 0.2s ease;
+  transition: background var(--transition);
 }
 
 .support-card:hover .support-icon {
@@ -286,17 +299,17 @@ summary:focus-visible {
   color: var(--color-primary);
   font-size: 22px;
   line-height: 1;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition);
 }
 
 .support-card:hover > span:last-child {
   transform: translateX(3px);
 }
 
-/* Frequently asked questions */
+/* FAQs */
 
 .faq-section {
-  margin-top: 48px;
+  margin-top: 44px;
   animation: supportFadeUp 400ms ease 120ms both;
 }
 
@@ -304,7 +317,7 @@ summary:focus-visible {
   margin-top: 7px;
   color: var(--color-text-primary);
   font-size: 28px;
-  line-height: 1.2;
+  line-height: 1.25;
   font-weight: 750;
   letter-spacing: -0.035em;
 }
@@ -312,24 +325,24 @@ summary:focus-visible {
 .faq-section details {
   margin-top: 14px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--color-surface);
   border: 1px solid var(--color-outline-light);
   border-radius: 15px;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .faq-section details:hover,
 .faq-section details[open] {
   border-color: #bfd0e8;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-md);
 }
 
 .faq-section summary {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 72px;
+  min-height: 68px;
   padding: 18px 64px 18px 22px;
   color: var(--color-text-primary);
   font-size: 16px;
@@ -351,15 +364,16 @@ summary:focus-visible {
   right: 20px;
   width: 32px;
   height: 32px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary);
   background: var(--color-primary-light);
   border-radius: var(--radius-full);
   font-size: 20px;
   font-weight: 600;
   transform: translateY(-50%);
-  transition: background 0.2s ease;
+  transition: background var(--transition);
 }
 
 .faq-section details[open] summary::after {
@@ -374,7 +388,7 @@ summary:focus-visible {
   line-height: 1.7;
 }
 
-/* Contact card */
+/* Contact */
 
 .contact-card {
   display: flex;
@@ -382,10 +396,10 @@ summary:focus-visible {
   gap: 14px;
   margin-top: 30px;
   padding: 22px;
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--color-surface);
   border: 1px solid var(--color-outline-light);
-  border-radius: 16px;
-  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
   animation: supportFadeUp 400ms ease 180ms both;
 }
 
@@ -393,11 +407,12 @@ summary:focus-visible {
   width: 46px;
   height: 46px;
   flex: 0 0 46px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary);
   background: var(--color-primary-light);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   font-size: 19px;
   font-weight: 700;
 }
@@ -414,24 +429,14 @@ summary:focus-visible {
   margin-top: 4px;
   color: var(--color-text-secondary);
   font-size: 13px;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
-/* Mobile navigation */
+/* Bottom navigation */
 
 .mobile-navigation {
   display: none;
 }
-
-/* Tablet */
-
-@media (max-width: 850px) {
-  .support-main {
-    width: min(calc(100% - 40px), 700px);
-  }
-}
-
-/* Mobile */
 
 @media (max-width: 680px) {
   body {
@@ -441,7 +446,7 @@ summary:focus-visible {
   .header-inner {
     width: 100%;
     min-height: 70px;
-    padding: 9px 20px;
+    padding: 9px 24px;
   }
 
   .brand {
@@ -468,35 +473,34 @@ summary:focus-visible {
 
   .support-main {
     width: 100%;
-    padding: 31px 14px 45px;
+    padding: 34px 24px 40px;
   }
 
   .support-intro {
     margin-bottom: 25px;
-    padding: 0 8px;
+    padding: 0;
     text-align: center;
   }
 
   .support-intro .eyebrow {
-    margin-bottom: 11px;
-    font-size: 10px;
+    margin-bottom: 12px;
   }
 
   .support-intro h1 {
-    font-size: clamp(31px, 9vw, 40px);
-    line-height: 1.08;
-    letter-spacing: -0.045em;
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
   }
 
   .support-intro p {
     margin-top: 12px;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
   .support-options {
     gap: 10px;
-    margin-top: 25px;
+    margin-top: 26px;
   }
 
   .support-card {
@@ -504,13 +508,13 @@ summary:focus-visible {
     grid-template-columns: 46px minmax(0, 1fr) auto;
     gap: 12px;
     padding: 13px;
-    border-radius: 13px;
+    border-radius: var(--radius-xl);
   }
 
   .support-icon {
     width: 46px;
     height: 46px;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     font-size: 19px;
   }
 
@@ -521,29 +525,20 @@ summary:focus-visible {
   .support-card small {
     margin-top: 4px;
     font-size: 12px;
-    line-height: 1.5;
-  }
-
-  .support-card > span:last-child {
-    font-size: 20px;
+    line-height: 1.6;
   }
 
   .faq-section {
     margin-top: 36px;
   }
 
-  .faq-section .section-label {
-    font-size: 9px;
-  }
-
   .faq-section h2 {
-    margin-top: 7px;
-    font-size: 25px;
+    font-size: 24px;
   }
 
   .faq-section details {
-    margin-top: 10px;
-    border-radius: 13px;
+    margin-top: 12px;
+    border-radius: 15px;
   }
 
   .faq-section summary {
@@ -562,14 +557,12 @@ summary:focus-visible {
   .faq-section details p {
     padding: 0 15px 16px;
     font-size: 12px;
-    line-height: 1.7;
   }
 
   .contact-card {
     gap: 12px;
     margin-top: 25px;
     padding: 16px;
-    border-radius: 13px;
   }
 
   .contact-icon {
@@ -584,15 +577,17 @@ summary:focus-visible {
   }
 
   .contact-card p {
-    font-size: 11px;
+    font-size: 12px;
   }
+
+  /* Same full-width navigation layout as Registration */
 
   .mobile-navigation {
     position: fixed;
+    z-index: 1000;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000;
     width: 100%;
     max-width: none;
     height: 76px;
@@ -601,76 +596,64 @@ summary:focus-visible {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: center;
-    gap: 0;
+    gap: 4px;
     background: rgba(255, 255, 255, 0.98);
     border-top: 1px solid var(--color-outline-light);
     box-shadow: 0 -5px 18px rgba(15, 23, 42, 0.07);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     transform: none;
   }
 
   .mobile-nav-item {
-    position: relative;
     min-width: 0;
-    min-height: 58px;
-    padding: 5px 6px;
+    height: 60px;
+    padding: 5px 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 4px;
-    border: 0;
-    border-radius: var(--radius-full);
     color: var(--color-text-secondary);
     background: transparent;
+    border: 0;
+    border-radius: var(--radius-full);
     font-size: 12px;
     line-height: 1;
     font-weight: 500;
-    transition: color 0.2s ease, background 0.2s ease,
-      transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+    transition: color var(--transition), background var(--transition);
   }
 
-  .mobile-nav-item > span,
-  .mobile-nav-icon {
-    width: 21px;
-    height: 21px;
-    display: grid;
-    place-items: center;
+  .mobile-nav-item > span {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 22px;
     line-height: 1;
-    font-weight: 500;
   }
 
-  .mobile-nav-item > span:last-child,
   .mobile-nav-item small {
-    width: auto;
-    height: auto;
+    display: block;
     font-size: 12px;
-    line-height: 1;
+    line-height: 15px;
     white-space: nowrap;
   }
 
   .mobile-nav-item.active {
-    min-height: 58px;
+    height: 68px;
     color: #ffffff;
     background: var(--color-primary);
-    font-weight: 600;
+    border-radius: var(--radius-full);
     box-shadow: 0 7px 18px rgba(0, 60, 144, 0.24);
-    transform: translateY(-2px);
-  }
-
-  .mobile-nav-item.active .mobile-nav-icon {
     font-weight: 600;
   }
 
   .mobile-nav-item:hover:not(.active) {
     color: var(--color-primary);
     background: var(--color-surface-container);
-  }
-
-  .mobile-nav-item:not(.active):active {
-    transform: scale(0.95);
   }
 }
 
@@ -682,40 +665,49 @@ summary:focus-visible {
     padding-left: 16px;
   }
 
+  .brand {
+    gap: 12px;
+  }
+
   .support-main {
-    padding-right: 11px;
-    padding-left: 11px;
-  }
-
-  .support-intro h1 {
-    font-size: 31px;
-  }
-
-  .support-intro p {
-    font-size: 13px;
+    padding-right: 14px;
+    padding-left: 14px;
   }
 
   .mobile-navigation {
     padding-right: 7px;
     padding-left: 7px;
+    gap: 2px;
   }
 
   .mobile-nav-item {
+    padding-right: 2px;
+    padding-left: 2px;
     font-size: 11px;
   }
 
-  .mobile-nav-item > span,
-  .mobile-nav-icon {
-    font-size: 21px;
+  .mobile-nav-item small {
+    font-size: 11px;
   }
 }
 
 /* Extra-small phones */
 
 @media (max-width: 340px) {
+  .brand {
+    gap: 10px;
+  }
+
+  .brand-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    font-size: 25px;
+  }
+
   .brand-content strong,
   .brand-copy strong {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .brand-content small,
@@ -724,20 +716,27 @@ summary:focus-visible {
   }
 
   .support-intro h1 {
-    font-size: 28px;
+    font-size: 29px;
   }
 
   .mobile-nav-item {
     font-size: 10px;
   }
 
-  .mobile-nav-item > span,
-  .mobile-nav-icon {
-    font-size: 20px;
+  .mobile-nav-item small {
+    font-size: 10px;
   }
 }
 
-/* Reduced motion */
+/* Desktop */
+
+@media (min-width: 681px) {
+  .mobile-navigation {
+    display: none;
+  }
+}
+
+/* Animations */
 
 @keyframes supportFadeUp {
   from {
@@ -751,6 +750,10 @@ summary:focus-visible {
   }
 }
 
+.is-navigating {
+  opacity: 0.75;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -759,8 +762,7 @@ summary:focus-visible {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+    animation: none !important;
+    transition: none !important;
   }
 }
