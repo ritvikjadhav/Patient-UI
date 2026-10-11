@@ -1,330 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="description" content="Get help with Clinic Care registration, patient tokens, and queue tracking.">
+  <meta name="theme-color" content="#003c90">
 
-  <meta
-    name="description"
-    content="ClinicCare patient support."
-  >
+  <title>Patient Support | Clinic Care</title>
 
-  <meta
-    name="theme-color"
-    content="#003c90"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <title>Support | Clinic Care</title>
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
-  <link
-    rel="stylesheet"
-    href="css/support.css"
-  >
-
+  <link rel="stylesheet" href="css/support.css">
 </head>
 
 <body>
-
-
   <header class="app-header">
-
     <div class="header-inner">
-
-      <a
-        href="index.html"
-        class="brand"
-      >
-
-        <span class="brand-icon">
-          +
+      <a href="index.html" class="brand" aria-label="Clinic Care home">
+        <span class="brand-icon" aria-hidden="true">+</span>
+        <span class="brand-content">
+          <strong>Clinic Care</strong>
+          <small>Patient Portal</small>
         </span>
-
-        <span class="brand-copy">
-
-          <strong>
-            Clinic Care
-          </strong>
-
-          <small>
-            Patient Portal
-          </small>
-
-        </span>
-
       </a>
-
     </div>
-
   </header>
 
-
   <main class="support-main">
-
-
-    <section class="support-intro">
-
-      <span class="eyebrow">
-        PATIENT SUPPORT
-      </span>
-
-      <h1>
-        How can we
-        <br>
-        help?
-      </h1>
-
-      <p>
-        Find quick answers about registration, tokens
-        and your consultation queue.
-      </p>
-
+    <section class="support-intro" aria-labelledby="support-title">
+      <span class="eyebrow">HELP CENTRE</span>
+      <h1 id="support-title">We're here to help.</h1>
+      <p>Find guidance for using your patient portal and managing your clinic visit.</p>
     </section>
 
-
-    <!-- QUICK HELP -->
-
-    <section class="support-options">
-
-
-      <a
-        href="registration.html"
-        class="support-card"
-      >
-
-        <span class="support-icon">
-          +
-        </span>
-
+    <section class="support-options" aria-label="Help topics">
+      <a href="registration.html" class="support-card">
+        <span class="support-icon" aria-hidden="true">+</span>
         <div>
-
-          <strong>
-            Registration Help
-          </strong>
-
-          <small>
-            Having trouble registering?
-          </small>
-
+          <strong>Patient registration</strong>
+          <small>Learn how to submit your details and register for a visit.</small>
         </div>
-
-        <span>
-          →
-        </span>
-
+        <span aria-hidden="true">→</span>
       </a>
 
-
-      <a
-        href="token.html"
-        class="support-card"
-      >
-
-        <span class="support-icon">
-          #
-        </span>
-
+      <a href="token.html" class="support-card">
+        <span class="support-icon" aria-hidden="true">#</span>
         <div>
-
-          <strong>
-            Token Help
-          </strong>
-
-          <small>
-            Can't find or view your token?
-          </small>
-
+          <strong>Token information</strong>
+          <small>Find your consultation token and understand its purpose.</small>
         </div>
-
-        <span>
-          →
-        </span>
-
+        <span aria-hidden="true">→</span>
       </a>
 
-
-      <a
-        href="queue.html"
-        class="support-card"
-      >
-
-        <span class="support-icon">
-          ≡
-        </span>
-
+      <a href="queue.html" class="support-card">
+        <span class="support-icon" aria-hidden="true">≡</span>
         <div>
-
-          <strong>
-            Queue Help
-          </strong>
-
-          <small>
-            Understand your waiting position.
-          </small>
-
+          <strong>Queue tracking</strong>
+          <small>Check your waiting position and estimated waiting time.</small>
         </div>
-
-        <span>
-          →
-        </span>
-
+        <span aria-hidden="true">→</span>
       </a>
-
     </section>
 
-
-    <!-- FAQ -->
-
-    <section class="faq-section">
-
-      <span class="section-label">
-        COMMON QUESTIONS
-      </span>
-
-      <h2>
-        Quick answers
-      </h2>
-
+    <section class="faq-section" aria-labelledby="faq-title">
+      <span class="section-label">GOOD TO KNOW</span>
+      <h2 id="faq-title">Frequently asked questions</h2>
 
       <details>
-
-        <summary>
-          Do I need to stay at the reception?
-        </summary>
-
-        <p>
-          No. Once registered, you can use My Queue
-          to follow your position while waiting.
-        </p>
-
+        <summary>Can I check my queue without staying at reception?</summary>
+        <p>You can check your queue status through My Queue. Follow the clinic's instructions about where to wait.</p>
       </details>
-
 
       <details>
-
-        <summary>
-          Can my queue position change?
-        </summary>
-
-        <p>
-          Yes. Your position changes as patients ahead
-          of you are served.
-        </p>
-
+        <summary>Why does my waiting position change?</summary>
+        <p>Your position updates as the clinic serves patients. The estimated waiting time may also change.</p>
       </details>
-
 
       <details>
-
-        <summary>
-          Where can I find my token?
-        </summary>
-
-        <p>
-          Open My Token from the patient portal.
-        </p>
-
+        <summary>What if I cannot access my patient information?</summary>
+        <p>Check that you are using the correct portal page. If the problem continues, ask the clinic reception team for assistance.</p>
       </details>
-
     </section>
 
-
-    <!-- CONTACT -->
-
-    <section class="contact-card">
-
-      <span class="contact-icon">
-        ?
-      </span>
-
+    <section class="contact-card" aria-label="Additional assistance">
+      <span class="contact-icon" aria-hidden="true">i</span>
       <div>
-
-        <strong>
-          Still need help?
-        </strong>
-
-        <p>
-          Please speak with the clinic reception desk.
-        </p>
-
+        <strong>Need personal assistance?</strong>
+        <p>For registration issues or visit-related questions, contact the clinic reception team directly.</p>
       </div>
-
     </section>
-
   </main>
 
-
-  <nav
-    class="mobile-navigation"
-    aria-label="Patient navigation"
-  >
-
-    <a
-      href="index.html"
-      class="mobile-nav-item"
-    >
-
-      <span>⌂</span>
+  <nav class="mobile-navigation" aria-label="Patient navigation">
+    <a href="index.html" class="mobile-nav-item">
+      <span aria-hidden="true">⌂</span>
       <small>Home</small>
-
     </a>
 
-    <a
-      href="registration.html"
-      class="mobile-nav-item"
-    >
-
-      <span>+</span>
+    <a href="registration.html" class="mobile-nav-item">
+      <span aria-hidden="true">+</span>
       <small>Register</small>
-
     </a>
 
-    <a
-      href="queue.html"
-      class="mobile-nav-item"
-    >
-
-      <span>≡</span>
+    <a href="queue.html" class="mobile-nav-item">
+      <span aria-hidden="true">≡</span>
       <small>My Queue</small>
-
     </a>
 
-    <a
-      href="support.html"
-      class="mobile-nav-item active"
-    >
-
-      <span>?</span>
+    <a href="support.html" class="mobile-nav-item active" aria-current="page">
+      <span aria-hidden="true">?</span>
       <small>Support</small>
-
     </a>
-
   </nav>
 
-
   <script src="js/support.js"></script>
-
 </body>
-
 </html>
