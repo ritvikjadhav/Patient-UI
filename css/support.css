@@ -96,7 +96,7 @@ button {
   flex-shrink: 0;
   color: #ffffff;
   background: var(--color-primary);
-  border: 0;
+  border: none;
   border-radius: 14px;
   font-size: 30px;
   font-weight: 500;
@@ -110,7 +110,8 @@ button {
   box-shadow: 0 7px 18px rgba(0, 60, 144, 0.18);
 }
 
-.brand-content {
+.brand-content,
+.brand-copy {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -118,14 +119,16 @@ button {
   line-height: 1.15;
 }
 
-.brand-content strong {
+.brand-content strong,
+.brand-copy strong {
   color: var(--color-text-primary);
   font-size: 20px;
   font-weight: 750;
   letter-spacing: -0.025em;
 }
 
-.brand-content small {
+.brand-content small,
+.brand-copy small {
   color: var(--color-text-secondary);
   font-size: 13px;
   font-weight: 500;
@@ -139,13 +142,12 @@ button {
 
 .support-intro {
   max-width: 650px;
-  animation: supportFadeUp 420ms var(--transition) both;
+  animation: supportFadeUp 400ms ease both;
 }
 
 .eyebrow,
 .section-label {
-  display: inline-flex;
-  align-items: center;
+  display: block;
   color: var(--color-primary);
   font-size: 11px;
   line-height: 16px;
@@ -189,19 +191,19 @@ button {
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
-  animation: supportFadeUp 420ms var(--transition) both;
+  animation: supportFadeUp 400ms ease both;
 }
 
 .support-card:nth-child(1) {
-  animation-delay: 60ms;
+  animation-delay: 50ms;
 }
 
 .support-card:nth-child(2) {
-  animation-delay: 110ms;
+  animation-delay: 100ms;
 }
 
 .support-card:nth-child(3) {
-  animation-delay: 160ms;
+  animation-delay: 150ms;
 }
 
 .support-card:hover {
@@ -225,11 +227,10 @@ button {
   border-radius: var(--radius-lg);
   font-size: 20px;
   font-weight: 700;
-  transition: transform var(--transition), background var(--transition);
+  transition: background var(--transition);
 }
 
 .support-card:hover .support-icon {
-  transform: scale(1.04);
   background: #dce8ff;
 }
 
@@ -267,7 +268,7 @@ button {
 
 .faq-section {
   margin-top: 44px;
-  animation: supportFadeUp 460ms var(--transition) 180ms both;
+  animation: supportFadeUp 400ms ease 120ms both;
 }
 
 .faq-section h2 {
@@ -340,7 +341,7 @@ button {
 .faq-section details[open] summary::after {
   content: "−";
   background: #dce8ff;
-  transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%);
 }
 
 .faq-section summary:focus-visible {
@@ -361,10 +362,11 @@ button {
   gap: 14px;
   margin-top: 30px;
   padding: 20px;
-  background: linear-gradient(135deg, #eef4ff 0%, #f8faff 100%);
-  border: 1px solid #d6e3f8;
+  background: #ffffff;
+  border: 1px solid var(--color-outline-light);
   border-radius: var(--radius-xl);
-  animation: supportFadeUp 460ms var(--transition) 240ms both;
+  box-shadow: var(--shadow-md);
+  animation: supportFadeUp 400ms ease 180ms both;
 }
 
 .contact-icon {
@@ -375,8 +377,7 @@ button {
   justify-content: center;
   flex-shrink: 0;
   color: var(--color-primary);
-  background: var(--color-surface);
-  border: 1px solid #dbe5f5;
+  background: var(--color-primary-light);
   border-radius: var(--radius-lg);
   font-size: 18px;
   font-weight: 700;
@@ -482,11 +483,13 @@ button {
     font-size: 27px;
   }
 
-  .brand-content strong {
+  .brand-content strong,
+  .brand-copy strong {
     font-size: 18px;
   }
 
-  .brand-content small {
+  .brand-content small,
+  .brand-copy small {
     font-size: 12px;
   }
 
@@ -587,11 +590,13 @@ button {
     font-size: 25px;
   }
 
-  .brand-content strong {
+  .brand-content strong,
+  .brand-copy strong {
     font-size: 16px;
   }
 
-  .brand-content small {
+  .brand-content small,
+  .brand-copy small {
     font-size: 11px;
   }
 
@@ -629,4 +634,9 @@ button {
     animation: none !important;
     transition: none !important;
   }
+}
+
+:focus-visible {
+  outline: 3px solid rgba(0, 60, 144, 0.18);
+  outline-offset: 3px;
 }
